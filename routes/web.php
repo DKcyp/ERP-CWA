@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Master\AreaController;
 use App\Http\Controllers\Master\SupplierController;
 use App\Http\Controllers\Master\SupplierGroupController;
+use App\Http\Controllers\Master\SupplierBalanceSummaryController;
 use App\Http\Controllers\Master\SupplierCenterController;
+use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
+use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -98,6 +101,26 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [SupplierCenterController::class, 'show'])->name('show');
             Route::put('/{id}', [SupplierCenterController::class, 'update'])->name('update');
             Route::delete('/{id}', [SupplierCenterController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
+            Route::get('/', [SupplierBalanceSummaryController::class, 'index'])->name('index');
+            Route::get('/table', [SupplierBalanceSummaryController::class, 'table'])->name('table');
+        });
+
+        Route::prefix('purchase-request-list')->name('purchase-request.')->group(function () {
+            Route::get('/', [PurchaseRequestController::class, 'index'])->name('index');
+            Route::get('/table', [PurchaseRequestController::class, 'table'])->name('table');
+            Route::post('/', [PurchaseRequestController::class, 'store'])->name('store');
+            Route::get('/{id}', [PurchaseRequestController::class, 'show'])->name('show');
+            Route::put('/{id}', [PurchaseRequestController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PurchaseRequestController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('purchase-request-fulfilment-report')->name('purchase-request-fulfilment.')->group(function () {
+            Route::get('/', [PurchaseRequestFulfilmentController::class, 'index'])->name('index');
+            Route::get('/table', [PurchaseRequestFulfilmentController::class, 'table'])->name('table');
+            Route::get('/{id}', [PurchaseRequestFulfilmentController::class, 'show'])->name('show');
         });
 
     });
