@@ -1,0 +1,33 @@
+Yang perlu kamu lakukan sekarang
+
+Buka terminal baru (di D:\xampp\htdocs\tes) dan jalankan:
+
+php artisan queue:work --queue=prd-scan --sleep=1 --tries=3
+
+
+--queue=prd-scan → khusus konsumsi antrian prd-scan
+
+--sleep=1 → kalau antrian kosong, worker tidur 1 detik
+
+--tries=3 → kalau gagal, auto-retry sampai 3x
+
+Mau lebih cepat? Jalankan beberapa worker (mis. 2–4 jendela terminal yang sama). Makin banyak worker = makin cepat, tapi beban DB/ERP juga naik.
+
+Mau lebih santai/throttle?
+
+Kurangi jumlah worker, atau
+
+Naikkan jeda kecil di dalam job saat enqueuing (kalau command kamu ada opsi --sleep-ms), misalnya saat scan:
+
+php artisan prd:scan barang-jadi --sleep-ms=30
+
+
+Cek progres / masalah
+
+Kalau pakai database queue, job tersimpan di tabel jobs, yang gagal di failed_jobs.
+
+Lihat gagal: php artisan queue:failed
+
+Ulangi yang gagal: php artisan queue:retry all
+
+(Job akan kasih jeda 300ms antar PRD di RN yang sama.)
