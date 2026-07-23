@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>@yield('title') | {{ env('APP_NAME', 'Horizon ERP') }} </title>
+    <title>@yield('title') | {{ env('APP_NAME', 'ERP CWA') }} </title>
 
     <link rel="shortcut icon" href="{{ asset('custom/assets/compiled/svg/favicon2.svg') }}" type="image/x-icon">
     <style>
@@ -66,7 +66,8 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
                             <a href="{{ url('/') }}" class="d-flex align-items-center gap-2 text-decoration-none">
-                                <h4 class="sidebar-brand-title mb-0">HORIZON <span>FREE</span></h4>
+                                <img src="{{ asset('logo.png') }}" alt="Logo ERP CWA" class="sidebar-brand-icon" style="height:36px; width:auto; object-fit:contain;">
+                                <h4 class="sidebar-brand-title mb-0">ERP <span>CWA</span></h4>
                             </a>
                         </div>
                         <div class="sidebar-toggler x">
@@ -144,7 +145,7 @@
             <footer class="py-3 mt-auto">
                 <div class="footer clearfix mb-0 text-muted fs-6">
                     <div class="float-start">
-                        <p><span id="current-year"></span> &copy; Horizon UI ERP Layout</p>
+                        <p><span id="current-year"></span> &copy; ERP CWA Layout</p>
                     </div>
                     <div class="float-end">
                         <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill"></i></span></p>

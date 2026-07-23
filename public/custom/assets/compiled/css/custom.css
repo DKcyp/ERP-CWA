@@ -286,7 +286,7 @@ body {
     color: #2563EB !important;
 }
 
-.sidebar-wrapper .sidebar-menu .sidebar-item.active > .sidebar-link::after {
+.sidebar-wrapper .sidebar-menu .sidebar-item.active:not(.has-sub) > .sidebar-link::after {
     content: '' !important;
     position: absolute !important;
     right: 0 !important;
@@ -297,6 +297,10 @@ body {
     background-color: #2563EB !important;
     border-radius: 4px !important;
     display: block !important;
+}
+
+.sidebar-wrapper .sidebar-menu .sidebar-item.active.has-sub > .sidebar-link::after {
+    display: none !important;
 }
 
 /* Submenu Level 2 High Contrast Styling */

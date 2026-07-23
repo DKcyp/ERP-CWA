@@ -15,6 +15,27 @@ use App\Http\Controllers\Master\SupplierBalanceSummaryController;
 use App\Http\Controllers\Master\SupplierCenterController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
+use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
+use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
+use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
+use App\Http\Controllers\MaterialManagement\PurchaseInvoiceListController;
+use App\Http\Controllers\MaterialManagement\DailyPurchaseInvoiceReportController;
+use App\Http\Controllers\MaterialManagement\MonthlyPurchaseBySupplierReportController;
+use App\Http\Controllers\MaterialManagement\StbjController;
+use App\Http\Controllers\MaterialManagement\SupplierPaymentListController;
+use App\Http\Controllers\MaterialManagement\SupplierOutstandingListController;
+use App\Http\Controllers\MaterialManagement\SupplierDailyPaymentReportController;
+use App\Http\Controllers\MaterialManagement\SupplierDailyPaymentListController;
+use App\Http\Controllers\MaterialManagement\PurchaseReturnListController;
+use App\Http\Controllers\MaterialManagement\SjbbController;
+use App\Http\Controllers\MaterialManagement\StockAdjustmentUseController;
+use App\Http\Controllers\MaterialManagement\StockAdjustmentListController;
+use App\Http\Controllers\MaterialManagement\StockTransferListController;
+use App\Http\Controllers\MaterialManagement\DailyStockTransferReportController;
+use App\Http\Controllers\MaterialManagement\StockTransferFulfilmentController;
+use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentCostReportController;
+use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentTrackReportController;
+use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentReportController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -114,6 +135,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/', [PurchaseRequestController::class, 'store'])->name('store');
             Route::get('/{id}', [PurchaseRequestController::class, 'show'])->name('show');
             Route::put('/{id}', [PurchaseRequestController::class, 'update'])->name('update');
+            Route::put('/{id}/status', [PurchaseRequestController::class, 'updateStatus'])->name('status');
             Route::delete('/{id}', [PurchaseRequestController::class, 'destroy'])->name('destroy');
         });
 
@@ -121,6 +143,170 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [PurchaseRequestFulfilmentController::class, 'index'])->name('index');
             Route::get('/table', [PurchaseRequestFulfilmentController::class, 'table'])->name('table');
             Route::get('/{id}', [PurchaseRequestFulfilmentController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('purchase-order-list')->name('purchase-order.')->group(function () {
+            Route::get('/', [PurchaseOrderListController::class, 'index'])->name('index');
+            Route::get('/table', [PurchaseOrderListController::class, 'table'])->name('table');
+            Route::put('/{id}/status', [PurchaseOrderListController::class, 'updateStatus'])->name('status');
+            Route::get('/{id}', [PurchaseOrderListController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('purchase-fulfillment-report')->name('purchase-fulfill.')->group(function () {
+            Route::get('/', [PurchaseOrderFulfillmentController::class, 'index'])->name('index');
+            Route::get('/table', [PurchaseOrderFulfillmentController::class, 'table'])->name('table');
+            Route::get('/{id}', [PurchaseOrderFulfillmentController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('daily-purchase-order-report')->name('daily-po.')->group(function () {
+            Route::get('/', [DailyPurchaseOrderReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyPurchaseOrderReportController::class, 'table'])->name('table');
+            Route::get('/summary', [DailyPurchaseOrderReportController::class, 'summary'])->name('summary');
+            Route::get('/{id}', [DailyPurchaseOrderReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('purchase-invoice-list')->name('purchase-invoice.')->group(function () {
+            Route::get('/', [PurchaseInvoiceListController::class, 'index'])->name('index');
+            Route::get('/table', [PurchaseInvoiceListController::class, 'table'])->name('table');
+            Route::post('/', [PurchaseInvoiceListController::class, 'store'])->name('store');
+            Route::put('/{id}/status', [PurchaseInvoiceListController::class, 'updateStatus'])->name('status');
+            Route::get('/{id}', [PurchaseInvoiceListController::class, 'show'])->name('show');
+            Route::put('/{id}', [PurchaseInvoiceListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PurchaseInvoiceListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('daily-purchase-invoice-report')->name('daily-invoice.')->group(function () {
+            Route::get('/', [DailyPurchaseInvoiceReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyPurchaseInvoiceReportController::class, 'table'])->name('table');
+            Route::get('/summary', [DailyPurchaseInvoiceReportController::class, 'summary'])->name('summary');
+            Route::get('/{id}', [DailyPurchaseInvoiceReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('monthly-purchase-by-supplier-report')->name('monthly-supplier.')->group(function () {
+            Route::get('/', [MonthlyPurchaseBySupplierReportController::class, 'index'])->name('index');
+            Route::get('/table', [MonthlyPurchaseBySupplierReportController::class, 'table'])->name('table');
+            Route::get('/summary', [MonthlyPurchaseBySupplierReportController::class, 'summary'])->name('summary');
+        });
+
+        Route::prefix('stbj')->name('stbj.')->group(function () {
+            Route::get('/', [StbjController::class, 'index'])->name('index');
+            Route::get('/table', [StbjController::class, 'table'])->name('table');
+            Route::post('/', [StbjController::class, 'store'])->name('store');
+            Route::put('/{id}/status', [StbjController::class, 'updateStatus'])->name('status');
+            Route::get('/{id}', [StbjController::class, 'show'])->name('show');
+            Route::put('/{id}', [StbjController::class, 'update'])->name('update');
+            Route::delete('/{id}', [StbjController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('supplier-payment-list')->name('supplier-payment.')->group(function () {
+            Route::get('/', [SupplierPaymentListController::class, 'index'])->name('index');
+            Route::get('/table', [SupplierPaymentListController::class, 'table'])->name('table');
+            Route::post('/', [SupplierPaymentListController::class, 'store'])->name('store');
+            Route::put('/{id}/status', [SupplierPaymentListController::class, 'updateStatus'])->name('status');
+            Route::get('/{id}', [SupplierPaymentListController::class, 'show'])->name('show');
+            Route::put('/{id}', [SupplierPaymentListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SupplierPaymentListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('supp-outstanding-list')->name('supp-outstanding.')->group(function () {
+            Route::get('/', [SupplierOutstandingListController::class, 'index'])->name('index');
+            Route::get('/table', [SupplierOutstandingListController::class, 'table'])->name('table');
+        });
+
+        Route::prefix('daily-supplier-payment-report')->name('daily-supplier-payment.')->group(function () {
+            Route::get('/', [SupplierDailyPaymentReportController::class, 'index'])->name('index');
+            Route::get('/table', [SupplierDailyPaymentReportController::class, 'table'])->name('table');
+            Route::get('/summary', [SupplierDailyPaymentReportController::class, 'summary'])->name('summary');
+            Route::get('/{id}', [SupplierDailyPaymentReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('daily-supplier-payment-list')->name('daily-supplier-payment-list.')->group(function () {
+            Route::get('/', [SupplierDailyPaymentListController::class, 'index'])->name('index');
+            Route::get('/table', [SupplierDailyPaymentListController::class, 'table'])->name('table');
+        });
+
+        Route::prefix('purchase-return-list')->name('purchase-return.')->group(function () {
+            Route::get('/', [PurchaseReturnListController::class, 'index'])->name('index');
+            Route::get('/table', [PurchaseReturnListController::class, 'table'])->name('table');
+            Route::post('/', [PurchaseReturnListController::class, 'store'])->name('store');
+            Route::put('/{id}/status', [PurchaseReturnListController::class, 'updateStatus'])->name('status');
+            Route::get('/{id}', [PurchaseReturnListController::class, 'show'])->name('show');
+            Route::put('/{id}', [PurchaseReturnListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PurchaseReturnListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('sjbb')->name('sjbb.')->group(function () {
+            Route::get('/', [SjbbController::class, 'index'])->name('index');
+            Route::get('/table', [SjbbController::class, 'table'])->name('table');
+            Route::post('/', [SjbbController::class, 'store'])->name('store');
+            Route::put('/{id}/status', [SjbbController::class, 'updateStatus'])->name('status');
+            Route::get('/{id}', [SjbbController::class, 'show'])->name('show');
+            Route::put('/{id}', [SjbbController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SjbbController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('stock-adjustment-use')->name('stock-adjustment-use.')->group(function () {
+            Route::get('/', [StockAdjustmentUseController::class, 'index'])->name('index');
+            Route::get('/table', [StockAdjustmentUseController::class, 'table'])->name('table');
+            Route::post('/', [StockAdjustmentUseController::class, 'store'])->name('store');
+            Route::put('/{id}/status', [StockAdjustmentUseController::class, 'updateStatus'])->name('status');
+            Route::get('/{id}', [StockAdjustmentUseController::class, 'show'])->name('show');
+            Route::put('/{id}', [StockAdjustmentUseController::class, 'update'])->name('update');
+            Route::delete('/{id}', [StockAdjustmentUseController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('stock-adjustment-list')->name('stock-adjustment-list.')->group(function () {
+            Route::get('/', [StockAdjustmentListController::class, 'index'])->name('index');
+            Route::get('/table', [StockAdjustmentListController::class, 'table'])->name('table');
+            Route::post('/', [StockAdjustmentListController::class, 'store'])->name('store');
+            Route::put('/{id}/status', [StockAdjustmentListController::class, 'updateStatus'])->name('status');
+            Route::get('/{id}', [StockAdjustmentListController::class, 'show'])->name('show');
+            Route::put('/{id}', [StockAdjustmentListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [StockAdjustmentListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('stock-transfer-list')->name('stock-transfer.')->group(function () {
+            Route::get('/', [StockTransferListController::class, 'index'])->name('index');
+            Route::get('/table', [StockTransferListController::class, 'table'])->name('table');
+            Route::post('/', [StockTransferListController::class, 'store'])->name('store');
+            Route::put('/{id}/status', [StockTransferListController::class, 'updateStatus'])->name('status');
+            Route::get('/{id}', [StockTransferListController::class, 'show'])->name('show');
+            Route::put('/{id}', [StockTransferListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [StockTransferListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('daily-stock-transfer-report')->name('daily-stock-transfer.')->group(function () {
+            Route::get('/', [DailyStockTransferReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyStockTransferReportController::class, 'table'])->name('table');
+            Route::get('/summary', [DailyStockTransferReportController::class, 'summary'])->name('summary');
+            Route::get('/{id}', [DailyStockTransferReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('stock-transfer-fulfilment')->name('stock-transfer-fulfilment.')->group(function () {
+            Route::get('/', [StockTransferFulfilmentController::class, 'index'])->name('index');
+            Route::get('/table', [StockTransferFulfilmentController::class, 'table'])->name('table');
+            Route::get('/{id}', [StockTransferFulfilmentController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('daily-stock-adjustment-cost-report')->name('daily-stock-adjustment-cost.')->group(function () {
+            Route::get('/', [DailyStockAdjustmentCostReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyStockAdjustmentCostReportController::class, 'table'])->name('table');
+            Route::get('/summary', [DailyStockAdjustmentCostReportController::class, 'summary'])->name('summary');
+            Route::get('/{id}', [DailyStockAdjustmentCostReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('daily-stock-adjustment-track-report')->name('daily-stock-adjustment-track.')->group(function () {
+            Route::get('/', [DailyStockAdjustmentTrackReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyStockAdjustmentTrackReportController::class, 'table'])->name('table');
+            Route::get('/summary', [DailyStockAdjustmentTrackReportController::class, 'summary'])->name('summary');
+            Route::get('/{id}', [DailyStockAdjustmentTrackReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('daily-stock-adjustment-report')->name('daily-stock-adjustment.')->group(function () {
+            Route::get('/', [DailyStockAdjustmentReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyStockAdjustmentReportController::class, 'table'])->name('table');
+            Route::get('/summary', [DailyStockAdjustmentReportController::class, 'summary'])->name('summary');
+            Route::get('/{id}', [DailyStockAdjustmentReportController::class, 'show'])->name('show');
         });
 
     });

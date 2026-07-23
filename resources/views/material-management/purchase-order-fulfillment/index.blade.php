@@ -1,0 +1,119 @@
+@extends('layouts.layout')
+
+@section('title', 'Purchase Fulfillment Report')
+
+@section('content')
+<div class="page-content">
+
+    {{-- Filter Card --}}
+    <div class="card border-0 shadow-sm hz-card mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-semibold mb-1 small text-muted">
+                        <i class="bi bi-search me-1"></i>Cari PO
+                    </label>
+                    <input type="text" class="form-control" id="filter-search" placeholder="Cari nomor PO atau supplier...">
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold mb-1 small text-muted">
+                        <i class="bi bi-toggle-on me-1"></i>Status
+                    </label>
+                    <select id="filter-status" class="form-select">
+                        <option value="all">Semua Status</option>
+                        <option value="DRAFT">Draft</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="APPROVED">Approved</option>
+                        <option value="REJECTED">Rejected</option>
+                        <option value="FULFILLED">Fulfilled</option>
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-5 d-flex gap-2 justify-content-md-end">
+                    <button type="button" class="btn btn-outline-secondary" id="btn-reset-filter">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- DataTable Card --}}
+    <div class="card border-0 shadow-sm hz-card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle w-100" id="table-fulfill">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:40px;" class="text-center">No</th>
+                            <th>No. PO</th>
+                            <th class="text-center">Tanggal</th>
+                            <th>Supplier</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Progress Fulfillment</th>
+                            <th class="text-end">Total Amount</th>
+                            <th style="width:80px;" class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Detail --}}
+<div class="modal fade" id="modal-detail" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-semibold">Detail PO - <span id="detail-po-number"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">Tanggal</small>
+                        <span id="detail-po-date" class="fw-semibold">-</span>
+                    </div>
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">Supplier</small>
+                        <span id="detail-po-supplier" class="fw-semibold">-</span>
+                    </div>
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">Status</small>
+                        <span id="detail-po-status">-</span>
+                    </div>
+                    <div class="col-12">
+                        <small class="text-muted d-block">Catatan</small>
+                        <span id="detail-po-note" class="fw-semibold">-</span>
+                    </div>
+                </div>
+                <hr>
+                <h6 class="fw-semibold mb-3">Daftar Item</h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-center" style="width:40px;">No</th>
+                                <th>Nama Material</th>
+                                <th class="text-center" style="width:80px;">Qty</th>
+                                <th style="width:90px;">Satuan</th>
+                                <th class="text-center" style="width:110px;">Qty Fulfilled</th>
+                                <th class="text-center" style="width:140px;">Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detail-items-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@include('material-management.purchase-order-fulfillment.javascript')

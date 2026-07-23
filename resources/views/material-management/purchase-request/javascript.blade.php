@@ -45,6 +45,7 @@
     const prShowUrl    = "{{ route('purchase-request.show', '__ID__') }}";
     const prUpdateUrl  = "{{ route('purchase-request.update', '__ID__') }}";
     const prDeleteUrl  = "{{ route('purchase-request.destroy', ['id' => '__ID__']) }}";
+    const prStatusUrl  = "{{ route('purchase-request.status', ['id' => '__ID__']) }}";
     const csrfToken    = $('meta[name="csrf-token"]').attr('content');
 
     $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': csrfToken } });
@@ -279,6 +280,39 @@
                 Swal.fire({ icon: 'error', title: 'Gagal', text: 'Tidak dapat mengambil data.' });
             });
     });
+
+    // ─────────────────────────────────────────────
+    // APPROVE / REJECT
+    // ─────────────────────────────────────────────
+    function updateStatusPR(id, status) {
+        const label = status === 'APPROVED' ? 'approve' : 'reject';
+        Swal.fire({
+            title: 'Yakin akan ' + label + ' PR ini?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: status === 'APPROVED' ? '#198754' : '#dc3545',
+            confirmButtonText: 'Ya, ' + label,
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (!result.isConfirmed) return;
+
+            $.ajax({
+                url: prStatusUrl.replace('__ID__', id),
+                method: 'POST',
+                data: { _method: 'PUT', status: status },
+                success: function (response) {
+                    Swal.fire({ icon: 'success', title: response.message, timer: 1500, showConfirmButton: false });
+                    tablePR.ajax.reload(null, false);
+                },
+                error: function (xhr) {
+                    Swal.fire({ icon: 'error', title: 'Gagal', text: xhr.responseJSON?.message || 'Terjadi kesalahan.' });
+                }
+            });
+        });
+    }
+
+    $('#table-pr').on('click', '.btn-approve', function () { updateStatusPR($(this).data('id'), 'APPROVED'); });
+    $('#table-pr').on('click', '.btn-reject', function () { updateStatusPR($(this).data('id'), 'REJECTED'); });
 
     // ─────────────────────────────────────────────
     // DELETE

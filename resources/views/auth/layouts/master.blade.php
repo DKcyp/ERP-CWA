@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') | {{ env('APP_NAME', 'Horizon UI ERP') }}</title>
+    <title>@yield('title') | {{ env('APP_NAME', 'ERP CWA') }}</title>
 
     <link rel="shortcut icon" href="{{ asset('custom/assets/compiled/svg/favicon2.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('custom/assets/compiled/css/app.css') }}">

@@ -133,10 +133,17 @@ class PurchaseRequestController extends Controller
                 return '<span class="badge ' . $c . '">' . $l . '</span>';
             })
             ->addColumn('action', function ($row) {
-                return '<div class="btn-group btn-group-sm">
-                    <button type="button" class="btn btn-outline-primary btn-edit" data-id="' . $row['id'] . '"><i class="bi bi-pencil"></i></button>
-                    <button type="button" class="btn btn-outline-danger btn-delete" data-id="' . $row['id'] . '"><i class="bi bi-trash"></i></button>
-                </div>';
+                $id = $row['id'];
+                $status = $row['status'] ?? 'DRAFT';
+                $btns = '<div class="btn-group btn-group-sm">';
+                $btns .= '<button type="button" class="btn btn-outline-primary btn-edit" data-id="' . $id . '"><i class="bi bi-pencil"></i></button>';
+                if (in_array($status, ['DRAFT', 'PENDING'])) {
+                    $btns .= '<button type="button" class="btn btn-outline-success btn-approve" data-id="' . $id . '"><i class="bi bi-check-lg"></i></button>';
+                    $btns .= '<button type="button" class="btn btn-outline-danger btn-reject" data-id="' . $id . '"><i class="bi bi-x-lg"></i></button>';
+                }
+                $btns .= '<button type="button" class="btn btn-outline-danger btn-delete" data-id="' . $id . '"><i class="bi bi-trash"></i></button>';
+                $btns .= '</div>';
+                return $btns;
             })
             ->rawColumns(['status_badge', 'action'])
             ->make(true);
@@ -199,6 +206,19 @@ class PurchaseRequestController extends Controller
         ]);
 
         return response()->json(['message' => 'Data berhasil diperbarui.']);
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => ['required', 'string', 'in:APPROVED,REJECTED'],
+        ]);
+
+        $this->store->update($id, [
+            'status' => $request->input('status'),
+        ]);
+
+        return response()->json(['message' => 'Status berhasil diperbarui.']);
     }
 
     public function destroy($id)

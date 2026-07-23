@@ -67,10 +67,10 @@
                         <img src="{{ asset('logo.png') }}" alt="Logo" style="max-height: 90px; filter: brightness(0) invert(1);" onError="this.onerror=null; this.style.display='none';">
                     </div>
                     <h2 class="fw-extrabold text-white display-6 mb-3" style="letter-spacing:-0.5px;">
-                        HORIZON <span style="font-weight: 300;">FREE</span>
+                        ERP <span style="font-weight: 300;">CWA</span>
                     </h2>
                     <p class="text-white-50 fs-5 mb-0" style="max-width: 380px; margin: 0 auto; line-height: 1.5;">
-                        {{ $data['app_description'] ?? 'Learn more about Horizon UI Dashboard & ERP System controls' }}
+                        {{ $data['app_description'] ?? 'ERP System controls' }}
                     </p>
                 </div>
             </div>
