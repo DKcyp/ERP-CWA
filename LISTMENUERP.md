@@ -119,7 +119,6 @@
 - Daily Sales Order Invoice Report
     Komponen : Date, SO No, SI No, Customer Name, SO Amount, Invoiced Amount, Fulfilment Rate (%)
     Fungsi : Laporan perbandingan harian antara nilai pesanan (SO) dengan nilai yang telah berhasil ditagihkan (Invoice).
-http://127.0.0.1:8000/packing
 - Packing `packing`
   Komponen :Packing No, Date, SO No, Customer ID, Warehouse ID, Packing Staff, Total Box/Package, Weight, Status, Note
   Fungsi : Mengelola proses pengemasan barang di gudang berdasarkan pesanan penjualan sebelum diserahkan ke tim kurir/pengiriman.
@@ -128,13 +127,10 @@ http://127.0.0.1:8000/packing
   - Sales Invoice List, 
     Komponen : No.,Date,Due Date,Doc. Type,Printed Status,Purchase Note,Warehouse,Sales Order,No. Faktur,Customer Id,Name,Area,WA,Note,Curr.,Total,Disc. %,Disc. Amt.,Status,Term,User,Outstanding,Delivery Status
     Fungsi : Mengelola tagihan penjualan resmi kepada pelanggan atas barang yang telah dikirimkan.
-  - Shipment Priority
+  - Shipment Priority 
     Komponen : Priority No, Invoice No, SO No, Customer ID, Area, Total Weight/Volume, Promised Date, Status
     Fungsi : Mengatur urutan prioritas pengiriman barang berdasarkan kriteria pelanggan atau tanggal janji serah.
-  - Customer Payment
-    Komponen : Payment No, Date, Customer ID, Invoice No, Amount Paid, Payment Method, Account ID, Status
-    Fungsi : Mencatat penerimaan pembayaran dari pelanggan untuk melunasi faktur tagihan.
-  - Sales Promo Report
+  - Sales Promo Report 
     Komponen : Promo ID, Promo Name, Invoice No, Customer Name, Product ID, Discount Amount, Free Goods Qty
     Fungsi : Laporan efektivitas dan rekap penggunaan program promosi pada transaksi penjualan.
   - Sales Profit Report
@@ -146,13 +142,13 @@ http://127.0.0.1:8000/packing
   - Sales Void Report
     Komponen : Void Date, Doc No (SO/SI), Customer Name, Original Amount, Void Reason, Authorized User
     Fungsi : Laporan riwayat pembatalan (void) dokumen transaksi penjualan beserta alasannya.
-  - Sales Commision Report
+  - Sales Commision Report 
     Komponen : Salesman ID, Salesman Name, Period, Total Omset, Target, Commission Rate (%), Total Commission
     Fungsi : Laporan perhitungan komisi penjualan untuk wiraniaga berdasarkan pencapaian target.
-  - Invoice Payment Report
+  - Invoice Payment Report 
     Komponen : Invoice No, Invoice Date, Customer Name, Total Invoice, Total Paid, Balance Due, Last Payment Date, Status
     Fungsi : Laporan riwayat dan status pelunasan faktur penjualan.
-  - Profit Loss report
+  - Profit Loss report 
     Komponen : Period, Total Sales Revenue, Sales Return, Cost of Goods Sold (HPP), Gross Margin, Operating Expenses, Net Sales Profit
     Fungsi : Laporan ringkasan laba rugi operasional yang dihasilkan dari aktivitas penjualan.
   - Sales Reports
@@ -167,36 +163,35 @@ http://127.0.0.1:8000/packing
     Sales by Category
     }
     Fungsi : Modul pelaporan penjualan multi-dimensi dengan berbagai kombinasi filter analisis.
-
 - Tanda Terima Penagihan `tanda-terima-penagihan`
   Komponen :TTP No, TTP Date, Collector Name, Customer ID, Total Invoice Count, Total Amount, Due Date, Status, Note
   Fungsi : Mengelola dokumen penyerahan lembar faktur tagihan kepada penagih/kolektor untuk melakukan penagihan ke lokasi pelanggan.
 
 - Customer Payment `customer-payment`
-  - Customer Payment List
+  - Customer Payment List 
     komponen : Payment No., Date, Date Complete, Warehouse, No. TTP, Customer Id, Name, Account, Total, Status, Currency, Rate, Note, Def. Sales, type payment (Reguler/Down)
     Fungsi : Mengelola daftar seluruh transaksi penerimaan kas/bank dari pelanggan baik untuk pelunasan maupun uang muka.
-  - Cust. Outstanding List
+  - Cust. Outstanding List 
     Komponen : Invoice No, Customer Id, Customer Name, City, Date, Due Date, Age (Days), Curr, Total, Outstanding, Term, Invoiced, Warehouse, Sales, Note
     Fungsi : Memantau daftar faktur penjualan yang belum dilunasi beserta umur piutangnya.
-  - Daily Customer Payment Report
+  - Daily Customer Payment Report 
     Komponen : Date, Payment No, Customer Name, Payment Method, Total Paid, Account Name, User
     Fungsi : Laporan harian penerimaan pembayaran dari pelanggan.
-  - Outstanding per Customer Report
+  - Outstanding per Customer Report 
     Komponen : Customer ID, Customer Name, Total Invoices, Total Outstanding Amount, Credit Limit, Exceeded Amount
     Fungsi : Laporan total sisa piutang yang dikelompokkan per pelanggan.
-  - Customer Payment Check
+  - Customer Payment Check 
     Komponen : Check/Giro No, Bank Name, Maturity Date, Customer ID, Amount, Status (Clearing/Bounced/Passed)
     Fungsi : Memantau dan memverifikasi status pembayaran menggunakan instrumen Cek atau Giro.
-  - Customer Outstanding per Date Report
+  - Customer Outstanding per Date Report 
     Komponen : As of Date, Customer ID, Customer Name, Current, 1-30 Days, 31-60 Days, 61-90 Days, >90 Days, Total Outstanding
     Fungsi : Laporan analisis umur piutang (Aging AR Report) pada tanggal posisi tertentu.
 
 - Sales Return `sales-return`
-  - Sales Return List
+  - Sales Return List 
     Komponen : No.,Date,Warehouse,Customer Id,Name,Area,WA,Disc. %,Disc. Amt.,Total,Currency,Status,Note,Term,Sales,SI Returned
     Fungsi : Mengelola penerimaan kembali barang yang dijual akibat kerusakan, retur komersial, atau kesalahan pengiriman.
-  - Daily Sales Return Report
+  - Daily Sales Return Report 
     Komponen : Date, Return No, Customer Name, Product ID, Qty Returned, Total Amount, Reason, Warehouse ID
     Fungsi : Laporan harian pengembalian barang dan pemotongan tagihan piutang.
 

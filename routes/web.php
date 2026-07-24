@@ -61,6 +61,25 @@ use App\Http\Controllers\SalesDistribution\SalesPromoReportController;
 use App\Http\Controllers\SalesDistribution\SalesProfitReportController;
 use App\Http\Controllers\SalesDistribution\SalesOmsetReportController;
 use App\Http\Controllers\SalesDistribution\SalesVoidReportController;
+use App\Http\Controllers\SalesDistribution\SalesCommisionReportController;
+use App\Http\Controllers\SalesDistribution\InvoicePaymentReportController;
+use App\Http\Controllers\SalesDistribution\ProfitLossReportController;
+use App\Http\Controllers\SalesDistribution\SalesReportController;
+use App\Http\Controllers\SalesDistribution\TandaTerimaPenagihanController;
+use App\Http\Controllers\SalesDistribution\CustomerPaymentListController;
+use App\Http\Controllers\SalesDistribution\CustOutstandingListController;
+use App\Http\Controllers\SalesDistribution\DailyCustomerPaymentReportController;
+use App\Http\Controllers\SalesDistribution\OutstandingPerCustomerReportController;
+use App\Http\Controllers\SalesDistribution\CustomerPaymentCheckController;
+use App\Http\Controllers\SalesDistribution\CustomerOutstandingPerDateReportController;
+use App\Http\Controllers\SalesDistribution\SalesReturnListController;
+use App\Http\Controllers\SalesDistribution\DailySalesReturnReportController;
+use App\Http\Controllers\SalesDistribution\TandaTerimaInvoiceController;
+use App\Http\Controllers\SalesDistribution\DeliveryOrderController;
+use App\Http\Controllers\SalesDistribution\ShipmentPreparationController;
+use App\Http\Controllers\SalesDistribution\PurchaseNoteController;
+use App\Http\Controllers\SalesDistribution\SalesCommissionController;
+use App\Http\Controllers\SalesDistribution\TaxController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -528,6 +547,149 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [SalesVoidReportController::class, 'index'])->name('index');
             Route::get('/table', [SalesVoidReportController::class, 'table'])->name('table');
             Route::get('/{id}', [SalesVoidReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('sales-commision-report')->name('sales-commision-report.')->group(function () {
+            Route::get('/', [SalesCommisionReportController::class, 'index'])->name('index');
+            Route::get('/table', [SalesCommisionReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [SalesCommisionReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('invoice-payment-report')->name('invoice-payment-report.')->group(function () {
+            Route::get('/', [InvoicePaymentReportController::class, 'index'])->name('index');
+            Route::get('/table', [InvoicePaymentReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [InvoicePaymentReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('profit-loss-report')->name('profit-loss-report.')->group(function () {
+            Route::get('/', [ProfitLossReportController::class, 'index'])->name('index');
+            Route::get('/table', [ProfitLossReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [ProfitLossReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('sales-report')->name('sales-report.')->group(function () {
+            Route::get('/', [SalesReportController::class, 'index'])->name('index');
+            Route::get('/table', [SalesReportController::class, 'table'])->name('table');
+        });
+
+        Route::prefix('tanda-terima-penagihan')->name('tanda-terima-penagihan.')->group(function () {
+            Route::get('/', [TandaTerimaPenagihanController::class, 'index'])->name('index');
+            Route::get('/table', [TandaTerimaPenagihanController::class, 'table'])->name('table');
+            Route::post('/', [TandaTerimaPenagihanController::class, 'store'])->name('store');
+            Route::get('/{id}', [TandaTerimaPenagihanController::class, 'show'])->name('show');
+            Route::put('/{id}', [TandaTerimaPenagihanController::class, 'update'])->name('update');
+            Route::delete('/{id}', [TandaTerimaPenagihanController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('customer-payment-list')->name('customer-payment-list.')->group(function () {
+            Route::get('/', [CustomerPaymentListController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerPaymentListController::class, 'table'])->name('table');
+            Route::post('/', [CustomerPaymentListController::class, 'store'])->name('store');
+            Route::get('/{id}', [CustomerPaymentListController::class, 'show'])->name('show');
+            Route::put('/{id}', [CustomerPaymentListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CustomerPaymentListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('cust-outstanding-list')->name('cust-outstanding-list.')->group(function () {
+            Route::get('/', [CustOutstandingListController::class, 'index'])->name('index');
+            Route::get('/table', [CustOutstandingListController::class, 'table'])->name('table');
+            Route::get('/{id}', [CustOutstandingListController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('daily-customer-payment-report')->name('daily-customer-payment-report.')->group(function () {
+            Route::get('/', [DailyCustomerPaymentReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyCustomerPaymentReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [DailyCustomerPaymentReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('outstanding-per-customer-report')->name('outstanding-per-customer-report.')->group(function () {
+            Route::get('/', [OutstandingPerCustomerReportController::class, 'index'])->name('index');
+            Route::get('/table', [OutstandingPerCustomerReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [OutstandingPerCustomerReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('customer-payment-check')->name('customer-payment-check.')->group(function () {
+            Route::get('/', [CustomerPaymentCheckController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerPaymentCheckController::class, 'table'])->name('table');
+            Route::post('/', [CustomerPaymentCheckController::class, 'store'])->name('store');
+            Route::get('/{id}', [CustomerPaymentCheckController::class, 'show'])->name('show');
+            Route::put('/{id}', [CustomerPaymentCheckController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CustomerPaymentCheckController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('customer-outstanding-per-date-report')->name('customer-outstanding-per-date-report.')->group(function () {
+            Route::get('/', [CustomerOutstandingPerDateReportController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerOutstandingPerDateReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [CustomerOutstandingPerDateReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('sales-return-list')->name('sales-return-list.')->group(function () {
+            Route::get('/', [SalesReturnListController::class, 'index'])->name('index');
+            Route::get('/table', [SalesReturnListController::class, 'table'])->name('table');
+            Route::post('/', [SalesReturnListController::class, 'store'])->name('store');
+            Route::get('/{id}', [SalesReturnListController::class, 'show'])->name('show');
+            Route::put('/{id}', [SalesReturnListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SalesReturnListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('daily-sales-return-report')->name('daily-sales-return-report.')->group(function () {
+            Route::get('/', [DailySalesReturnReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailySalesReturnReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [DailySalesReturnReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('tanda-terima-invoice')->name('tanda-terima-invoice.')->group(function () {
+            Route::get('/', [TandaTerimaInvoiceController::class, 'index'])->name('index');
+            Route::get('/table', [TandaTerimaInvoiceController::class, 'table'])->name('table');
+            Route::post('/', [TandaTerimaInvoiceController::class, 'store'])->name('store');
+            Route::get('/{id}', [TandaTerimaInvoiceController::class, 'show'])->name('show');
+            Route::put('/{id}', [TandaTerimaInvoiceController::class, 'update'])->name('update');
+            Route::delete('/{id}', [TandaTerimaInvoiceController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('delivery-order')->name('delivery-order.')->group(function () {
+            Route::get('/', [DeliveryOrderController::class, 'index'])->name('index');
+            Route::get('/table', [DeliveryOrderController::class, 'table'])->name('table');
+            Route::post('/', [DeliveryOrderController::class, 'store'])->name('store');
+            Route::get('/{id}', [DeliveryOrderController::class, 'show'])->name('show');
+            Route::put('/{id}', [DeliveryOrderController::class, 'update'])->name('update');
+            Route::delete('/{id}', [DeliveryOrderController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('shipment-preparation')->name('shipment-preparation.')->group(function () {
+            Route::get('/', [ShipmentPreparationController::class, 'index'])->name('index');
+            Route::get('/table', [ShipmentPreparationController::class, 'table'])->name('table');
+            Route::post('/', [ShipmentPreparationController::class, 'store'])->name('store');
+            Route::get('/{id}', [ShipmentPreparationController::class, 'show'])->name('show');
+            Route::put('/{id}', [ShipmentPreparationController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ShipmentPreparationController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('purchase-note')->name('purchase-note.')->group(function () {
+            Route::get('/', [PurchaseNoteController::class, 'index'])->name('index');
+            Route::get('/table', [PurchaseNoteController::class, 'table'])->name('table');
+            Route::post('/', [PurchaseNoteController::class, 'store'])->name('store');
+            Route::get('/{id}', [PurchaseNoteController::class, 'show'])->name('show');
+            Route::put('/{id}', [PurchaseNoteController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PurchaseNoteController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('sales-commission')->name('sales-commission.')->group(function () {
+            Route::get('/', [SalesCommissionController::class, 'index'])->name('index');
+            Route::get('/table', [SalesCommissionController::class, 'table'])->name('table');
+            Route::post('/', [SalesCommissionController::class, 'store'])->name('store');
+            Route::get('/{id}', [SalesCommissionController::class, 'show'])->name('show');
+            Route::put('/{id}', [SalesCommissionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SalesCommissionController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('tax')->name('tax.')->group(function () {
+            Route::get('/', [TaxController::class, 'index'])->name('index');
+            Route::get('/table', [TaxController::class, 'table'])->name('table');
+            Route::post('/', [TaxController::class, 'store'])->name('store');
+            Route::get('/{id}', [TaxController::class, 'show'])->name('show');
+            Route::put('/{id}', [TaxController::class, 'update'])->name('update');
+            Route::delete('/{id}', [TaxController::class, 'destroy'])->name('destroy');
         });
 
     });

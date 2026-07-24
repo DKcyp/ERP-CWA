@@ -4,347 +4,366 @@
 
 ## 1. Kelompok Master Data Supplier & Material
 
-### `supplier_groups` (Grup Supplier)
-- `id` (char 26 / ULID / Primary Key)
-- `code` (varchar 50, Unique)
-- `name` (varchar 100)
-- `description` (text, Nullable)
-- `created_at`, `updated_at`, `deleted_at`
+1. MASTER DATA SUPPLIER
+--------------------------------------------------------------------------------
+Tabel: supplier_groups
+Deskripsi: Grup & Kategori Supplier (`supplier-group`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - code                 : VARCHAR(50)   | UNIQUE, NOT NULL | Kode grup supplier
+  - name                 : VARCHAR(100)  | NOT NULL    | Nama grup supplier
+  - description          : TEXT          | NULLABLE    | Deskripsi kriteria
+  - ap_account_id        : CHAR(26)      | FK          | Relasi ke chart_of_accounts.id
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
-### `supplier_centers` (Pusat / Area Supplier)
-- `id` (char 26, Primary Key)
-- `code` (varchar 50, Unique)
-- `name` (varchar 100)
-- `created_at`, `updated_at`, `deleted_at`
+Tabel: supplier_centers
+Deskripsi: Pusat / Wilayah Area Supplier (`supplier-center`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - code                 : VARCHAR(50)   | UNIQUE, NOT NULL | Kode area supplier
+  - name                 : VARCHAR(100)  | NOT NULL    | Nama area/cabang supplier
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
-### `suppliers` (Master Supplier Utama)
-- `id` (char 26, Primary Key)
-- `supplier_code` (varchar 50, Unique)
-- `name` (varchar 150)
-- `supplier_group_id` (foreign key -> `supplier_groups.id`)
-- `supplier_center_id` (foreign key -> `supplier_centers.id`)
-- `phone` (varchar 30)
-- `email` (varchar 100)
-- `address` (text)
-- `term_of_payment` (integer, TOP Hari)
-- `status` (boolean / tinyint)
-- `created_at`, `updated_at`, `deleted_at`
+Tabel: suppliers
+Deskripsi: Master Data Supplier Utama (`supplier-master`, `supplier-balance-summary`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - supplier_code        : VARCHAR(50)   | UNIQUE, NOT NULL | Kode unik supplier
+  - name                 : VARCHAR(150)  | NOT NULL    | Nama resmi vendor
+  - supplier_group_id    : CHAR(26)      | FK          | Relasi ke supplier_groups.id
+  - supplier_center_id   : CHAR(26)      | FK          | Relasi ke supplier_centers.id
+  - phone                : VARCHAR(30)   | NULLABLE    | Nomor telepon kontak
+  - email                : VARCHAR(100)  | NULLABLE    | Alamat email resmi
+  - address              : TEXT          | NULLABLE    | Alamat lengkap vendor
+  - term_of_payment      : INT           | NOT NULL    | DEFAULT 0 (TOP Hari)
+  - status               : BOOLEAN       | NOT NULL    | DEFAULT true (Status Aktif)
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
-### `materials` / `products` (Master Barang / Material)
-- `id` (char 26, Primary Key)
-- `item_code` (varchar 50, Unique)
-- `item_name` (varchar 150)
-- `category_id` (foreign key)
-- `unit_id` (foreign key)
-- `cost_price` (decimal 15,2)
-- `min_stock` (decimal 12,2)
-- `max_stock` (decimal 12,2)
-- `status` (boolean)
-- `created_at`, `updated_at`, `deleted_at`
 
-### `warehouses` (Master Gudang)
-- `id` (char 26, Primary Key)
-- `warehouse_code` (varchar 50, Unique)
-- `warehouse_name` (varchar 100)
-- `location` (text)
-- `created_at`, `updated_at`, `deleted_at`
+2. PURCHASE REQUEST & PURCHASE ORDER
+--------------------------------------------------------------------------------
+Tabel: purchase_requests
+Deskripsi: Header Permintaan Pembelian (`new-purchase-request`, `purchase-request-list`, `purchase-request-fulfilment-report`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - pr_number            : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor dokumen PR
+  - pr_date              : DATE          | NOT NULL    | Tanggal pengajuan PR
+  - requester_user_id    : CHAR(26)      | FK          | Relasi ke users.id
+  - department           : VARCHAR(100)  | NOT NULL    | Departemen pemohon
+  - status               : ENUM          | NOT NULL    | 'DRAFT', 'PENDING', 'APPROVED', 'REJECTED', 'FULFILLED'
+  - note                 : TEXT          | NULLABLE    | Catatan tambahan PR
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
----
+Tabel: purchase_request_details
+Deskripsi: Detail Item Permintaan Pembelian
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - purchase_request_id  : CHAR(26)      | FK          | Relasi ke purchase_requests.id
+  - material_id          : CHAR(26)      | FK          | Relasi ke materials.id
+  - qty_requested        : DECIMAL(12,2) | NOT NULL    | Jumlah yang diminta
+  - qty_fulfilled        : DECIMAL(12,2) | NOT NULL    | DEFAULT 0.00 (Sudah di-PO)
+  - unit_id              : CHAR(26)      | FK          | Relasi ke units.id
+  - notes                : TEXT          | NULLABLE    | Spesifikasi/catatan barang
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
-## 2. Purchase Request (PR - Permintaan Pembelian)
+Tabel: purchase_orders
+Deskripsi: Header Pesanan Pembelian (`new-purchase-order`, `purchase-order-list`, `purchase-fulfillment-report`, `daily-purchase-order-report`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - po_number            : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor dokumen PO
+  - po_date              : DATE          | NOT NULL    | Tanggal terbit PO
+  - supplier_id          : CHAR(26)      | FK          | Relasi ke suppliers.id
+  - purchase_request_id  : CHAR(26)      | FK          | Relasi ke purchase_requests.id (Nullable)
+  - payment_term_days    : INT           | NOT NULL    | DEFAULT 0 (Termin Hari)
+  - subtotal             : DECIMAL(15,2) | NOT NULL    | DEFAULT 0.00
+  - tax_amount           : DECIMAL(15,2) | NOT NULL    | DEFAULT 0.00
+  - discount_amount      : DECIMAL(15,2) | NOT NULL    | DEFAULT 0.00
+  - total_amount         : DECIMAL(15,2) | NOT NULL    | DEFAULT 0.00 (Grand Total)
+  - status               : ENUM          | NOT NULL    | 'DRAFT', 'APPROVED', 'PARTIAL', 'CLOSED', 'CANCELLED'
+  - note                 : TEXT          | NULLABLE    | Ketentuan / Instruksi PO
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
-### `purchase_requests` (Header PR)
-- `id` (char 26, Primary Key)
-- `pr_number` (varchar 50, Unique)
-- `pr_date` (date)
-- `requester_user_id` (foreign key -> `users.id`)
-- `department` (varchar 100)
-- `status` (enum: 'DRAFT', 'PENDING', 'APPROVED', 'REJECTED', 'FULFILLED')
-- `note` (text)
-- `created_at`, `updated_at`, `deleted_at`
+Tabel: purchase_order_details
+Deskripsi: Detail Item Pesanan Pembelian
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - purchase_order_id    : CHAR(26)      | FK          | Relasi ke purchase_orders.id
+  - material_id          : CHAR(26)      | FK          | Relasi ke materials.id
+  - qty_ordered          : DECIMAL(12,2) | NOT NULL    | Jumlah dipesan
+  - qty_received         : DECIMAL(12,2) | NOT NULL    | DEFAULT 0.00 (Sudah diterima)
+  - unit_price           : DECIMAL(15,2) | NOT NULL    | Harga satuan deal
+  - discount             : DECIMAL(15,2) | NOT NULL    | DEFAULT 0.00
+  - tax                  : DECIMAL(15,2) | NOT NULL    | DEFAULT 0.00
+  - subtotal             : DECIMAL(15,2) | NOT NULL    | Total harga bersih item
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
-### `purchase_request_details` (Detail PR)
-- `id` (char 26, Primary Key)
-- `purchase_request_id` (foreign key -> `purchase_requests.id`)
-- `material_id` (foreign key -> `materials.id`)
-- `qty_requested` (decimal 12,2)
-- `qty_fulfilled` (decimal 12,2, default 0)
-- `unit_id` (foreign key)
-- `notes` (text)
-- `created_at`, `updated_at`
 
----
+3. RECEIVING (STBJ) & PURCHASE INVOICE
+--------------------------------------------------------------------------------
+Tabel: goods_receipts
+Deskripsi: Header Surat Tanda Bukti Jalan / Goods Receipt (`stbj`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - stbj_number          : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor dokumen STBJ
+  - stbj_date            : DATE          | NOT NULL    | Tanggal penerimaan fisik
+  - supplier_id          : CHAR(26)      | FK          | Relasi ke suppliers.id
+  - purchase_order_id    : CHAR(26)      | FK          | Relasi ke purchase_orders.id
+  - warehouse_id         : CHAR(26)      | FK          | Relasi ke warehouses.id
+  - sj_supplier_number   : VARCHAR(100)  | NULLABLE    | No Surat Jalan Supplier
+  - note                 : TEXT          | NULLABLE    | Catatan inspek/penerimaan
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
-## 3. Purchase Order (PO - Pesanan Pembelian)
+Tabel: goods_receipt_details
+Deskripsi: Detail Fisik Penerimaan Barang STBJ
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - goods_receipt_id     : CHAR(26)      | FK          | Relasi ke goods_receipts.id
+  - material_id          : CHAR(26)      | FK          | Relasi ke materials.id
+  - qty_received         : DECIMAL(12,2) | NOT NULL    | Jumlah barang datang
+  - qty_accepted         : DECIMAL(12,2) | NOT NULL    | Jumlah barang lolos QC
+  - qty_rejected         : DECIMAL(12,2) | NOT NULL    | DEFAULT 0.00 (Ditolak)
+  - unit_id              : CHAR(26)      | FK          | Relasi ke units.id
+  - note                 : TEXT          | NULLABLE    | Alasan reject / remark
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
-### `purchase_orders` (Header PO)
-- `id` (char 26, Primary Key)
-- `po_number` (varchar 50, Unique)
-- `po_date` (date)
-- `supplier_id` (foreign key -> `suppliers.id`)
-- `purchase_request_id` (foreign key -> `purchase_requests.id`, Nullable)
-- `payment_term_days` (integer)
-- `subtotal` (decimal 15,2)
-- `tax_amount` (decimal 15,2)
-- `discount_amount` (decimal 15,2)
-- `total_amount` (decimal 15,2)
-- `status` (enum: 'DRAFT', 'APPROVED', 'PARTIAL', 'CLOSED', 'CANCELLED')
-- `note` (text)
-- `created_at`, `updated_at`, `deleted_at`
+Tabel: purchase_invoices
+Deskripsi: Header Faktur Pembelian (`new-purchase-invoice`, `purchase-invoice-list`, `daily-purchase-invoice-report`, `monthly-purchase-by-supplier-report`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - invoice_number       : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor Faktur Pembelian
+  - invoice_date         : DATE          | NOT NULL    | Tanggal terbit faktur
+  - due_date             : DATE          | NOT NULL    | Jatuh tempo pembayaran
+  - supplier_id          : CHAR(26)      | FK          | Relasi ke suppliers.id
+  - purchase_order_id    : CHAR(26)      | FK          | Relasi ke purchase_orders.id (Nullable)
+  - goods_receipt_id     : CHAR(26)      | FK          | Relasi ke goods_receipts.id (Nullable)
+  - total_amount         : DECIMAL(15,2) | NOT NULL    | Total kewajiban hutang
+  - paid_amount          : DECIMAL(15,2) | NOT NULL    | DEFAULT 0.00 (Terbayar)
+  - status               : ENUM          | NOT NULL    | 'UNPAID', 'PARTIAL', 'PAID'
+  - note                 : TEXT          | NULLABLE    | Catatan Keuangan
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
-### `purchase_order_details` (Detail PO)
-- `id` (char 26, Primary Key)
-- `purchase_order_id` (foreign key -> `purchase_orders.id`)
-- `material_id` (foreign key -> `materials.id`)
-- `qty_ordered` (decimal 12,2)
-- `qty_received` (decimal 12,2, default 0)
-- `unit_price` (decimal 15,2)
-- `discount` (decimal 15,2)
-- `tax` (decimal 15,2)
-- `subtotal` (decimal 15,2)
-- `created_at`, `updated_at`
+Tabel: purchase_invoice_details
+Deskripsi: Detail Rincian Item Tagihan Invoice Pembelian
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - purchase_invoice_id  : CHAR(26)      | FK          | Relasi ke purchase_invoices.id
+  - material_id          : CHAR(26)      | FK          | Relasi ke materials.id
+  - qty                  : DECIMAL(12,2) | NOT NULL    | Jumlah ditagihkan
+  - unit_price           : DECIMAL(15,2) | NOT NULL    | Harga satuan tagihan
+  - subtotal             : DECIMAL(15,2) | NOT NULL    | Subtotal tagihan item
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
----
 
-## 4. STBJ (Surat Tanda Bukti Jalan / Goods Receipt Note - Penerimaan Barang)
+4. SUPPLIER PAYMENT, RETURN & SJBB
+--------------------------------------------------------------------------------
+Tabel: supplier_payments
+Deskripsi: Header Pembayaran Supplier (`new-supplier-payment`, `new-supplier-down-payment`, `supplier-payment-list`, `supp-outstanding-list`, `daily-supplier-payment-report`, `daily-supplier-payment-list`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - payment_number       : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor Bukti Kas/Bank Keluar
+  - payment_date         : DATE          | NOT NULL    | Tanggal eksekusi bayar
+  - supplier_id          : CHAR(26)      | FK          | Relasi ke suppliers.id
+  - payment_type         : ENUM          | NOT NULL    | 'REGULAR', 'DOWN_PAYMENT'
+  - payment_method       : ENUM          | NOT NULL    | 'TRANSFER', 'CASH', 'GIRO'
+  - total_paid           : DECIMAL(15,2) | NOT NULL    | Nominal dibayarkan
+  - reference_number     : VARCHAR(100)  | NULLABLE    | No Rekening/Giro/Ref Bank
+  - note                 : TEXT          | NULLABLE    | Keterangan pembayaran
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
-### `goods_receipts` / `stbj` (Header STBJ)
-- `id` (char 26, Primary Key)
-- `stbj_number` (varchar 50, Unique)
-- `stbj_date` (date)
-- `supplier_id` (foreign key -> `suppliers.id`)
-- `purchase_order_id` (foreign key -> `purchase_orders.id`)
-- `warehouse_id` (foreign key -> `warehouses.id`)
-- `sj_supplier_number` (varchar 100, No Surat Jalan Supplier)
-- `note` (text)
-- `created_at`, `updated_at`, `deleted_at`
+Tabel: supplier_payment_details
+Deskripsi: Detail Alokasi Pembayaran ke Invoice AP
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - supplier_payment_id  : CHAR(26)      | FK          | Relasi ke supplier_payments.id
+  - purchase_invoice_id  : CHAR(26)      | FK          | Relasi ke purchase_invoices.id
+  - amount_paid          : DECIMAL(15,2) | NOT NULL    | Porsi nominal dialokasikan
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
-### `goods_receipt_details` / `stbj_details` (Detail STBJ)
-- `id` (char 26, Primary Key)
-- `stbj_id` (foreign key -> `goods_receipts.id`)
-- `material_id` (foreign key -> `materials.id`)
-- `qty_received` (decimal 12,2)
-- `qty_accepted` (decimal 12,2)
-- `qty_rejected` (decimal 12,2)
-- `unit_id` (foreign key)
-- `note` (text)
-- `created_at`, `updated_at`
+Tabel: purchase_returns
+Deskripsi: Header Retur Pembelian (`new-purchase-return`, `purchase-return-list`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - return_number        : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor Dokumen Retur
+  - return_date          : DATE          | NOT NULL    | Tanggal pengembalian
+  - supplier_id          : CHAR(26)      | FK          | Relasi ke suppliers.id
+  - purchase_invoice_id  : CHAR(26)      | FK          | Relasi ke purchase_invoices.id (Nullable)
+  - goods_receipt_id     : CHAR(26)      | FK          | Relasi ke goods_receipts.id (Nullable)
+  - total_return_amount  : DECIMAL(15,2) | NOT NULL    | DEFAULT 0.00 (Nilai Retur)
+  - reason               : TEXT          | NULLABLE    | Alasan pengembalian barang
+  - status               : ENUM          | NOT NULL    | 'DRAFT', 'APPROVED', 'COMPLETED'
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
----
+Tabel: purchase_return_details
+Deskripsi: Detail Barang Dikembalikan ke Supplier
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - purchase_return_id   : CHAR(26)      | FK          | Relasi ke purchase_returns.id
+  - material_id          : CHAR(26)      | FK          | Relasi ke materials.id
+  - qty_returned         : DECIMAL(12,2) | NOT NULL    | Kuantitas retur
+  - unit_price           : DECIMAL(15,2) | NOT NULL    | Harga patokan klaim retur
+  - subtotal             : DECIMAL(15,2) | NOT NULL    | Subtotal nilai retur item
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
-## 5. Purchase Invoice (Faktur Pembelian)
+Tabel: sjbb
+Deskripsi: Surat Jalan Bukti Barter (`sjbb`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - sjbb_number          : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor dokumen SJBB
+  - sjbb_date            : DATE          | NOT NULL    | Tanggal transaksi barter
+  - supplier_id          : CHAR(26)      | FK          | Relasi ke suppliers.id
+  - type                 : ENUM          | NOT NULL    | 'IN', 'OUT'
+  - status               : ENUM          | NOT NULL    | 'DRAFT', 'ISSUED', 'COMPLETED', 'CANCELLED'
+  - notes                : TEXT          | NULLABLE    | Catatan khusus barter
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
-### `purchase_invoices` (Header Invoice)
-- `id` (char 26, Primary Key)
-- `invoice_number` (varchar 50, Unique)
-- `invoice_date` (date)
-- `due_date` (date)
-- `supplier_id` (foreign key -> `suppliers.id`)
-- `purchase_order_id` (foreign key -> `purchase_orders.id`, Nullable)
-- `stbj_id` (foreign key -> `goods_receipts.id`, Nullable)
-- `currency` (varchar 10, default 'IDR')
-- `rate` (integer, exchange rate terhadap IDR, default 1)
-- `total` (decimal 15,2, total invoice dalam foreign currency)
-- `paid_amount` (decimal 15,2, total yang sudah dibayar, default 0)
-- `outstanding` (decimal 15,2, derived: total - paid_amount)
-- `term` (varchar 50, payment term e.g. Net 14, Net 30)
-- `status` (enum: 'DRAFT', 'PENDING', 'APPROVED', 'REJECTED', 'PAID')
-- `note` (text)
-- `created_at`, `updated_at`, `deleted_at`
+Tabel: sjbb_details
+Deskripsi: Detail Item Barang Barter (SJBB)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - sjbb_id              : CHAR(26)      | FK          | Relasi ke sjbb.id
+  - material_id          : CHAR(26)      | FK          | Relasi ke materials.id
+  - qty                  : DECIMAL(12,2) | NOT NULL    | Jumlah fisik barter
+  - unit_id              : CHAR(26)      | FK          | Relasi ke units.id
+  - notes                : TEXT          | NULLABLE    | Kondisi barang / remark
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
-### `purchase_invoice_details` (Detail Invoice)
-- `id` (char 26, Primary Key)
-- `purchase_invoice_id` (foreign key -> `purchase_invoices.id`)
-- `material_id` (foreign key -> `materials.id`)
-- `qty` (decimal 12,2)
-- `unit_price` (decimal 15,2)
-- `subtotal` (decimal 15,2)
-- `created_at`, `updated_at`
 
----
+5. STOCK ADJUSTMENT & STOCK TRANSFER
+--------------------------------------------------------------------------------
+Tabel: stock_adjustments
+Deskripsi: Header Penyesuaian Stok (`stock-adjustment-use`, `new-stock-adjustment-standard`, `new-stock-adjustment-internal-use`, `stock-adjustment-list`, `daily-stock-adjustment-report`, `daily-stock-adjustment-track-report`, `daily-stock-adjustment-cost-report`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - adjustment_number    : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor Dokumen Adjustment
+  - adjustment_date      : DATE          | NOT NULL    | Tanggal SO / Adjustment
+  - warehouse_id         : CHAR(26)      | FK          | Relasi ke warehouses.id
+  - adjustment_type      : ENUM          | NOT NULL    | 'STANDARD', 'INTERNAL_USE'
+  - reason               : TEXT          | NULLABLE    | Alasan selisih stok
+  - status               : ENUM          | NOT NULL    | 'DRAFT', 'APPROVED'
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
-## 6. Supplier Payment & Down Payment (DP)
+Tabel: stock_adjustment_details
+Deskripsi: Detail Selisih Fisik vs Sistem
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - stock_adjustment_id  : CHAR(26)      | FK          | Relasi ke stock_adjustments.id
+  - material_id          : CHAR(26)      | FK          | Relasi ke materials.id
+  - system_qty           : DECIMAL(12,2) | NOT NULL    | Kuantitas terdata di sistem
+  - physical_qty         : DECIMAL(12,2) | NOT NULL    | Kuantitas hitung fisik
+  - qty_diff             : DECIMAL(12,2) | NOT NULL    | Selisih (physical_qty - system_qty)
+  - cost_per_unit        : DECIMAL(15,2) | NOT NULL    | HPP per unit barang
+  - total_cost_diff      : DECIMAL(15,2) | NOT NULL    | Total finansial selisih
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
-### `supplier_payments` (Header Pembayaran Supplier)
-- `id` (char 26, Primary Key)
-- `payment_number` (varchar 50, Unique)
-- `payment_date` (date)
-- `supplier_id` (varchar 50)
-- `supplier_name` (varchar 150)
-- `currency` (varchar 10)
-- `rate` (integer, exchange rate terhadap IDR, default 1)
-- `invoice_date` (date, tanggal invoice terkait)
-- `subtotal` (decimal 15,2, total sebelum diskon)
-- `discount_percent` (decimal 5,2, persentase diskon)
-- `discount_amount` (decimal 15,2, nominal diskon)
-- `lain_lain` (decimal 15,2, biaya lain-lain)
-- `total_payment` (decimal 15,2, total akhir: subtotal - diskon + lain-lain)
-- `total_paid` (decimal 15,2, total yang sudah dibayarkan)
-- `account_id` (varchar 50, nomor rekening)
-- `account` (varchar 100, nama bank/rekening)
-- `user_name` (varchar 150)
-- `complete_date` (date, Nullable)
-- `stbj_number` (varchar 50)
-- `invoice_number` (varchar 50)
-- `note` (text)
-- `note_detail` (text, catatan detail)
-- `payment_type` (varchar 20)
-- `status` (enum: 'DRAFT', 'PENDING', 'APPROVED', 'REJECTED', 'PAID')
-- `created_at`, `updated_at`, `deleted_at`
+Tabel: stock_transfers
+Deskripsi: Header Transfer Barang Antar Gudang (`new-stock-transfer`, `stock-transfer-list`, `new-stock-transfer-request`, `stock-transfer-request-list`, `daily-stock-transfer-report`, `stock-transfer-fulfilment`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - transfer_number      : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor Dokumen Mutasi
+  - transfer_date        : DATE          | NOT NULL    | Tanggal pengiriman transfer
+  - from_warehouse_id    : CHAR(26)      | FK          | Relasi ke warehouses.id (Gudang Asal)
+  - to_warehouse_id      : CHAR(26)      | FK          | Relasi ke warehouses.id (Gudang Tujuan)
+  - status               : ENUM          | NOT NULL    | 'REQUESTED', 'PREPARED', 'IN_TRANSIT', 'COMPLETED', 'CANCELLED'
+  - notes                : TEXT          | NULLABLE    | Instruksi pengiriman
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
-### `supplier_payment_details` (Detail Alokasi Invoice)
-- `id` (char 26, Primary Key)
-- `supplier_payment_id` (foreign key -> `supplier_payments.id`)
-- `purchase_invoice_id` (foreign key -> `purchase_invoices.id`)
-- `amount_paid` (decimal 15,2)
-- `created_at`, `updated_at`
+Tabel: stock_transfer_details
+Deskripsi: Detail Items Transfer Antar Gudang
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - stock_transfer_id    : CHAR(26)      | FK          | Relasi ke stock_transfers.id
+  - material_id          : CHAR(26)      | FK          | Relasi ke materials.id
+  - qty_requested        : DECIMAL(12,2) | NOT NULL    | Kuantitas diminta
+  - qty_shipped          : DECIMAL(12,2) | NOT NULL    | DEFAULT 0.00 (Dikirim gudang asal)
+  - qty_received         : DECIMAL(12,2) | NOT NULL    | DEFAULT 0.00 (Diterima gudang tujuan)
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
----
+Tabel: stock_transfer_shipments
+Deskripsi: Persiapan Pengiriman Transfer Gudang (`stock-transfer-shipment-preparation`, `stock-transfer-shipment-preparation-list`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - prep_number          : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor Surat Persiapan Muatan
+  - prep_date            : DATE          | NOT NULL    | Tanggal persiapan muat
+  - stock_transfer_id    : CHAR(26)      | FK          | Relasi ke stock_transfers.id
+  - driver_name          : VARCHAR(100)  | NULLABLE    | Driver armada pengangkut
+  - vehicle_number       : VARCHAR(30)   | NULLABLE    | Plat nomor armada
+  - status               : ENUM          | NOT NULL    | 'PREPARED', 'DISPATCHED', 'DELIVERED'
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
-## 7. Purchase Return (Retur Pembelian) & SJBB
 
-### `purchase_returns` (Header Retur Pembelian)
-- `id` (char 26, Primary Key)
-- `return_number` (varchar 50, Unique)
-- `return_date` (date)
-- `warehouse` (varchar 100)
-- `supplier_id` (varchar 50)
-- `supplier_name` (varchar 150)
-- `currency` (varchar 10, default 'IDR')
-- `term` (varchar 50)
-- `discount_percent` (decimal 5,2)
-- `discount_amount` (decimal 15,2)
-- `total_return_amount` (decimal 15,2, dihitung dari items - diskon)
-- `user_name` (varchar 150)
-- `account` (varchar 100)
-- `price_list` (varchar 50)
-- `note` (text)
-- `status` (enum: 'DRAFT', 'APPROVED', 'COMPLETED')
-- `items` (array of objects: material, qty, unit, price)
-- `created_at`, `updated_at`, `deleted_at`
+6. STOCK CONVERSION & MATERIAL TEMPLATE (BOM)
+--------------------------------------------------------------------------------
+Tabel: material_templates
+Deskripsi: Bill of Materials Header (`material-template`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - template_code        : VARCHAR(50)   | UNIQUE, NOT NULL | Kode formula BOM
+  - template_name        : VARCHAR(150)  | NOT NULL    | Nama resep / racikan
+  - target_material_id   : CHAR(26)      | FK          | Relasi ke materials.id (Hasil Jadi)
+  - target_output_qty    : DECIMAL(12,2) | NOT NULL    | DEFAULT 1.00 (Output standar)
+  - description          : TEXT          | NULLABLE    | Instruksi perakitan
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
 
-### `purchase_return_details` (Detail Retur Pembelian)
-- `id` (char 26, Primary Key)
-- `purchase_return_id` (foreign key -> `purchase_returns.id`)
-- `material_id` (foreign key -> `materials.id`)
-- `qty_returned` (decimal 12,2)
-- `unit_price` (decimal 15,2)
-- `subtotal` (decimal 15,2)
-- `created_at`, `updated_at`
+Tabel: material_template_details
+Deskripsi: Detail Komponen Bahan Baku BOM
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - material_template_id : CHAR(26)      | FK          | Relasi ke material_templates.id
+  - raw_material_id      : CHAR(26)      | FK          | Relasi ke materials.id (Bahan Baku)
+  - qty_needed           : DECIMAL(12,2) | NOT NULL    | Kuantitas bahan baku per resep
+  - unit_id              : CHAR(26)      | FK          | Relasi ke units.id
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
 
-### `sjbb` (Surat Jalan Bukti Barter)
-- `id` (char 26, Primary Key)
-- `sjbb_number` (varchar 50, Unique)
-- `sjbb_date` (date)
-- `supplier_id` (varchar 50)
-- `supplier_name` (varchar 150)
-- `type` (enum: 'IN', 'OUT')
-- `status` (varchar 50)
-- `notes` (text)
-- `created_at`, `updated_at`, `deleted_at`
-
----
-
-## 8. Stock Adjustment (Penyesuaian Stok)
-
-### `stock_adjustments` (Header Penyesuaian Stok)
-- `id` (char 26, Primary Key)
-- `adjustment_number` (varchar 50, Unique)
-- `adjustment_date` (date)
-- `warehouse` (varchar 100)
-- `department` (varchar 100)
-- `adjustment_type` (enum: 'STANDARD', 'INTERNAL_USE')
-- `use_for` (varchar 200)
-- `transfer_to_ta` (varchar 50)
-- `product_group` (varchar 100)
-- `pic` (varchar 100)
-- `user_id` (varchar 50)
-- `reason` (text)
-- `status` (enum: 'DRAFT', 'APPROVED', 'COMPLETED')
-- `items` (array of objects: material, system_qty, physical_qty, cost_per_unit)
-- `created_at`, `updated_at`, `deleted_at`
-
-### `stock_adjustment_details` (Detail Penyesuaian Stok)
-- `id` (char 26, Primary Key)
-- `stock_adjustment_id` (foreign key -> `stock_adjustments.id`)
-- `material` (varchar 150, nama material)
-- `system_qty` (decimal 12,2)
-- `physical_qty` (decimal 12,2)
-- `qty_diff` (decimal 12,2, derived: system_qty - physical_qty)
-- `cost_per_unit` (decimal 15,2)
-- `total_cost_diff` (decimal 15,2, derived: qty_diff * cost_per_unit)
-- `created_at`, `updated_at`
-
----
-
-## 9. Stock Transfer (Transfer Stok Antar Gudang)
-
-### `stock_transfers` (Header Transfer Stok)
-- `id` (char 26, Primary Key)
-- `transfer_number` (varchar 50, Unique)
-- `transfer_date` (date)
-- `from_warehouse_id` (foreign key -> `warehouses.id`)
-- `to_warehouse_id` (foreign key -> `warehouses.id`)
-- `status` (enum: 'REQUESTED', 'PREPARED', 'IN_TRANSIT', 'COMPLETED', 'CANCELLED')
-- `notes` (text)
-- `created_at`, `updated_at`, `deleted_at`
-
-### `stock_transfer_details` (Detail Transfer Stok)
-- `id` (char 26, Primary Key)
-- `stock_transfer_id` (foreign key -> `stock_transfers.id`)
-- `material_id` (foreign key -> `materials.id`)
-- `qty_requested` (decimal 12,2)
-- `qty_shipped` (decimal 12,2, default 0)
-- `qty_received` (decimal 12,2, default 0)
-- `created_at`, `updated_at`
-
----
-
-## 10. Stock Conversion & Material Template (BOM)
-
-### `material_templates` (Template Resep Material / BOM)
-- `id` (char 26, Primary Key)
-- `template_code` (varchar 50, Unique)
-- `template_name` (varchar 150)
-- `target_material_id` (foreign key -> `materials.id`)
-- `target_output_qty` (decimal 12,2)
-- `description` (text)
-- `created_at`, `updated_at`, `deleted_at`
-
-### `material_template_details` (Komponen Bahan Baku Template)
-- `id` (char 26, Primary Key)
-- `material_template_id` (foreign key -> `material_templates.id`)
-- `raw_material_id` (foreign key -> `materials.id`)
-- `qty_needed` (decimal 12,2)
-- `unit_id` (foreign key)
-- `created_at`, `updated_at`
-
-### `stock_conversions` (Transaksi Eksekusi Konversi)
-- `id` (char 26, Primary Key)
-- `conversion_number` (varchar 50, Unique)
-- `conversion_date` (date)
-- `warehouse_id` (foreign key -> `warehouses.id`)
-- `material_template_id` (foreign key -> `material_templates.id`)
-- `output_qty_produced` (decimal 12,2)
-- `notes` (text)
-- `created_at`, `updated_at`, `deleted_at`
-
----
-
-## 11. Stock Ledger (Kartu Stok / Mutasi Stok Real-Time)
-
-### `stock_ledgers` (Kartu Mutasi Stok)
-- `id` (char 26, Primary Key)
-- `material_id` (foreign key -> `materials.id`)
-- `warehouse_id` (foreign key -> `warehouses.id`)
-- `reference_type` (varchar 50: 'STBJ', 'PURCHASE_RETURN', 'STOCK_ADJUSTMENT', 'STOCK_TRANSFER', 'STOCK_CONVERSION')
-- `reference_id` (char 26)
-- `qty_in` (decimal 12,2, default 0)
-- `qty_out` (decimal 12,2, default 0)
-- `balance_qty` (decimal 12,2)
-- `cost_price` (decimal 15,2)
-- `created_at`, `updated_at`, `deleted_at`
-
+Tabel: stock_conversions
+Deskripsi: Header Eksekusi Perakitan / Konversi Stok (`stock-convertion`)
+Kolom:
+  - id                   : CHAR(26)      | PRIMARY KEY | ULID Unique Identifier
+  - conversion_number    : VARCHAR(50)   | UNIQUE, NOT NULL | Nomor dokumen konversi
+  - conversion_date      : DATE          | NOT NULL    | Tanggal pengerjaan
+  - warehouse_id         : CHAR(26)      | FK          | Relasi ke warehouses.id
+  - material_template_id : CHAR(26)      | FK          | Relasi ke material_templates.id
+  - output_qty_produced  : DECIMAL(12,2) | NOT NULL    | Kuantitas hasil jadi yang diproduksi
+  - notes                : TEXT          | NULLABLE    | Catatan proses perakitan
+  - created_at           : TIMESTAMP     | NOT NULL    | Waktu pembuatan record
+  - updated_at           : TIMESTAMP     | NOT NULL    | Waktu update terakhir
+  - deleted_at           : TIMESTAMP     | NULLABLE    | Soft delete timestamp
+================================================================================
 ---
 
 ### `customer_groups`
