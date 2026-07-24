@@ -50,6 +50,11 @@ use App\Http\Controllers\SalesDistribution\CategoryExceptionController;
 use App\Http\Controllers\SalesDistribution\ProductPointClaimSetupController;
 use App\Http\Controllers\SalesDistribution\ClaimProductController;
 use App\Http\Controllers\SalesDistribution\ClaimProductDailyReportController;
+use App\Http\Controllers\SalesDistribution\SalesOrderListController;
+use App\Http\Controllers\SalesDistribution\SalesOrderFulfilmentController;
+use App\Http\Controllers\SalesDistribution\DailySalesOrderReportController;
+use App\Http\Controllers\SalesDistribution\DailySalesOrderInvoiceReportController;
+use App\Http\Controllers\SalesDistribution\PackingController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -437,6 +442,44 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', [ClaimProductDailyReportController::class, 'table'])->name('table');
             Route::get('/summary', [ClaimProductDailyReportController::class, 'summary'])->name('summary');
             Route::get('/{id}', [ClaimProductDailyReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('sales-order-list')->name('sales-order.')->group(function () {
+            Route::get('/', [SalesOrderListController::class, 'index'])->name('index');
+            Route::get('/table', [SalesOrderListController::class, 'table'])->name('table');
+            Route::post('/', [SalesOrderListController::class, 'store'])->name('store');
+            Route::get('/{id}', [SalesOrderListController::class, 'show'])->name('show');
+            Route::put('/{id}', [SalesOrderListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SalesOrderListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('sales-order-fulfilment')->name('sales-order-fulfilment.')->group(function () {
+            Route::get('/', [SalesOrderFulfilmentController::class, 'index'])->name('index');
+            Route::get('/table', [SalesOrderFulfilmentController::class, 'table'])->name('table');
+            Route::get('/{id}', [SalesOrderFulfilmentController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('daily-sales-order-report')->name('daily-sales-order-report.')->group(function () {
+            Route::get('/', [DailySalesOrderReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailySalesOrderReportController::class, 'table'])->name('table');
+            Route::get('/summary', [DailySalesOrderReportController::class, 'summary'])->name('summary');
+            Route::get('/{id}', [DailySalesOrderReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('daily-sales-order-invoice-report')->name('daily-so-invoice-report.')->group(function () {
+            Route::get('/', [DailySalesOrderInvoiceReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailySalesOrderInvoiceReportController::class, 'table'])->name('table');
+            Route::get('/summary', [DailySalesOrderInvoiceReportController::class, 'summary'])->name('summary');
+            Route::get('/{id}', [DailySalesOrderInvoiceReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('packing')->name('packing.')->group(function () {
+            Route::get('/', [PackingController::class, 'index'])->name('index');
+            Route::get('/table', [PackingController::class, 'table'])->name('table');
+            Route::post('/', [PackingController::class, 'store'])->name('store');
+            Route::get('/{id}', [PackingController::class, 'show'])->name('show');
+            Route::put('/{id}', [PackingController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PackingController::class, 'destroy'])->name('destroy');
         });
 
     });

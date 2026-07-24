@@ -82,11 +82,9 @@
 - Customer Balance Summary `customer-balance-summary`
   Komponen :Customer ID,Name,Currency,Beginning Balance,Total Invoice,Total Payment,Total Return,Ending Balance,Credit Limit,Available Credit
   Fungsi : Menyajikan ringkasan posisi saldo piutang pelanggan, sisa batas kredit, dan histori akumulasi mutasi secara real-time.
-
 - AR Warehouse Report `ar-warehouse-report`
   Komponen :Warehouse ID,Warehouse Name,Customer ID,Customer Name,Invoice No,Invoice Date,Due Date,Outstanding Amount,Age (Days)
   Fungsi : Laporan rincian piutang usaha yang dikelompokkan berdasarkan gudang pemenuhan pesanan.
-
 - Customer Point `customer-point`
   - Point Setting
   Komponen :Point(num)
