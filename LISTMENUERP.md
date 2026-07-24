@@ -113,13 +113,13 @@
   - Sales Order Fulfilment 
     Komponen : Cust. ID, Name, Area, Sales Order, SO Date, Warehouse, Note, Status, Product ID, Name, Description, SO Qty, SO UOM ID, SI Date, SI Qty, SI UOM ID, Qty Diff, Tonase
     Fungsi : Memantau tingkat pemenuhan kuantitas barang dari Sales Order menjadi Sales Invoice/pengiriman.
-  - Daily Sales Order Report
+- Daily Sales Order Report
     Komponen : Date, SO No, Customer Name, Salesman, Total Amount, Status, Warehouse
     Fungsi : Laporan rekapitulasi harian pembuatan dan status dokumen Sales Order.
-  - Daily Sales Order Invoice Report
+- Daily Sales Order Invoice Report
     Komponen : Date, SO No, SI No, Customer Name, SO Amount, Invoiced Amount, Fulfilment Rate (%)
     Fungsi : Laporan perbandingan harian antara nilai pesanan (SO) dengan nilai yang telah berhasil ditagihkan (Invoice).
-
+http://127.0.0.1:8000/packing
 - Packing `packing`
   Komponen :Packing No, Date, SO No, Customer ID, Warehouse ID, Packing Staff, Total Box/Package, Weight, Status, Note
   Fungsi : Mengelola proses pengemasan barang di gudang berdasarkan pesanan penjualan sebelum diserahkan ke tim kurir/pengiriman.

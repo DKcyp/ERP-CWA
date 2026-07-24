@@ -55,6 +55,12 @@ use App\Http\Controllers\SalesDistribution\SalesOrderFulfilmentController;
 use App\Http\Controllers\SalesDistribution\DailySalesOrderReportController;
 use App\Http\Controllers\SalesDistribution\DailySalesOrderInvoiceReportController;
 use App\Http\Controllers\SalesDistribution\PackingController;
+use App\Http\Controllers\SalesDistribution\SalesInvoiceListController;
+use App\Http\Controllers\SalesDistribution\ShipmentPriorityController;
+use App\Http\Controllers\SalesDistribution\SalesPromoReportController;
+use App\Http\Controllers\SalesDistribution\SalesProfitReportController;
+use App\Http\Controllers\SalesDistribution\SalesOmsetReportController;
+use App\Http\Controllers\SalesDistribution\SalesVoidReportController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -480,6 +486,48 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [PackingController::class, 'show'])->name('show');
             Route::put('/{id}', [PackingController::class, 'update'])->name('update');
             Route::delete('/{id}', [PackingController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('sales-invoice-list')->name('sales-invoice.')->group(function () {
+            Route::get('/', [SalesInvoiceListController::class, 'index'])->name('index');
+            Route::get('/table', [SalesInvoiceListController::class, 'table'])->name('table');
+            Route::post('/', [SalesInvoiceListController::class, 'store'])->name('store');
+            Route::get('/{id}', [SalesInvoiceListController::class, 'show'])->name('show');
+            Route::put('/{id}', [SalesInvoiceListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SalesInvoiceListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('shipment-priority')->name('shipment-priority.')->group(function () {
+            Route::get('/', [ShipmentPriorityController::class, 'index'])->name('index');
+            Route::get('/table', [ShipmentPriorityController::class, 'table'])->name('table');
+            Route::post('/', [ShipmentPriorityController::class, 'store'])->name('store');
+            Route::get('/{id}', [ShipmentPriorityController::class, 'show'])->name('show');
+            Route::put('/{id}', [ShipmentPriorityController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ShipmentPriorityController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('sales-promo-report')->name('sales-promo-report.')->group(function () {
+            Route::get('/', [SalesPromoReportController::class, 'index'])->name('index');
+            Route::get('/table', [SalesPromoReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [SalesPromoReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('sales-profit-report')->name('sales-profit-report.')->group(function () {
+            Route::get('/', [SalesProfitReportController::class, 'index'])->name('index');
+            Route::get('/table', [SalesProfitReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [SalesProfitReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('sales-omset-report')->name('sales-omset-report.')->group(function () {
+            Route::get('/', [SalesOmsetReportController::class, 'index'])->name('index');
+            Route::get('/table', [SalesOmsetReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [SalesOmsetReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('sales-void-report')->name('sales-void-report.')->group(function () {
+            Route::get('/', [SalesVoidReportController::class, 'index'])->name('index');
+            Route::get('/table', [SalesVoidReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [SalesVoidReportController::class, 'show'])->name('show');
         });
 
     });

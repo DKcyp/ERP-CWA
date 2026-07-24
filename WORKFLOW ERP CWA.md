@@ -161,3 +161,4 @@ Semua transaksi masuk/keluar barang dicatat di `stock_ledgers`:
 | Stock Adjustment | DRAFT → APPROVED |
 | Stock Transfer | REQUESTED → PREPARED → IN_TRANSIT → COMPLETED / CANCELLED |
 | Purchase Return | DRAFT → APPROVED → COMPLETED |
+
