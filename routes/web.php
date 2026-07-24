@@ -13,6 +13,13 @@ use App\Http\Controllers\Master\SupplierController;
 use App\Http\Controllers\Master\SupplierGroupController;
 use App\Http\Controllers\Master\SupplierBalanceSummaryController;
 use App\Http\Controllers\Master\SupplierCenterController;
+use App\Http\Controllers\Master\CustomerMasterController;
+use App\Http\Controllers\Master\CustomerGroupController;
+use App\Http\Controllers\Master\CustomerAreaController;
+use App\Http\Controllers\Master\WaNameController;
+use App\Http\Controllers\Master\CustomerToolsController;
+use App\Http\Controllers\Master\CustomerCentreController;
+use App\Http\Controllers\Master\CustomerBalanceSummaryController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
@@ -36,6 +43,13 @@ use App\Http\Controllers\MaterialManagement\StockTransferFulfilmentController;
 use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentCostReportController;
 use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentTrackReportController;
 use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentReportController;
+use App\Http\Controllers\SalesDistribution\ArWarehouseReportController;
+use App\Http\Controllers\SalesDistribution\PointSettingController;
+use App\Http\Controllers\SalesDistribution\CustomerPointPromoRuleController;
+use App\Http\Controllers\SalesDistribution\CategoryExceptionController;
+use App\Http\Controllers\SalesDistribution\ProductPointClaimSetupController;
+use App\Http\Controllers\SalesDistribution\ClaimProductController;
+use App\Http\Controllers\SalesDistribution\ClaimProductDailyReportController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -122,6 +136,65 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [SupplierCenterController::class, 'show'])->name('show');
             Route::put('/{id}', [SupplierCenterController::class, 'update'])->name('update');
             Route::delete('/{id}', [SupplierCenterController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('customer-master')->name('customer-master.')->group(function () {
+            Route::get('/', [CustomerMasterController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerMasterController::class, 'table'])->name('table');
+            Route::post('/', [CustomerMasterController::class, 'store'])->name('store');
+            Route::get('/{id}', [CustomerMasterController::class, 'show'])->name('show');
+            Route::put('/{id}', [CustomerMasterController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CustomerMasterController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('customer-group')->name('customer-group.')->group(function () {
+            Route::get('/', [CustomerGroupController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerGroupController::class, 'table'])->name('table');
+            Route::post('/', [CustomerGroupController::class, 'store'])->name('store');
+            Route::get('/{id}', [CustomerGroupController::class, 'show'])->name('show');
+            Route::put('/{id}', [CustomerGroupController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CustomerGroupController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('customer-area')->name('customer-area.')->group(function () {
+            Route::get('/', [CustomerAreaController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerAreaController::class, 'table'])->name('table');
+            Route::post('/', [CustomerAreaController::class, 'store'])->name('store');
+            Route::get('/{id}', [CustomerAreaController::class, 'show'])->name('show');
+            Route::put('/{id}', [CustomerAreaController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CustomerAreaController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('wa-name')->name('wa-name.')->group(function () {
+            Route::get('/', [WaNameController::class, 'index'])->name('index');
+            Route::get('/table', [WaNameController::class, 'table'])->name('table');
+            Route::post('/', [WaNameController::class, 'store'])->name('store');
+            Route::get('/{id}', [WaNameController::class, 'show'])->name('show');
+            Route::put('/{id}', [WaNameController::class, 'update'])->name('update');
+            Route::delete('/{id}', [WaNameController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('customer-tools')->name('customer-tools.')->group(function () {
+            Route::get('/', [CustomerToolsController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerToolsController::class, 'table'])->name('table');
+            Route::post('/', [CustomerToolsController::class, 'store'])->name('store');
+            Route::get('/{id}', [CustomerToolsController::class, 'show'])->name('show');
+            Route::put('/{id}', [CustomerToolsController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CustomerToolsController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('customer-centre')->name('customer-centre.')->group(function () {
+            Route::get('/', [CustomerCentreController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerCentreController::class, 'table'])->name('table');
+            Route::post('/', [CustomerCentreController::class, 'store'])->name('store');
+            Route::get('/{id}', [CustomerCentreController::class, 'show'])->name('show');
+            Route::put('/{id}', [CustomerCentreController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CustomerCentreController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('customer-balance-summary')->name('customer-balance.')->group(function () {
+            Route::get('/', [CustomerBalanceSummaryController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerBalanceSummaryController::class, 'table'])->name('table');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
@@ -307,6 +380,63 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', [DailyStockAdjustmentReportController::class, 'table'])->name('table');
             Route::get('/summary', [DailyStockAdjustmentReportController::class, 'summary'])->name('summary');
             Route::get('/{id}', [DailyStockAdjustmentReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
+            Route::get('/', [ArWarehouseReportController::class, 'index'])->name('index');
+            Route::get('/table', [ArWarehouseReportController::class, 'table'])->name('table');
+        });
+
+        Route::prefix('point-setting')->name('point-setting.')->group(function () {
+            Route::get('/', [PointSettingController::class, 'index'])->name('index');
+            Route::get('/table', [PointSettingController::class, 'table'])->name('table');
+            Route::post('/', [PointSettingController::class, 'store'])->name('store');
+            Route::get('/{id}', [PointSettingController::class, 'show'])->name('show');
+            Route::put('/{id}', [PointSettingController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PointSettingController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('customer-point-promo-rule')->name('point-promo-rule.')->group(function () {
+            Route::get('/', [CustomerPointPromoRuleController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerPointPromoRuleController::class, 'table'])->name('table');
+            Route::post('/', [CustomerPointPromoRuleController::class, 'store'])->name('store');
+            Route::get('/{id}', [CustomerPointPromoRuleController::class, 'show'])->name('show');
+            Route::put('/{id}', [CustomerPointPromoRuleController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CustomerPointPromoRuleController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('category-exception')->name('category-exception.')->group(function () {
+            Route::get('/', [CategoryExceptionController::class, 'index'])->name('index');
+            Route::get('/table', [CategoryExceptionController::class, 'table'])->name('table');
+            Route::post('/', [CategoryExceptionController::class, 'store'])->name('store');
+            Route::get('/{id}', [CategoryExceptionController::class, 'show'])->name('show');
+            Route::put('/{id}', [CategoryExceptionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CategoryExceptionController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('product-point-claim-setup')->name('product-point-claim-setup.')->group(function () {
+            Route::get('/', [ProductPointClaimSetupController::class, 'index'])->name('index');
+            Route::get('/table', [ProductPointClaimSetupController::class, 'table'])->name('table');
+            Route::post('/', [ProductPointClaimSetupController::class, 'store'])->name('store');
+            Route::get('/{id}', [ProductPointClaimSetupController::class, 'show'])->name('show');
+            Route::put('/{id}', [ProductPointClaimSetupController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ProductPointClaimSetupController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('claim-product')->name('claim-product.')->group(function () {
+            Route::get('/', [ClaimProductController::class, 'index'])->name('index');
+            Route::get('/table', [ClaimProductController::class, 'table'])->name('table');
+            Route::post('/', [ClaimProductController::class, 'store'])->name('store');
+            Route::get('/{id}', [ClaimProductController::class, 'show'])->name('show');
+            Route::put('/{id}', [ClaimProductController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ClaimProductController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('claim-product-daily-report')->name('claim-product-daily-report.')->group(function () {
+            Route::get('/', [ClaimProductDailyReportController::class, 'index'])->name('index');
+            Route::get('/table', [ClaimProductDailyReportController::class, 'table'])->name('table');
+            Route::get('/summary', [ClaimProductDailyReportController::class, 'summary'])->name('summary');
+            Route::get('/{id}', [ClaimProductDailyReportController::class, 'show'])->name('show');
         });
 
     });
