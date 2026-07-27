@@ -89,6 +89,7 @@ use App\Http\Controllers\TransitArea\RlhpController;
 use App\Http\Controllers\TransitArea\ArPerCustomerReportController;
 use App\Http\Controllers\TransitArea\CustomerArPositionReportController;
 use App\Http\Controllers\TransitArea\InvoiceCustomerArListReportController;
+use App\Http\Controllers\TransitArea\SalesmanArListPmbController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -759,6 +760,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [InvoiceCustomerArListReportController::class, 'index'])->name('index');
             Route::get('/table', [InvoiceCustomerArListReportController::class, 'table'])->name('table');
             Route::get('/{id}', [InvoiceCustomerArListReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('salesman-ar-list-pmb')->name('salesman-ar-list-pmb.')->group(function () {
+            Route::get('/', [SalesmanArListPmbController::class, 'index'])->name('index');
+            Route::get('/table', [SalesmanArListPmbController::class, 'table'])->name('table');
+            Route::get('/{id}', [SalesmanArListPmbController::class, 'show'])->name('show');
         });
 
     });
