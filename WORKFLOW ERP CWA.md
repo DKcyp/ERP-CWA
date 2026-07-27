@@ -109,3 +109,74 @@
     ▼                 ▼
 Poin Loyalty     Komisi Sales
 (Customer Point) (Sales Commission)
+
+### 1.1 Ekspedisi Dokumen & Alur Distribusi Faktur Depo
+
+[KANTOR PUSAT / GUDANG]
+         │
+         ├── Cetak Faktur & Surat Jalan
+         │
+         ▼
+Shipping Invoice Expedition / Invoice Expedition
+         │
+         ├── Penyerahan Berkas ke Kurir Armada / Salesman
+         │
+         ▼
+     [LAPANGAN / PELANGGAN]
+         │
+         ├── Barang & Faktur Diterima Pelanggan
+         │
+         ▼
+  Laporan Transaksi Harian Depo
+         ├── Daily Sales Invoice Report
+         ├── Daily Sales PO Closing Report
+         ├── Daily Sales Return Report
+         └── Daily Sales by Brand Report
+
+
+### 1.2 Alur Penagihan, RLHP & Manajemen Piutang (AR) Depo
+
+[KOLEKTOR / SALESMAN DEPO] ──→ Penagihan Lapangan
+                                      │
+                                      ▼
+                      RLHP (Rincian Laporan Hasil Penagihan)
+                                      │
+                                ┌─────┴─────┐
+                                │           │
+                              CASH         GIRO / CHEQUE
+                                │           │
+                                │           ▼
+                                │    Cheque Management (Validasi & Kliring)
+                                │           │
+                                └─────┬─────┘
+                                      │
+                                      ▼
+                          Daily Payment Recap Report
+                                      │
+                                      ▼
+                        Kontrol Saldo & Posisi Piutang
+                              ├── AR per Customer Report
+                              ├── Customer AR Position Report
+                              └── Invoice Customer AR List Report
+
+
+### 1.3 Alur Kontrol Target, Monitoring Sales & Bonus (PMB)
+
+[MANAJEMEN TRANSIT AREA]
+         │
+         ├── Penetapan Parameter Depo
+         │      ├── Transit Area Target (Target Bulanan)
+         │      └── Transit Area New Brand (Fokus Produk Baru)
+         │
+         ▼
+   Monitoring Kinerja Harian Depo
+         ├── UBM Daily Control Progress Sales Report
+         ├── UBM New Product Sales Report (Penetrasi NOO)
+         ├── Daily Sales Achievement Report
+         └── UBM Collection Progress Report (Ranking Penagihan)
+         │
+         ▼
+  Salesman AR List PMB (Evaluasi Koleksi Piutang Sales)
+         │
+         ▼
+  PMB (Penetapan & Monitoring Bonus Salesman / Depo)

@@ -80,6 +80,7 @@ use App\Http\Controllers\SalesDistribution\ShipmentPreparationController;
 use App\Http\Controllers\SalesDistribution\PurchaseNoteController;
 use App\Http\Controllers\SalesDistribution\SalesCommissionController;
 use App\Http\Controllers\SalesDistribution\TaxController;
+use App\Http\Controllers\TransitArea\DailySalesInvoiceReportController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -690,6 +691,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [TaxController::class, 'show'])->name('show');
             Route::put('/{id}', [TaxController::class, 'update'])->name('update');
             Route::delete('/{id}', [TaxController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('daily-sales-invoice-report')->name('daily-sales-invoice-report.')->group(function () {
+            Route::get('/', [DailySalesInvoiceReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailySalesInvoiceReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [DailySalesInvoiceReportController::class, 'show'])->name('show');
         });
 
     });

@@ -141,6 +141,31 @@ class MenuSeeder extends Seeder
                     'Sales Commission' => '#',
                     'Tax' => '#',
                 ]
+            ],
+            'Transit Area' => [
+                'icon' => 'bi bi-signpost-2-fill',
+                'items' => [
+                    'Daily Sales Invoice Report' => '#',
+                    'Daily Sales PO Closing Report' => '#',
+                    'Daily Sales Return Report' => '#',
+                    'Daily Sales by Brand Report' => '#',
+                    'Daily Payment Recap Report' => '#',
+                    'Cheque Management' => '#',
+                    'RLHP (Rincian Laporan Hasil Penagihan)' => '#',
+                    'AR per Customer Report' => '#',
+                    'Customer AR Position Report' => '#',
+                    'Invoice Customer AR List Report' => '#',
+                    'Salesman AR List PMB' => '#',
+                    'Invoice Expedition' => '#',
+                    'Shipping Invoice Expedition' => '#',
+                    'Transit Area Target' => '#',
+                    'UBM Daily Control Progress Sales Report' => '#',
+                    'Transit Area New Brand' => '#',
+                    'UBM New Product Sales Report' => '#',
+                    'UBM Collection Progress Report' => '#',
+                    'Daily Sales Achievement Report' => '#',
+                    'PMB (Penetapan & Monitoring Bonus)' => '#',
+                ]
             ]
         ];
 
