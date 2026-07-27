@@ -84,6 +84,7 @@ use App\Http\Controllers\TransitArea\DailySalesInvoiceReportController;
 use App\Http\Controllers\TransitArea\DailySalesPoClosingReportController;
 use App\Http\Controllers\TransitArea\DailySalesByBrandReportController;
 use App\Http\Controllers\TransitArea\DailyPaymentRecapReportController;
+use App\Http\Controllers\TransitArea\ChequeManagementController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -718,6 +719,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [DailyPaymentRecapReportController::class, 'index'])->name('index');
             Route::get('/table', [DailyPaymentRecapReportController::class, 'table'])->name('table');
             Route::get('/{id}', [DailyPaymentRecapReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('cheque-management')->name('cheque-management.')->group(function () {
+            Route::get('/', [ChequeManagementController::class, 'index'])->name('index');
+            Route::get('/table', [ChequeManagementController::class, 'table'])->name('table');
+            Route::post('/', [ChequeManagementController::class, 'store'])->name('store');
+            Route::get('/{id}', [ChequeManagementController::class, 'show'])->name('show');
+            Route::put('/{id}', [ChequeManagementController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ChequeManagementController::class, 'destroy'])->name('destroy');
         });
 
     });
