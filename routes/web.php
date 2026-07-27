@@ -837,7 +837,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [DailySalesAchievementReportController::class, 'show'])->name('show');
         });
 
-        Route::prefix('pmb')->name('pmb.')->group(function () {
+        Route::prefix('pmb-penetapan-monitoring-bonus')->name('pmb.')->group(function () {
             Route::get('/', [PmbController::class, 'index'])->name('index');
             Route::get('/table', [PmbController::class, 'table'])->name('table');
             Route::post('/', [PmbController::class, 'store'])->name('store');
