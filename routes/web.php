@@ -87,6 +87,7 @@ use App\Http\Controllers\TransitArea\DailyPaymentRecapReportController;
 use App\Http\Controllers\TransitArea\ChequeManagementController;
 use App\Http\Controllers\TransitArea\RlhpController;
 use App\Http\Controllers\TransitArea\ArPerCustomerReportController;
+use App\Http\Controllers\TransitArea\CustomerArPositionReportController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -745,6 +746,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [ArPerCustomerReportController::class, 'index'])->name('index');
             Route::get('/table', [ArPerCustomerReportController::class, 'table'])->name('table');
             Route::get('/{id}', [ArPerCustomerReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('customer-ar-position-report')->name('customer-ar-position-report.')->group(function () {
+            Route::get('/', [CustomerArPositionReportController::class, 'index'])->name('index');
+            Route::get('/table', [CustomerArPositionReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [CustomerArPositionReportController::class, 'show'])->name('show');
         });
 
     });
