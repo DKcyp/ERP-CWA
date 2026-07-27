@@ -33,7 +33,7 @@ class PmbController extends Controller
             ->addColumn('incentive_rate_fmt', fn($r) => number_format((float)($r['incentive_rate'] ?? 0), 2) . ' %')
             ->addColumn('penalty_amount_fmt', fn($r) => 'Rp ' . number_format((int)($r['penalty_amount'] ?? 0), 0, ',', '.'))
             ->addColumn('total_pmb_bonus_fmt', fn($r) => 'Rp ' . number_format((int)($r['total_pmb_bonus'] ?? 0), 0, ',', '.'))
-            ->addColumn('status_badge', fn($r) => {
+            ->addColumn('status_badge', function($r) {
                 $map = ['Aktif'=>'success','Tidak Aktif'=>'secondary','Pending'=>'warning'];
                 $c = $map[$r['status']??'']??'secondary';
                 return '<span class="badge bg-'.$c.'">'.($r['status']??'-').'</span>';
