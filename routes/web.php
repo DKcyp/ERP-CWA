@@ -81,6 +81,7 @@ use App\Http\Controllers\SalesDistribution\PurchaseNoteController;
 use App\Http\Controllers\SalesDistribution\SalesCommissionController;
 use App\Http\Controllers\SalesDistribution\TaxController;
 use App\Http\Controllers\TransitArea\DailySalesInvoiceReportController;
+use App\Http\Controllers\TransitArea\DailySalesPoClosingReportController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -697,6 +698,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [DailySalesInvoiceReportController::class, 'index'])->name('index');
             Route::get('/table', [DailySalesInvoiceReportController::class, 'table'])->name('table');
             Route::get('/{id}', [DailySalesInvoiceReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('daily-sales-po-closing-report')->name('daily-sales-po-closing-report.')->group(function () {
+            Route::get('/', [DailySalesPoClosingReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailySalesPoClosingReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [DailySalesPoClosingReportController::class, 'show'])->name('show');
         });
 
     });
