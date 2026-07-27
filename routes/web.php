@@ -96,6 +96,7 @@ use App\Http\Controllers\TransitArea\TransitAreaTargetController;
 use App\Http\Controllers\TransitArea\UbmDailyControlProgressSalesReportController;
 use App\Http\Controllers\TransitArea\TransitAreaNewBrandController;
 use App\Http\Controllers\TransitArea\UbmNewProductSalesReportController;
+use App\Http\Controllers\TransitArea\UbmCollectionProgressReportController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -820,6 +821,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [UbmNewProductSalesReportController::class, 'index'])->name('index');
             Route::get('/table', [UbmNewProductSalesReportController::class, 'table'])->name('table');
             Route::get('/{id}', [UbmNewProductSalesReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('ubm-collection-progress-report')->name('ubm-collection-progress-report.')->group(function () {
+            Route::get('/', [UbmCollectionProgressReportController::class, 'index'])->name('index');
+            Route::get('/table', [UbmCollectionProgressReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [UbmCollectionProgressReportController::class, 'show'])->name('show');
         });
 
     });
