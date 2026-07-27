@@ -94,6 +94,7 @@ use App\Http\Controllers\TransitArea\InvoiceExpeditionController;
 use App\Http\Controllers\TransitArea\ShippingInvoiceExpeditionController;
 use App\Http\Controllers\TransitArea\TransitAreaTargetController;
 use App\Http\Controllers\TransitArea\UbmDailyControlProgressSalesReportController;
+use App\Http\Controllers\TransitArea\TransitAreaNewBrandController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -803,6 +804,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [UbmDailyControlProgressSalesReportController::class, 'index'])->name('index');
             Route::get('/table', [UbmDailyControlProgressSalesReportController::class, 'table'])->name('table');
             Route::get('/{id}', [UbmDailyControlProgressSalesReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('transit-area-new-brand')->name('transit-area-new-brand.')->group(function () {
+            Route::get('/', [TransitAreaNewBrandController::class, 'index'])->name('index');
+            Route::get('/table', [TransitAreaNewBrandController::class, 'table'])->name('table');
+            Route::post('/', [TransitAreaNewBrandController::class, 'store'])->name('store');
+            Route::get('/{id}', [TransitAreaNewBrandController::class, 'show'])->name('show');
+            Route::put('/{id}', [TransitAreaNewBrandController::class, 'update'])->name('update');
+            Route::delete('/{id}', [TransitAreaNewBrandController::class, 'destroy'])->name('destroy');
         });
 
     });
