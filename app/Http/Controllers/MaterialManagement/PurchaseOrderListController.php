@@ -80,6 +80,22 @@ class PurchaseOrderListController extends Controller
             ->make(true);
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'po_number'     => ['required','string','max:50'],
+            'po_date'       => ['required','date'],
+            'supplier_name' => ['nullable','string','max:200'],
+            'supplier_code' => ['nullable','string','max:50'],
+            'note'          => ['nullable','string','max:500'],
+        ]);
+        $this->store->create(array_merge(
+            $request->only('po_number','po_date','supplier_name','supplier_code','note'),
+            ['status' => 'DRAFT', 'items' => []]
+        ));
+        return response()->json(['message' => 'PO berhasil ditambahkan.']);
+    }
+
     public function updateStatus(Request $request, $id)
     {
         $request->validate([

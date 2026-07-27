@@ -3,56 +3,153 @@
 ## Material Management `#`
 
 - Supplier Master `supplier-master`
+  Komponen : Supplier ID, Supplier Code, Name, Supplier Group ID, Supplier Center ID, Phone, Email, Address, Term of Payment, Status, Contact Person, NPWP
+  Fungsi : Mengelola data induk (master data) supplier/vendor mulai dari profil, kontak, alamat, hingga ketentuan termin pembayaran.
+
 - Supplier Group `supplier-group`
+  Komponen : Group ID, Code, Name, Description, AP Account
+  Fungsi : Mengelompokkan supplier berdasarkan jenis/kategori serta pemetaan akun Hutang (AP Account) pada buku besar.
+
 - Supplier Center `supplier-center`
+  Komponen : Center ID, Code, Name
+  Fungsi : Mengelola pembagian wilayah/pusat area pemasok untuk kebutuhan pengelompokan geografis.
+
 - Supplier Balance Summary `supplier-balance-summary`
+  Komponen : Supplier ID, Name, Currency, Beginning Balance, Total Invoice, Total Payment, Total Return, Ending Balance, Total AP
+  Fungsi : Menyajikan ringkasan posisi saldo hutang usaha per supplier beserta mutasi penambahan tagihan dan pelunasan secara real-time.
+
 - Purchase Request `#`
   - New Purchase Request `new-purchase-request`
+    Komponen : PR No, Date, Requester User, Department, Warehouse ID, Material ID, Qty Requested, UOM ID, Note
+    Fungsi : Form pengajuan permintaan pemesanan barang/material baru oleh departemen internal sebelum dibuatkan PO.
   - Purchase Request List `purchase-request-list`
+    Komponen : PR No, Date, Requester, Department, Total Item, Status (Draft/Pending/Approved/Rejected/Fulfilled), Note
+    Fungsi : Menampilkan dan mengelola daftar seluruh dokumen pengajuan Permintaan Pembelian (PR) beserta status persetujuannya.
   - Purchase Request Fulfilment Report `purchase-request-fulfilment-report`
+    Komponen : PR No, Date, Department, Material ID, Name, Qty Requested, Qty Fulfilled, Qty Outstanding, Status
+    Fungsi : Memantau tingkat pemenuhan barang yang diminta pada PR menjadi dokumen Purchase Order (PO).
+
 - Purchase Order `#`
   - New Purchase Order `new-purchase-order`
+    Komponen : PO No, Date, Supplier ID, PR No Ref, Payment Term, Material ID, Qty Ordered, Unit Price, Discount, Tax, Subtotal, Total Amount, Note
+    Fungsi : Form pembuatan surat pesanan pembelian resmi kepada supplier berdasarkan kesepakatan harga dan termin.
   - Purchase Order List `purchase-order-list`
+    Komponen : PO No, Date, Supplier Name, PR Ref, Subtotal, Tax, Discount, Total Amount, Status (Draft/Approved/Partial/Closed/Cancelled)
+    Fungsi : Menampilkan dan mengelola daftar seluruh dokumen Purchase Order (PO) yang telah diterbitkan.
   - Purchase Fulfillment Report `purchase-fulfillment-report`
+    Komponen : PO No, PO Date, Supplier Name, Material ID, Qty Ordered, Qty Received (STBJ), Qty Outstanding, Fulfilment Rate (%)
+    Fungsi : Memantau rasio pemenuhan penerimaan barang fisik oleh supplier terhadap pesanan PO.
   - Daily Purchase Order Report `daily-purchase-order-report`
+    Komponen : Date, PO No, Supplier Name, Total Amount, Status, User ID
+    Fungsi : Laporan harian rekapitulasi pembuatan dan status dokumen Purchase Order.
+
 - Purchase Invoice `#`
   - New Purchase Invoice `new-purchase-invoice`
+    Komponen : Invoice No, Date, Due Date, Supplier ID, PO No Ref, STBJ No Ref, Material ID, Qty, Unit Price, Subtotal, Total Amount, Note
+    Fungsi : Form pencatatan tagihan/faktur pembelian resmi dari supplier atas barang yang telah diterima.
   - Purchase Invoice List `purchase-invoice-list`
+    Komponen : Invoice No, Date, Due Date, Supplier Name, PO Ref, STBJ Ref, Total Amount, Paid Amount, Outstanding, Status (Unpaid/Partial/Paid)
+    Fungsi : Menampilkan daftar seluruh faktur tagihan pembelian beserta status pelunasannya.
   - Daily Purchase Invoice Report `daily-purchase-invoice-report`
+    Komponen : Date, Invoice No, Supplier Name, Total Amount, Status, Due Date
+    Fungsi : Laporan harian rincian penerbitan faktur pembelian dari supplier.
   - Monthly Purchase by Supplier Report `monthly-purchase-by-supplier-report`
+    Komponen : Period, Supplier ID, Name, Total PO Count, Total Invoice Amount, Total Paid Amount, Total Outstanding
+    Fungsi : Laporan akumulasi nilai transaksi pembelian per supplier dalam periode bulanan.
+
 - STBJ `stbj`
+  Komponen : STBJ No, Date, Supplier ID, PO No Ref, Warehouse ID, SJ Supplier No, Material ID, Qty Received, Qty Accepted, Qty Rejected, UOM ID, Note
+  Fungsi : Mengelola pencatatan Surat Tanda Bukti Jalan (STBJ/Goods Receipt) atas penerimaan fisik barang dari supplier di gudang.
+
 - Supplier Payment `#`
   - New Supplier Payment `new-supplier-payment`
+    Komponen : Payment No, Date, Supplier ID, Payment Method (Transfer/Cash/Giro), Account ID, Invoice No Ref, Amount Paid, Total Paid, Ref No, Note
+    Fungsi : Form pencatatan transaksi pembayaran/pelunasan hutang atas faktur pembelian ke supplier.
   - New Supplier Down Payment `new-supplier-down-payment`
+    Komponen : Payment No, Date, Supplier ID, PO No Ref, Payment Method, Account ID, Total DP Amount, Ref No, Note
+    Fungsi : Form pencatatan pembayaran uang muka (Down Payment) kepada supplier sebelum barang diterima/faktur terbit.
   - Supplier Payment List `supplier-payment-list`
+    Komponen : Payment No, Date, Supplier Name, Payment Type (Regular/DP), Payment Method, Total Paid, Ref No, Status
+    Fungsi : Menampilkan daftar riwayat transaksi pembayaran dan uang muka ke supplier.
   - Supp. Outstanding List `supp-outstanding-list`
+    Komponen : Invoice No, Supplier ID, Supplier Name, Invoice Date, Due Date, Age (Days), Total Amount, Paid Amount, Outstanding Amount
+    Fungsi : Memantau rincian faktur hutang pembelian yang belum dilunasi beserta analisis umur hutang (AP Aging).
   - Daily Supplier Payment Report `daily-supplier-payment-report`
+    Komponen : Date, Payment No, Supplier Name, Payment Method, Total Paid, Account Name, User ID
+    Fungsi : Laporan harian pengeluaran kas/bank untuk pembayaran hutang supplier.
   - Daily Supplier Payment List `daily-supplier-payment-list`
+    Komponen : Date, Payment No, Supplier ID, Supplier Name, Payment Type, Total Amount, Ref No
+    Fungsi : Menampilkan daftar transaksi harian pembayaran supplier untuk pengawasan kas/bank keluar.
+
 - Purchase Return `#`
   - New Purchase Return `new-purchase-return`
+    Komponen : Return No, Date, Supplier ID, Invoice No Ref, STBJ No Ref, Material ID, Qty Returned, Unit Price, Subtotal, Total Return Amount, Reason, Status
+    Fungsi : Form pengajuan retur/pengembalian barang ke supplier akibat kerusakan, ketidaksesuaian, atau klaim komersial.
   - Purchase Return List `purchase-return-list`
+    Komponen : Return No, Date, Supplier Name, Invoice Ref, Total Return Amount, Reason, Status (Draft/Approved/Completed)
+    Fungsi : Menampilkan dan mengelola daftar dokumen retur pembelian barang.
+
 - SJBB `sjbb`
+  Komponen : SJBB No, Date, Supplier ID, Type (IN/OUT), Status, Material ID, Qty, UOM ID, Notes
+  Fungsi : Mengelola Surat Jalan Bukti Barter (SJBB) untuk pencatatan transaksi penukaran/barter barang dengan pihak supplier/partner.
+
 - Stock Adjustment `#`
   - Stock Adjustment Use `stock-adjustment-use`
+    Komponen : Adjustment No, Date, Warehouse ID, Material ID, System Qty, Physical Qty, Qty Diff, Cost Per Unit, Total Cost, Reason, User
+    Fungsi : Mengelola alokasi pemakaian barang persediaan untuk kebutuhan internal operasional perusahaan.
   - New Stock Adjustment (Standard) `new-stock-adjustment-standard`
+    Komponen : Adjustment No, Date, Warehouse ID, Material ID, System Qty, Physical Qty, Qty Diff, Cost Per Unit, Total Cost Diff, Reason, Status
+    Fungsi : Form pencatatan penyesuaian stok standar berdasarkan hasil perbandingan hitung fisik (Stock Opname) vs sistem.
   - New Stock Adjustment (Internal Use) `new-stock-adjustment-internal-use`
+    Komponen : Adjustment No, Date, Warehouse ID, Department ID, Material ID, Qty Used, Cost Per Unit, Total Cost, Reason, Status
+    Fungsi : Form pencatatan penyesuaian stok khusus untuk barang yang dikeluarkan demi pemakaian internal.
   - Stock Adjustment List `stock-adjustment-list`
+    Komponen : Adjustment No, Date, Warehouse Name, Adjustment Type (Standard/Internal Use), Total Cost Diff, Reason, Status
+    Fungsi : Menampilkan daftar seluruh transaksi penyesuaian stok dan pemakaian internal.
   - Daily Stock Adjustment Report `daily-stock-adjustment-report`
+    Komponen : Date, Adjustment No, Warehouse Name, Adjustment Type, Total Item, Total Cost Diff, User ID
+    Fungsi : Laporan harian rekapitulasi transaksi penyesuaian stok gudang.
   - Daily Stock Adjustment Track Report `daily-stock-adjustment-track-report`
+    Komponen : Date, Adjustment No, Warehouse Name, Material ID, Material Name, System Qty, Physical Qty, Qty Diff, Reason
+    Fungsi : Laporan rekapitulasi audit jejak mutasi kuantitas barang yang mengalami penyesuaian stok.
   - Daily Stock Adjustment Cost Report `daily-stock-adjustment-cost-report`
+    Komponen : Date, Adjustment No, Warehouse Name, Material ID, Material Name, Qty Diff, Unit Cost, Total Valuation Diff
+    Fungsi : Laporan analisis dampak finansial (nilai selisih biaya) dari transaksi penyesuaian stok harian.
+
 - Stock Transfer `#`
   - New Stock Transfer `new-stock-transfer`
+    Komponen : Transfer No, Date, From Warehouse ID, To Warehouse ID, Material ID, Qty Requested, Qty Shipped, Status, Notes
+    Fungsi : Form pengiriman mutasi stok barang langsung antar gudang.
   - Stock Transfer List `stock-transfer-list`
+    Komponen : Transfer No, Date, From Warehouse, To Warehouse, Total Items, Status (Requested/Prepared/In-Transit/Completed/Cancelled)
+    Fungsi : Menampilkan daftar seluruh dokumen mutasi/transfer barang antar gudang.
   - Stock Transfer Shipment Preparation `stock-transfer-shipment-preparation`
+    Komponen : Prep No, Prep Date, Stock Transfer No Ref, Driver Name, Vehicle No, Total Weight, Status
+    Fungsi : Form persiapan muat barang dan alokasi armada pengangkutan untuk proses transfer stok antar gudang.
   - Stock Transfer Shipment Preparation List `stock-transfer-shipment-preparation-list`
+    Komponen : Prep No, Prep Date, Transfer No Ref, Driver Name, Vehicle No, Status
+    Fungsi : Menampilkan daftar dokumen persiapan armada pengiriman transfer stok.
   - New Stock Transfer Request `new-stock-transfer-request`
+    Komponen : Request No, Date, Requester Warehouse ID, Source Warehouse ID, Material ID, Qty Requested, Notes, Status
+    Fungsi : Form pengajuan permintaan pasokan stok dari gudang pemohon ke gudang sumber.
   - Stock Transfer Request List `stock-transfer-request-list`
+    Komponen : Request No, Date, Requester Warehouse, Source Warehouse, Total Items, Status
+    Fungsi : Menampilkan daftar dokumen permintaan transfer stok antar gudang.
   - Daily Stock Transfer Report `daily-stock-transfer-report`
+    Komponen : Date, Transfer No, From Warehouse, To Warehouse, Material ID, Qty Shipped, Qty Received, Status
+    Fungsi : Laporan harian rekapitulasi aktivitas pengiriman dan penerimaan mutasi barang antar gudang.
   - Stock Transfer Fulfilment `stock-transfer-fulfilment`
-- Stock Conversion `stock-convertion`
-- Material Template `material-template`
+    Komponen : Request No, Transfer No, Material ID, Qty Requested, Qty Shipped, Qty Received, Qty Balance, Fulfilment Rate (%)
+    Fungsi : Memantau tingkat pemenuhan pengiriman barang berdasarkan pengajuan permintaan transfer stok.
 
-## Sales & Distribution `#`
+- Stock Conversion `stock-convertion`
+  Komponen : Conversion No, Date, Warehouse ID, Material Template ID, Output Material ID, Output Qty Produced, Raw Material ID, Qty Consumed, Notes
+  Fungsi : Mengelola transaksi perakitan/konversi stok (mengonversi beberapa stok bahan baku menjadi produk jadi berdasarkan resep).
+
+- Material Template `material-template`
+  Komponen : Template ID, Template Code, Template Name, Target Material ID, Target Output Qty, Raw Material ID, Qty Needed, UOM ID, Description
+  Fungsi : Mengelola formulasi resep / Bill of Materials (BOM) standar yang digunakan sebagai acuan proses konversi/perakitan stok.
+
 ## Sales & Distribution `#`
 
 - Customer Master `customer-master`

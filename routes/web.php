@@ -270,6 +270,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('purchase-order-list')->name('purchase-order.')->group(function () {
             Route::get('/', [PurchaseOrderListController::class, 'index'])->name('index');
             Route::get('/table', [PurchaseOrderListController::class, 'table'])->name('table');
+            Route::post('/', [PurchaseOrderListController::class, 'store'])->name('store');
             Route::put('/{id}/status', [PurchaseOrderListController::class, 'updateStatus'])->name('status');
             Route::get('/{id}', [PurchaseOrderListController::class, 'show'])->name('show');
         });

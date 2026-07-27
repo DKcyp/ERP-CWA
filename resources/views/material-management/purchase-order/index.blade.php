@@ -31,6 +31,7 @@
                 </div>
 
                 <div class="col-12 col-md-5 d-flex gap-2 justify-content-md-end">
+                    <button type="button" class="btn btn-primary" id="btn-add"><i class="bi bi-plus-lg me-1"></i>Tambah PO</button>
                     <button type="button" class="btn btn-outline-secondary" id="btn-reset-filter">
                         <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
                     </button>
@@ -60,6 +61,25 @@
             </div>
         </div>
     </div>
+</div>
+
+{{-- Modal Tambah/Edit --}}
+<div class="modal fade" id="modal-po" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable"><div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Tambah PO</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <form id="form-po" action="javascript:onSave()">
+            <div class="modal-body">@csrf
+                <div class="row g-3">
+                    <div class="col-6"><label class="form-label fw-semibold">No. PO <span class="text-danger">*</span></label><input type="text" class="form-control" name="po_number" id="f_po_number" maxlength="50"></div>
+                    <div class="col-6"><label class="form-label fw-semibold">Tanggal <span class="text-danger">*</span></label><input type="date" class="form-control" name="po_date" id="f_po_date"></div>
+                    <div class="col-6"><label class="form-label fw-semibold">Supplier</label><input type="text" class="form-control" name="supplier_name" id="f_supplier" maxlength="200"></div>
+                    <div class="col-6"><label class="form-label fw-semibold">Kode Supplier</label><input type="text" class="form-control" name="supplier_code" id="f_supplier_code" maxlength="50"></div>
+                    <div class="col-12"><label class="form-label fw-semibold">Catatan</label><textarea class="form-control" name="note" id="f_note" rows="2" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button><button type="submit" class="btn btn-primary"><i class="bi bi-floppy me-1"></i> Simpan</button></div>
+        </form>
+    </div></div>
 </div>
 
 {{-- Modal Detail --}}

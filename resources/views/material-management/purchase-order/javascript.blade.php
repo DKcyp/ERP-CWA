@@ -131,5 +131,44 @@
 
     $('#table-po').on('click', '.btn-approve', function () { updateStatusPO($(this).data('id'), 'APPROVED'); });
     $('#table-po').on('click', '.btn-reject', function () { updateStatusPO($(this).data('id'), 'REJECTED'); });
+
+    // ─── TAMBAH PO ────────────────────────────────
+    const poStoreUrl = "{{ route('purchase-order.store') }}";
+    const modalPO = $('#modal-po'), formPO = $('#form-po');
+
+    function resetFormPO() {
+        formPO[0].reset();
+        modalPO.find('.is-invalid').removeClass('is-invalid');
+        modalPO.find('.invalid-feedback').remove();
+        modalPO.find('.modal-title').text('Tambah PO');
+    }
+
+    $('#btn-add').on('click', function () { resetFormPO(); modalPO.modal('show'); });
+    modalPO.on('hidden.bs.modal', resetFormPO);
+
+    window.onSave = function () {
+        const fd = formPO.serializeArray();
+        $.ajax({
+            url: poStoreUrl,
+            type: 'POST',
+            data: fd,
+            dataType: 'json',
+            success: function (d) {
+                Swal.fire({ title: 'Sukses!', text: d.message, icon: 'success', confirmButtonText: 'OK' })
+                    .then(function () { resetFormPO(); modalPO.modal('hide'); tablePO.ajax.reload(null, false); });
+            },
+            error: function (x) {
+                const r = x.responseJSON || {};
+                if (x.status === 422 && r.errors) {
+                    Object.entries(r.errors).forEach(function ([k, m]) {
+                        const i = formPO.find('[name="' + k + '"]').first();
+                        if (i) { i.addClass('is-invalid'); i.closest('.col-6,.col-12').append('<div class="invalid-feedback">' + m[0] + '</div>'); }
+                    });
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Error', text: r.message || 'Terjadi kesalahan.' });
+                }
+            }
+        });
+    };
 </script>
 @endpush
