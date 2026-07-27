@@ -37,6 +37,7 @@ class PurchaseOrderListController extends Controller
         if ($request->filled('filter_search')) {
             $q = $request->filter_search;
             $data = array_filter($data, fn($i) =>
+                stripos($i['pr_number'] ?? '', $q) !== false ||
                 stripos($i['po_number'] ?? '', $q) !== false ||
                 stripos($i['supplier_name'] ?? '', $q) !== false
             );
@@ -85,19 +86,20 @@ class PurchaseOrderListController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'po_number'     => ['required','string','max:50'],
-            'po_date'       => ['required','date'],
-            'supplier_name' => ['nullable','string','max:200'],
-            'supplier_code' => ['nullable','string','max:50'],
-            'note'          => ['nullable','string','max:500'],
-            'status'        => ['required','string','in:DRAFT,PENDING,APPROVED,REJECTED,FULFILLED'],
-            'items'         => ['nullable','string'],
+            'pr_number'      => ['required','string','max:50'],
+            'po_number'      => ['required','string','max:50'],
+            'po_date'        => ['required','date'],
+            'supplier_name'  => ['nullable','string','max:200'],
+            'supplier_code'  => ['nullable','string','max:50'],
+            'note'           => ['nullable','string','max:500'],
+            'status'         => ['required','string','in:DRAFT,PENDING,APPROVED,REJECTED,FULFILLED'],
+            'items'          => ['nullable','string'],
         ]);
 
         $items = $request->input('items') ? json_decode($request->input('items'), true) : [];
 
         $this->store->create(array_merge(
-            $request->only('po_number','po_date','supplier_name','supplier_code','note','status'),
+            $request->only('pr_number','po_number','po_date','supplier_name','supplier_code','note','status'),
             ['items' => $items]
         ));
         return response()->json(['message' => 'PO berhasil ditambahkan.']);
@@ -106,19 +108,20 @@ class PurchaseOrderListController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'po_number'     => ['required','string','max:50'],
-            'po_date'       => ['required','date'],
-            'supplier_name' => ['nullable','string','max:200'],
-            'supplier_code' => ['nullable','string','max:50'],
-            'note'          => ['nullable','string','max:500'],
-            'status'        => ['required','string','in:DRAFT,PENDING,APPROVED,REJECTED,FULFILLED'],
-            'items'         => ['nullable','string'],
+            'pr_number'      => ['required','string','max:50'],
+            'po_number'      => ['required','string','max:50'],
+            'po_date'        => ['required','date'],
+            'supplier_name'  => ['nullable','string','max:200'],
+            'supplier_code'  => ['nullable','string','max:50'],
+            'note'           => ['nullable','string','max:500'],
+            'status'         => ['required','string','in:DRAFT,PENDING,APPROVED,REJECTED,FULFILLED'],
+            'items'          => ['nullable','string'],
         ]);
 
         $items = $request->input('items') ? json_decode($request->input('items'), true) : [];
 
         $this->store->update($id, array_merge(
-            $request->only('po_number','po_date','supplier_name','supplier_code','note','status'),
+            $request->only('pr_number','po_number','po_date','supplier_name','supplier_code','note','status'),
             ['items' => $items]
         ));
         return response()->json(['message' => 'PO berhasil diperbarui.']);

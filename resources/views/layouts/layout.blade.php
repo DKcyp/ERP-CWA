@@ -65,9 +65,9 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="{{ url('/') }}" class="d-flex align-items-center gap-2 text-decoration-none">
-                                <img src="{{ asset('logo.png') }}" alt="Logo ERP CWA" class="sidebar-brand-icon" style="height:36px; width:auto; object-fit:contain;">
-                                <h4 class="sidebar-brand-title mb-0">ERP <span>CWA</span></h4>
+                            <a href="{{ url('/') }}" class="d-flex align-items-center gap-3 text-decoration-none">
+                                <img src="{{ asset('logo.png') }}" alt="Logo ERP CWA" class="sidebar-brand-icon" style="height:48px; width:auto; object-fit:contain;">
+                                <h4 class="sidebar-brand-title mb-0" style="font-size:18px; font-weight:600;">ERP <span style="color:#FF6B6B;">CWA</span></h4>
                             </a>
                         </div>
                         <div class="sidebar-toggler x">

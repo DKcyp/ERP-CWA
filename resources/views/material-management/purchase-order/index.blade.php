@@ -46,16 +46,17 @@
             <div class="table-responsive">
                 <table class="table table-hover align-middle w-100" id="table-po">
                     <thead class="table-light">
-                        <tr>
-                            <th style="width:40px;" class="text-center">No</th>
-                            <th>No. PO</th>
-                            <th class="text-center">Tanggal</th>
-                            <th>Supplier</th>
-                            <th class="text-center">Total Item</th>
-                            <th class="text-end">Total Amount</th>
-                            <th style="width:110px;" class="text-center">Status</th>
-                            <th style="width:80px;" class="text-center">Aksi</th>
-                        </tr>
+                            <tr>
+                                <th style="width:40px;" class="text-center">No</th>
+                                <th>No. PR</th>
+                                <th>No. PO</th>
+                                <th class="text-center">Tanggal</th>
+                                <th>Supplier</th>
+                                <th class="text-center">Total Item</th>
+                                <th class="text-end">Total Amount</th>
+                                <th style="width:110px;" class="text-center">Status</th>
+                                <th style="width:100px;" class="text-center">Aksi</th>
+                            </tr>
                     </thead>
                 </table>
             </div>
@@ -70,6 +71,7 @@
         <form id="form-po" action="javascript:onSave()">
             <div class="modal-body">@csrf<input type="hidden" id="po_id">
                 <div class="row g-3 mb-4">
+                    <div class="col-4"><label class="form-label fw-semibold">No. PR <span class="text-danger">*</span></label><input type="text" class="form-control" name="pr_number" id="f_pr_number" maxlength="50" placeholder="PR-2026-0001"></div>
                     <div class="col-4"><label class="form-label fw-semibold">No. PO <span class="text-danger">*</span></label><input type="text" class="form-control" name="po_number" id="f_po_number" maxlength="50"></div>
                     <div class="col-4"><label class="form-label fw-semibold">Tanggal <span class="text-danger">*</span></label><input type="date" class="form-control" name="po_date" id="f_po_date"></div>
                     <div class="col-4"><label class="form-label fw-semibold">Status</label><select class="form-select" name="status" id="f_status"><option value="DRAFT">Draft</option><option value="PENDING">Pending</option><option value="APPROVED">Approved</option><option value="REJECTED">Rejected</option><option value="FULFILLED">Fulfilled</option></select></div>
@@ -111,6 +113,10 @@
             </div>
             <div class="modal-body">
                 <div class="row g-3 mb-3">
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">No. PR</small>
+                        <span id="detail-po-pr" class="fw-semibold">-</span>
+                    </div>
                     <div class="col-md-4">
                         <small class="text-muted d-block">Tanggal</small>
                         <span id="detail-po-date" class="fw-semibold">-</span>

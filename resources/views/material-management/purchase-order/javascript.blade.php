@@ -36,6 +36,7 @@
         },
         columns: [
             { data: 'DT_RowIndex',   name: 'DT_RowIndex',   orderable: false, searchable: false, className: 'text-center' },
+            { data: 'pr_number',     name: 'pr_number' },
             { data: 'po_number',     name: 'po_number' },
             { data: 'po_date_fmt',   name: 'po_date',       className: 'text-center' },
             { data: 'supplier_name', name: 'supplier_name' },
@@ -63,6 +64,7 @@
             .done(function (res) {
                 const d = res.data || {};
                 $('#detail-po-number').text(d.po_number ?? '-');
+                $('#detail-po-pr').text(d.pr_number ?? '-');
                 $('#detail-po-date').text(d.po_date ?? '-');
                 $('#detail-po-supplier').text(d.supplier_name ?? '-');
                 $('#detail-po-note').text(d.note ?? '-');
@@ -258,6 +260,7 @@
         $.get(poShowUrl.replace('__ID__', id)).done(function (res) {
             const d = res.data || {};
             idInputPO.val(d.id);
+            $('#f_pr_number').val(d.pr_number ?? '');
             $('#f_po_number').val(d.po_number ?? '');
             $('#f_po_date').val(d.po_date ?? '');
             $('#f_supplier').val(d.supplier_name ?? '');
