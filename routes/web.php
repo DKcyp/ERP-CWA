@@ -93,6 +93,7 @@ use App\Http\Controllers\TransitArea\SalesmanArListPmbController;
 use App\Http\Controllers\TransitArea\InvoiceExpeditionController;
 use App\Http\Controllers\TransitArea\ShippingInvoiceExpeditionController;
 use App\Http\Controllers\TransitArea\TransitAreaTargetController;
+use App\Http\Controllers\TransitArea\UbmDailyControlProgressSalesReportController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -796,6 +797,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [TransitAreaTargetController::class, 'show'])->name('show');
             Route::put('/{id}', [TransitAreaTargetController::class, 'update'])->name('update');
             Route::delete('/{id}', [TransitAreaTargetController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('ubm-daily-control-progress-sales-report')->name('ubm-daily-control-progress-sales-report.')->group(function () {
+            Route::get('/', [UbmDailyControlProgressSalesReportController::class, 'index'])->name('index');
+            Route::get('/table', [UbmDailyControlProgressSalesReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [UbmDailyControlProgressSalesReportController::class, 'show'])->name('show');
         });
 
     });
