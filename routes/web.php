@@ -28,6 +28,7 @@ use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
 use App\Http\Controllers\MaterialManagement\PurchaseInvoiceListController;
 use App\Http\Controllers\MaterialManagement\StockConvertionController;
+use App\Http\Controllers\MaterialManagement\MaterialTemplateController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseInvoiceReportController;
 use App\Http\Controllers\MaterialManagement\MonthlyPurchaseBySupplierReportController;
 use App\Http\Controllers\MaterialManagement\StbjController;
@@ -309,6 +310,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [StockConvertionController::class, 'show'])->name('show');
             Route::put('/{id}', [StockConvertionController::class, 'update'])->name('update');
             Route::delete('/{id}', [StockConvertionController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('material-template')->name('material-template.')->group(function () {
+            Route::get('/', [MaterialTemplateController::class, 'index'])->name('index');
+            Route::get('/table', [MaterialTemplateController::class, 'table'])->name('table');
+            Route::post('/', [MaterialTemplateController::class, 'store'])->name('store');
+            Route::get('/{id}', [MaterialTemplateController::class, 'show'])->name('show');
+            Route::put('/{id}', [MaterialTemplateController::class, 'update'])->name('update');
+            Route::delete('/{id}', [MaterialTemplateController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('daily-purchase-invoice-report')->name('daily-invoice.')->group(function () {
