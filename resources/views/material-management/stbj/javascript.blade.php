@@ -33,7 +33,7 @@
             { data: 'stbj_number',   name: 'stbj_number' },
             { data: 'stbj_date_fmt', name: 'stbj_date',     className: 'text-center' },
             { data: 'supplier_name', name: 'supplier_name' },
-            { data: 'invoice_number', name: 'invoice_number' },
+            { data: 'po_number', name: 'po_number' },
             { data: 'total_items',   name: 'total_items',   className: 'text-center' },
             { data: 'total_amount',  name: 'total_amount',  className: 'text-end' },
             { data: 'status_badge',  name: 'status',        orderable: false, searchable: false, className: 'text-center' },
@@ -178,7 +178,7 @@
                 $('#stbj_number').val(d.stbj_number ?? '');
                 $('#stbj_date').val(d.stbj_date ?? '');
                 $('#stbj_supplier').val(d.supplier_name ?? '');
-                $('#stbj_invoice').val(d.invoice_number ?? '');
+                $('#stbj_po').val(d.po_number ?? '');
                 $('#stbj_status').val(d.status ?? 'DRAFT');
                 $('#stbj_note').val(d.note ?? '');
                 populateItems(d.items ?? []);

@@ -39,7 +39,7 @@ class StbjController extends Controller
             $data = array_filter($data, fn($i) =>
                 stripos($i['stbj_number'] ?? '', $q) !== false ||
                 stripos($i['supplier_name'] ?? '', $q) !== false ||
-                stripos($i['invoice_number'] ?? '', $q) !== false
+                stripos($i['po_number'] ?? '', $q) !== false
             );
         }
 
@@ -88,7 +88,7 @@ class StbjController extends Controller
             'stbj_number'    => ['required', 'string', 'max:50'],
             'stbj_date'      => ['required', 'date'],
             'supplier_name'  => ['required', 'string', 'max:200'],
-            'invoice_number' => ['nullable', 'string', 'max:50'],
+            'po_number' => ['nullable', 'string', 'max:50'],
             'note'           => ['nullable', 'string'],
             'status'         => ['required', 'string', 'in:DRAFT,PENDING,APPROVED,REJECTED,PAID'],
             'items'          => ['nullable', 'string'],
@@ -97,7 +97,7 @@ class StbjController extends Controller
         $items = $request->input('items') ? json_decode($request->input('items'), true) : [];
         $items = array_map(fn($i) => $i + ['amount' => (int)($i['amount'] ?? 0)], $items);
 
-        $this->store->create($request->only('stbj_number', 'stbj_date', 'supplier_name', 'invoice_number', 'note', 'status') + [
+        $this->store->create($request->only('stbj_number', 'stbj_date', 'supplier_name', 'po_number', 'note', 'status') + [
             'items' => $items,
         ]);
 
@@ -118,7 +118,7 @@ class StbjController extends Controller
             'stbj_number'    => ['required', 'string', 'max:50'],
             'stbj_date'      => ['required', 'date'],
             'supplier_name'  => ['required', 'string', 'max:200'],
-            'invoice_number' => ['nullable', 'string', 'max:50'],
+            'po_number' => ['nullable', 'string', 'max:50'],
             'note'           => ['nullable', 'string'],
             'status'         => ['required', 'string', 'in:DRAFT,PENDING,APPROVED,REJECTED,PAID'],
             'items'          => ['nullable', 'string'],
@@ -127,7 +127,7 @@ class StbjController extends Controller
         $items = $request->input('items') ? json_decode($request->input('items'), true) : [];
         $items = array_map(fn($i) => $i + ['amount' => (int)($i['amount'] ?? 0)], $items);
 
-        $this->store->update($id, $request->only('stbj_number', 'stbj_date', 'supplier_name', 'invoice_number', 'note', 'status') + [
+        $this->store->update($id, $request->only('stbj_number', 'stbj_date', 'supplier_name', 'po_number', 'note', 'status') + [
             'items' => $items,
         ]);
 

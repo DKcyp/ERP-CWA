@@ -12,7 +12,7 @@
                     <label class="form-label fw-semibold mb-1 small text-muted">
                         <i class="bi bi-search me-1"></i>Cari STBJ
                     </label>
-                    <input type="text" class="form-control" id="filter-search" placeholder="Cari nomor STBJ, supplier, atau invoice...">
+                    <input type="text" class="form-control" id="filter-search" placeholder="Cari nomor STBJ, supplier, atau PO...">
                 </div>
 
                 <div class="col-12 col-md-3">

@@ -41,9 +41,9 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="stbj_invoice" class="form-label fw-semibold">No. Invoice</label>
-                            <input type="text" class="form-control" id="stbj_invoice" name="invoice_number"
-                                   placeholder="Cth: INV-2026-0001" maxlength="50">
+                            <label for="stbj_po" class="form-label fw-semibold">No. PO</label>
+                            <input type="text" class="form-control" id="stbj_po" name="po_number"
+                                   placeholder="Cth: PO-2026-0001" maxlength="50">
                         </div>
 
                         <div class="col-12">
