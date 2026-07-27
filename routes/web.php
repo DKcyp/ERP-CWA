@@ -85,6 +85,7 @@ use App\Http\Controllers\TransitArea\DailySalesPoClosingReportController;
 use App\Http\Controllers\TransitArea\DailySalesByBrandReportController;
 use App\Http\Controllers\TransitArea\DailyPaymentRecapReportController;
 use App\Http\Controllers\TransitArea\ChequeManagementController;
+use App\Http\Controllers\TransitArea\RlhpController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -728,6 +729,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [ChequeManagementController::class, 'show'])->name('show');
             Route::put('/{id}', [ChequeManagementController::class, 'update'])->name('update');
             Route::delete('/{id}', [ChequeManagementController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('rlhp')->name('rlhp.')->group(function () {
+            Route::get('/', [RlhpController::class, 'index'])->name('index');
+            Route::get('/table', [RlhpController::class, 'table'])->name('table');
+            Route::post('/', [RlhpController::class, 'store'])->name('store');
+            Route::get('/{id}', [RlhpController::class, 'show'])->name('show');
+            Route::put('/{id}', [RlhpController::class, 'update'])->name('update');
+            Route::delete('/{id}', [RlhpController::class, 'destroy'])->name('destroy');
         });
 
     });
