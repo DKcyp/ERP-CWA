@@ -35,9 +35,9 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label for="inv_po" class="form-label fw-semibold">No. PO <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="inv_po" name="po_number"
-                                   placeholder="Cth: PO-2026-0001" maxlength="50">
+                            <label for="inv_stbj" class="form-label fw-semibold">No. STBJ</label>
+                            <input type="text" class="form-control" id="inv_stbj" name="stbj_number"
+                                   placeholder="Cth: STBJ-2026-0001" maxlength="50">
                         </div>
 
                         <div class="col-md-8">

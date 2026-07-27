@@ -33,7 +33,7 @@
             { data: 'DT_RowIndex',     name: 'DT_RowIndex',     orderable: false, searchable: false, className: 'text-center' },
             { data: 'invoice_number',  name: 'invoice_number' },
             { data: 'invoice_date_fmt', name: 'invoice_date',   className: 'text-center' },
-            { data: 'po_number',       name: 'po_number' },
+            { data: 'stbj_number',       name: 'stbj_number' },
             { data: 'supplier_name',   name: 'supplier_name' },
             { data: 'total_items',     name: 'total_items',     className: 'text-center' },
             { data: 'total_amount',    name: 'total_amount',    className: 'text-end' },
@@ -208,7 +208,7 @@
                 idInputINV.val(d.id);
                 $('#inv_number').val(d.invoice_number ?? '');
                 $('#inv_date').val(d.invoice_date ?? '');
-                $('#inv_po').val(d.po_number ?? '');
+                $('#inv_stbj').val(d.stbj_number ?? '');
                 $('#inv_supplier').val(d.supplier_name ?? '');
                 $('#inv_status').val(d.status ?? 'DRAFT');
                 $('#inv_note').val(d.note ?? '');

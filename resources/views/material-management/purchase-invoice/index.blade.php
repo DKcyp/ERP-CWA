@@ -13,7 +13,7 @@
                     <label class="form-label fw-semibold mb-1 small text-muted">
                         <i class="bi bi-search me-1"></i>Cari Invoice
                     </label>
-                    <input type="text" class="form-control" id="filter-search" placeholder="Cari nomor invoice, PO, atau supplier...">
+                    <input type="text" class="form-control" id="filter-search" placeholder="Cari nomor invoice, STBJ, atau supplier...">
                 </div>
 
                 <div class="col-12 col-md-3">
@@ -52,7 +52,7 @@
                             <th style="width:40px;" class="text-center">No</th>
                             <th>No. Invoice</th>
                             <th class="text-center">Tanggal</th>
-                            <th>No. PO</th>
+                            <th>No. STBJ</th>
                             <th>Supplier</th>
                             <th class="text-center">Total Item</th>
                             <th class="text-end">Total Amount</th>

@@ -39,7 +39,7 @@ class PurchaseInvoiceListController extends Controller
             $data = array_filter($data, fn($i) =>
                 stripos($i['invoice_number'] ?? '', $q) !== false ||
                 stripos($i['supplier_name'] ?? '', $q) !== false ||
-                stripos($i['po_number'] ?? '', $q) !== false
+                stripos($i['stbj_number'] ?? '', $q) !== false
             );
         }
 
@@ -88,7 +88,7 @@ class PurchaseInvoiceListController extends Controller
             'invoice_number' => ['required', 'string', 'max:50'],
             'invoice_date'   => ['required', 'date'],
             'due_date'       => ['nullable', 'date'],
-            'po_number'      => ['required', 'string', 'max:50'],
+            'stbj_number'      => ['required', 'string', 'max:50'],
             'supplier_name'  => ['required', 'string', 'max:200'],
             'currency'       => ['nullable', 'string', 'max:10'],
             'rate'           => ['nullable', 'integer', 'min:1'],
@@ -103,7 +103,7 @@ class PurchaseInvoiceListController extends Controller
         $items = $request->input('items') ? json_decode($request->input('items'), true) : [];
         $items = array_map(fn($i) => $i + ['price' => (int)($i['price'] ?? 0)], $items);
 
-        $this->store->create($request->only('invoice_number', 'invoice_date', 'due_date', 'po_number', 'supplier_name', 'currency', 'rate', 'total', 'paid_amount', 'term', 'note', 'status') + [
+        $this->store->create($request->only('invoice_number', 'invoice_date', 'due_date', 'stbj_number', 'supplier_name', 'currency', 'rate', 'total', 'paid_amount', 'term', 'note', 'status') + [
             'items' => $items,
         ]);
 
@@ -124,7 +124,7 @@ class PurchaseInvoiceListController extends Controller
             'invoice_number' => ['required', 'string', 'max:50'],
             'invoice_date'   => ['required', 'date'],
             'due_date'       => ['nullable', 'date'],
-            'po_number'      => ['required', 'string', 'max:50'],
+            'stbj_number'      => ['required', 'string', 'max:50'],
             'supplier_name'  => ['required', 'string', 'max:200'],
             'currency'       => ['nullable', 'string', 'max:10'],
             'rate'           => ['nullable', 'integer', 'min:1'],
@@ -139,7 +139,7 @@ class PurchaseInvoiceListController extends Controller
         $items = $request->input('items') ? json_decode($request->input('items'), true) : [];
         $items = array_map(fn($i) => $i + ['price' => (int)($i['price'] ?? 0)], $items);
 
-        $this->store->update($id, $request->only('invoice_number', 'invoice_date', 'due_date', 'po_number', 'supplier_name', 'currency', 'rate', 'total', 'paid_amount', 'term', 'note', 'status') + [
+        $this->store->update($id, $request->only('invoice_number', 'invoice_date', 'due_date', 'stbj_number', 'supplier_name', 'currency', 'rate', 'total', 'paid_amount', 'term', 'note', 'status') + [
             'items' => $items,
         ]);
 
