@@ -86,6 +86,7 @@ use App\Http\Controllers\TransitArea\DailySalesByBrandReportController;
 use App\Http\Controllers\TransitArea\DailyPaymentRecapReportController;
 use App\Http\Controllers\TransitArea\ChequeManagementController;
 use App\Http\Controllers\TransitArea\RlhpController;
+use App\Http\Controllers\TransitArea\ArPerCustomerReportController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -738,6 +739,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [RlhpController::class, 'show'])->name('show');
             Route::put('/{id}', [RlhpController::class, 'update'])->name('update');
             Route::delete('/{id}', [RlhpController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('ar-per-customer-report')->name('ar-per-customer-report.')->group(function () {
+            Route::get('/', [ArPerCustomerReportController::class, 'index'])->name('index');
+            Route::get('/table', [ArPerCustomerReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [ArPerCustomerReportController::class, 'show'])->name('show');
         });
 
     });
