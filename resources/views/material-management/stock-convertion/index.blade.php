@@ -4,11 +4,19 @@
 <div class="page-content">
     <div class="card border-0 shadow-sm hz-card mb-4"><div class="card-body">
         <div class="row g-3 align-items-end">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label class="form-label fw-semibold mb-1 small text-muted"><i class="bi bi-search me-1"></i>Cari</label>
                 <input type="text" class="form-control" id="filter-search" placeholder="Cari conversion no, material, atau warehouse...">
             </div>
-            <div class="col-md-8 d-flex gap-2 justify-content-md-end">
+            <div class="col-md-2">
+                <label class="form-label fw-semibold mb-1 small text-muted"><i class="bi bi-calendar me-1"></i>Dari</label>
+                <input type="date" class="form-control" id="filter-date-from">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label fw-semibold mb-1 small text-muted"><i class="bi bi-calendar me-1"></i>Sampai</label>
+                <input type="date" class="form-control" id="filter-date-to">
+            </div>
+            <div class="col-md-5 d-flex gap-2 justify-content-md-end">
                 <button type="button" class="btn btn-outline-secondary" id="btn-reset-filter"><i class="bi bi-arrow-counterclockwise me-1"></i>Reset</button>
                 <button type="button" class="btn btn-primary" id="btn-add"><i class="bi bi-plus-lg me-1"></i>Tambah Conversion</button>
             </div>
@@ -55,13 +63,14 @@
 <script>
 const tableUrl="{{route('stock-convertion.table')}}",storeUrl="{{route('stock-convertion.store')}}",showUrl="{{route('stock-convertion.show','__ID__')}}",updateUrl="{{route('stock-convertion.update','__ID__')}}",deleteUrl="{{route('stock-convertion.destroy','__ID__')}}",csrf=$('meta[name="csrf-token"]').attr('content');
 $.ajaxSetup({headers:{'X-CSRF-TOKEN':csrf}});
-const tbl=$('#table-data').DataTable({processing:true,serverSide:true,scrollX:true,ajax:{url:tableUrl,data:function(d){d.filter_search=$('#filter-search').val()}},columns:[
+const tbl=$('#table-data').DataTable({processing:true,serverSide:true,scrollX:true,ajax:{url:tableUrl,data:function(d){d.filter_search=$('#filter-search').val();d.filter_date_from=$('#filter-date-from').val();d.filter_date_to=$('#filter-date-to').val()}},columns:[
 {data:'DT_RowIndex',name:'DT_RowIndex',orderable:false,searchable:false,className:'text-center'},
 {data:'conversion_no',name:'conversion_no'},{data:'date_fmt',name:'date',className:'text-center'},{data:'warehouse_id',name:'warehouse_id'},
 {data:'material_template',name:'material_template'},{data:'output_material',name:'output_material'},{data:'qty_produced_fmt',name:'qty_produced',className:'text-end'},
 {data:'raw_material',name:'raw_material'},{data:'qty_consumed_fmt',name:'qty_consumed',className:'text-end'},{data:'notes',name:'notes',render:function(d){return d||'-'}},{data:'action',name:'action',orderable:false,searchable:false,className:'text-end'}]});
 $('#filter-search').on('keyup',function(){tbl.ajax.reload()});
-$('#btn-reset-filter').on('click',function(){$('#filter-search').val('');tbl.ajax.reload()});
+$('#filter-date-from,#filter-date-to').on('change',function(){tbl.ajax.reload()});
+$('#btn-reset-filter').on('click',function(){$('#filter-search').val('');$('#filter-date-from').val('');$('#filter-date-to').val('');tbl.ajax.reload()});
 const modal=$('#modal-data'),form=$('#form-data'),idI=$('#data_id');
 function resetForm(){form[0].reset();idI.val('');form.find('.is-invalid').removeClass('is-invalid');form.find('.invalid-feedback').remove();modal.find('.modal-title').text('Tambah Conversion');}
 $('#btn-add').on('click',function(){resetForm();modal.modal('show')});

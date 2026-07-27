@@ -23,9 +23,16 @@ class StockConvertionController extends Controller
         return view('material-management.stock-convertion.index');
     }
 
-    public function table()
+    public function table(Request $request)
     {
         $data = $this->store->all();
+
+        if ($request->filled('filter_date_from')) {
+            $data = array_filter($data, fn($i) => ($i['date'] ?? '') >= $request->filter_date_from);
+        }
+        if ($request->filled('filter_date_to')) {
+            $data = array_filter($data, fn($i) => ($i['date'] ?? '') <= $request->filter_date_to);
+        }
 
         if ($request->filled('filter_search')) {
             $q = $request->filter_search;
