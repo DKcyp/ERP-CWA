@@ -92,6 +92,7 @@ use App\Http\Controllers\TransitArea\InvoiceCustomerArListReportController;
 use App\Http\Controllers\TransitArea\SalesmanArListPmbController;
 use App\Http\Controllers\TransitArea\InvoiceExpeditionController;
 use App\Http\Controllers\TransitArea\ShippingInvoiceExpeditionController;
+use App\Http\Controllers\TransitArea\TransitAreaTargetController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -786,6 +787,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [ShippingInvoiceExpeditionController::class, 'show'])->name('show');
             Route::put('/{id}', [ShippingInvoiceExpeditionController::class, 'update'])->name('update');
             Route::delete('/{id}', [ShippingInvoiceExpeditionController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('transit-area-target')->name('transit-area-target.')->group(function () {
+            Route::get('/', [TransitAreaTargetController::class, 'index'])->name('index');
+            Route::get('/table', [TransitAreaTargetController::class, 'table'])->name('table');
+            Route::post('/', [TransitAreaTargetController::class, 'store'])->name('store');
+            Route::get('/{id}', [TransitAreaTargetController::class, 'show'])->name('show');
+            Route::put('/{id}', [TransitAreaTargetController::class, 'update'])->name('update');
+            Route::delete('/{id}', [TransitAreaTargetController::class, 'destroy'])->name('destroy');
         });
 
     });
