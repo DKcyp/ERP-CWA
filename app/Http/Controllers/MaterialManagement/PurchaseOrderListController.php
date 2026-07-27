@@ -69,10 +69,12 @@ class PurchaseOrderListController extends Controller
                 $status = $row['status'] ?? 'DRAFT';
                 $btns = '<div class="btn-group btn-group-sm">';
                 $btns .= '<button type="button" class="btn btn-outline-primary btn-detail" data-id="' . $id . '"><i class="bi bi-eye"></i></button>';
+                $btns .= '<button type="button" class="btn btn-outline-warning btn-edit" data-id="' . $id . '"><i class="bi bi-pencil"></i></button>';
                 if (in_array($status, ['DRAFT', 'PENDING'])) {
                     $btns .= '<button type="button" class="btn btn-outline-success btn-approve" data-id="' . $id . '"><i class="bi bi-check-lg"></i></button>';
                     $btns .= '<button type="button" class="btn btn-outline-danger btn-reject" data-id="' . $id . '"><i class="bi bi-x-lg"></i></button>';
                 }
+                $btns .= '<button type="button" class="btn btn-outline-danger btn-delete" data-id="' . $id . '"><i class="bi bi-trash"></i></button>';
                 $btns .= '</div>';
                 return $btns;
             })
@@ -88,12 +90,44 @@ class PurchaseOrderListController extends Controller
             'supplier_name' => ['nullable','string','max:200'],
             'supplier_code' => ['nullable','string','max:50'],
             'note'          => ['nullable','string','max:500'],
+            'status'        => ['required','string','in:DRAFT,PENDING,APPROVED,REJECTED,FULFILLED'],
+            'items'         => ['nullable','string'],
         ]);
+
+        $items = $request->input('items') ? json_decode($request->input('items'), true) : [];
+
         $this->store->create(array_merge(
-            $request->only('po_number','po_date','supplier_name','supplier_code','note'),
-            ['status' => 'DRAFT', 'items' => []]
+            $request->only('po_number','po_date','supplier_name','supplier_code','note','status'),
+            ['items' => $items]
         ));
         return response()->json(['message' => 'PO berhasil ditambahkan.']);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'po_number'     => ['required','string','max:50'],
+            'po_date'       => ['required','date'],
+            'supplier_name' => ['nullable','string','max:200'],
+            'supplier_code' => ['nullable','string','max:50'],
+            'note'          => ['nullable','string','max:500'],
+            'status'        => ['required','string','in:DRAFT,PENDING,APPROVED,REJECTED,FULFILLED'],
+            'items'         => ['nullable','string'],
+        ]);
+
+        $items = $request->input('items') ? json_decode($request->input('items'), true) : [];
+
+        $this->store->update($id, array_merge(
+            $request->only('po_number','po_date','supplier_name','supplier_code','note','status'),
+            ['items' => $items]
+        ));
+        return response()->json(['message' => 'PO berhasil diperbarui.']);
+    }
+
+    public function destroy($id)
+    {
+        $this->store->delete($id);
+        return response()->json(['message' => 'PO berhasil dihapus.']);
     }
 
     public function updateStatus(Request $request, $id)

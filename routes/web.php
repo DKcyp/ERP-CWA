@@ -273,6 +273,8 @@ Route::middleware('auth')->group(function () {
             Route::post('/', [PurchaseOrderListController::class, 'store'])->name('store');
             Route::put('/{id}/status', [PurchaseOrderListController::class, 'updateStatus'])->name('status');
             Route::get('/{id}', [PurchaseOrderListController::class, 'show'])->name('show');
+            Route::put('/{id}', [PurchaseOrderListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PurchaseOrderListController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('purchase-fulfillment-report')->name('purchase-fulfill.')->group(function () {
