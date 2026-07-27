@@ -26,6 +26,18 @@ class StockConvertionController extends Controller
     public function table()
     {
         $data = $this->store->all();
+
+        if ($request->filled('filter_search')) {
+            $q = $request->filter_search;
+            $data = array_filter($data, fn($i) =>
+                stripos($i['conversion_no'] ?? '', $q) !== false ||
+                stripos($i['warehouse_id'] ?? '', $q) !== false ||
+                stripos($i['output_material'] ?? '', $q) !== false ||
+                stripos($i['raw_material'] ?? '', $q) !== false ||
+                stripos($i['material_template'] ?? '', $q) !== false
+            );
+        }
+
         return DataTables::of(array_values($data))
             ->addIndexColumn()
             ->addColumn('date_fmt', fn($r) => $r['date'] ? \Carbon\Carbon::parse($r['date'])->format('d/m/Y') : '-')
