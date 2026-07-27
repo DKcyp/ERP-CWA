@@ -731,7 +731,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{id}', [ChequeManagementController::class, 'destroy'])->name('destroy');
         });
 
-        Route::prefix('rlhp')->name('rlhp.')->group(function () {
+        Route::prefix('rlhp-rincian-laporan-hasil-penagihan')->name('rlhp.')->group(function () {
             Route::get('/', [RlhpController::class, 'index'])->name('index');
             Route::get('/table', [RlhpController::class, 'table'])->name('table');
             Route::post('/', [RlhpController::class, 'store'])->name('store');
