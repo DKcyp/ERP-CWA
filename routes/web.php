@@ -90,6 +90,7 @@ use App\Http\Controllers\TransitArea\ArPerCustomerReportController;
 use App\Http\Controllers\TransitArea\CustomerArPositionReportController;
 use App\Http\Controllers\TransitArea\InvoiceCustomerArListReportController;
 use App\Http\Controllers\TransitArea\SalesmanArListPmbController;
+use App\Http\Controllers\TransitArea\InvoiceExpeditionController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -766,6 +767,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [SalesmanArListPmbController::class, 'index'])->name('index');
             Route::get('/table', [SalesmanArListPmbController::class, 'table'])->name('table');
             Route::get('/{id}', [SalesmanArListPmbController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('invoice-expedition')->name('invoice-expedition.')->group(function () {
+            Route::get('/', [InvoiceExpeditionController::class, 'index'])->name('index');
+            Route::get('/table', [InvoiceExpeditionController::class, 'table'])->name('table');
+            Route::post('/', [InvoiceExpeditionController::class, 'store'])->name('store');
+            Route::get('/{id}', [InvoiceExpeditionController::class, 'show'])->name('show');
+            Route::put('/{id}', [InvoiceExpeditionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [InvoiceExpeditionController::class, 'destroy'])->name('destroy');
         });
 
     });
