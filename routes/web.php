@@ -95,6 +95,7 @@ use App\Http\Controllers\TransitArea\ShippingInvoiceExpeditionController;
 use App\Http\Controllers\TransitArea\TransitAreaTargetController;
 use App\Http\Controllers\TransitArea\UbmDailyControlProgressSalesReportController;
 use App\Http\Controllers\TransitArea\TransitAreaNewBrandController;
+use App\Http\Controllers\TransitArea\UbmNewProductSalesReportController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -813,6 +814,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [TransitAreaNewBrandController::class, 'show'])->name('show');
             Route::put('/{id}', [TransitAreaNewBrandController::class, 'update'])->name('update');
             Route::delete('/{id}', [TransitAreaNewBrandController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('ubm-new-product-sales-report')->name('ubm-new-product-sales-report.')->group(function () {
+            Route::get('/', [UbmNewProductSalesReportController::class, 'index'])->name('index');
+            Route::get('/table', [UbmNewProductSalesReportController::class, 'table'])->name('table');
+            Route::get('/{id}', [UbmNewProductSalesReportController::class, 'show'])->name('show');
         });
 
     });
