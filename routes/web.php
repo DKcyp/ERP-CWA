@@ -98,6 +98,7 @@ use App\Http\Controllers\TransitArea\TransitAreaNewBrandController;
 use App\Http\Controllers\TransitArea\UbmNewProductSalesReportController;
 use App\Http\Controllers\TransitArea\UbmCollectionProgressReportController;
 use App\Http\Controllers\TransitArea\DailySalesAchievementReportController;
+use App\Http\Controllers\TransitArea\PmbController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -834,6 +835,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [DailySalesAchievementReportController::class, 'index'])->name('index');
             Route::get('/table', [DailySalesAchievementReportController::class, 'table'])->name('table');
             Route::get('/{id}', [DailySalesAchievementReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('pmb')->name('pmb.')->group(function () {
+            Route::get('/', [PmbController::class, 'index'])->name('index');
+            Route::get('/table', [PmbController::class, 'table'])->name('table');
+            Route::post('/', [PmbController::class, 'store'])->name('store');
+            Route::get('/{id}', [PmbController::class, 'show'])->name('show');
+            Route::put('/{id}', [PmbController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PmbController::class, 'destroy'])->name('destroy');
         });
 
     });
