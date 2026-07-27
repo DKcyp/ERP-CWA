@@ -67,7 +67,7 @@
                         <div class="logo">
                             <a href="{{ url('/') }}" class="d-flex align-items-center gap-3 text-decoration-none">
                                 <img src="{{ asset('logo.png') }}" alt="Logo ERP CWA" class="sidebar-brand-icon" style="height:48px; width:auto; object-fit:contain;">
-                                <h4 class="sidebar-brand-title mb-0" style="font-size:18px; font-weight:600;">ERP <span style="color:#FF6B6B;">CWA</span></h4>
+                                <h4 class="sidebar-brand-title mb-0" style="font-size:28px; font-weight:700; line-height:1;">ERP <span style="color:#FF6B6B;">CWA</span></h4>
                             </a>
                         </div>
                         <div class="sidebar-toggler x">
@@ -157,12 +157,174 @@
 
     @stack('before-script')
 
+    <style>
+        .menu-search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .menu-search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            margin-top: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .menu-search-results.show {
+            display: block;
+        }
+
+        .menu-search-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-search-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .menu-search-item-icon {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .menu-search-item-text {
+            flex: 1;
+        }
+
+        .menu-search-item-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .menu-search-item-level {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        .hz-search-wrapper {
+            position: relative;
+            width: 100%;
+        }
+    </style>
+
     <script src="{{ asset('custom/assets/static/js/components/dark.js') }}"></script>
     <script src="{{ asset('custom/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('custom/assets/extensions/jquery/jquery.min.js') }}"></script>
     {{-- DataTables --}}
     <script src="{{ asset('custom/assets/extensions/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('custom/assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+
+    <script>
+        // Menu Search functionality
+        const searchInput = document.querySelector('.hz-search-wrapper input');
+        let searchResultsContainer = null;
+
+        function initMenuSearch() {
+            if (!searchInput) return;
+
+            // Create results container
+            const wrapper = document.querySelector('.hz-search-wrapper');
+            if (wrapper && !document.querySelector('.menu-search-results')) {
+                searchResultsContainer = document.createElement('div');
+                searchResultsContainer.className = 'menu-search-results';
+                wrapper.appendChild(searchResultsContainer);
+            } else {
+                searchResultsContainer = document.querySelector('.menu-search-results');
+            }
+
+            // Add event listener for input
+            searchInput.addEventListener('input', debounce(performSearch, 300));
+
+            // Close results when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.hz-search-wrapper')) {
+                    if (searchResultsContainer) {
+                        searchResultsContainer.classList.remove('show');
+                    }
+                }
+            });
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function performSearch(e) {
+            const query = searchInput.value.trim();
+
+            if (query.length < 1) {
+                if (searchResultsContainer) {
+                    searchResultsContainer.classList.remove('show');
+                }
+                return;
+            }
+
+            fetch(`{{ route('menu.search') }}?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => displayResults(data))
+                .catch(error => console.error('Search error:', error));
+        }
+
+        function displayResults(results) {
+            if (!searchResultsContainer) return;
+
+            searchResultsContainer.innerHTML = '';
+
+            if (results.length === 0) {
+                searchResultsContainer.innerHTML = '<div style="padding: 10px 15px; color: #999;">Menu tidak ditemukan</div>';
+                searchResultsContainer.classList.add('show');
+                return;
+            }
+
+            results.forEach(menu => {
+                const item = document.createElement('div');
+                item.className = 'menu-search-item';
+                item.innerHTML = `
+                    <i class="menu-search-item-icon ${menu.icon || 'bi bi-file-earmark'}"></i>
+                    <div class="menu-search-item-text">
+                        <div class="menu-search-item-name">${menu.name}</div>
+                        <div class="menu-search-item-level">${menu.level}</div>
+                    </div>
+                `;
+                item.addEventListener('click', () => navigateToMenu(menu));
+                searchResultsContainer.appendChild(item);
+            });
+
+            searchResultsContainer.classList.add('show');
+        }
+
+        function navigateToMenu(menu) {
+            if (menu.url && menu.url !== '#') {
+                window.location.href = `{{ url('/') }}/${menu.url}`;
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', initMenuSearch);
+    </script>
     <script src="{{ asset('custom/assets/extensions/datatables.net-bs5/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('custom/assets/extensions/datatables.net-bs5/js/responsive.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('custom/assets/static/js/pages/datatables.js') }}"></script>
@@ -183,6 +345,34 @@
         });
 
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Dark mode toggle script
+        (function() {
+            const themeToggleBtn = document.getElementById('hz-theme-toggle');
+            if (!themeToggleBtn) return;
+            const themeIcon = themeToggleBtn.querySelector('i');
+
+            function updateIcon(theme) {
+                if (!themeIcon) return;
+                if (theme === 'dark') {
+                    themeIcon.className = 'bi bi-sun';
+                } else {
+                    themeIcon.className = 'bi bi-moon';
+                }
+            }
+
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', currentTheme);
+            updateIcon(currentTheme);
+
+            themeToggleBtn.addEventListener('click', function() {
+                const activeTheme = document.documentElement.getAttribute('data-bs-theme');
+                const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-bs-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateIcon(newTheme);
+            });
+        })();
     </script>
 
     @stack('after-script')

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\MenuSearchController;
 use App\Http\Controllers\ScaffoldController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleMenusController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
 use App\Http\Controllers\MaterialManagement\PurchaseInvoiceListController;
+use App\Http\Controllers\MaterialManagement\StockConvertionController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseInvoiceReportController;
 use App\Http\Controllers\MaterialManagement\MonthlyPurchaseBySupplierReportController;
 use App\Http\Controllers\MaterialManagement\StbjController;
@@ -298,6 +300,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [PurchaseInvoiceListController::class, 'show'])->name('show');
             Route::put('/{id}', [PurchaseInvoiceListController::class, 'update'])->name('update');
             Route::delete('/{id}', [PurchaseInvoiceListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('stock-convertion')->name('stock-convertion.')->group(function () {
+            Route::get('/', [StockConvertionController::class, 'index'])->name('index');
+            Route::get('/table', [StockConvertionController::class, 'table'])->name('table');
+            Route::post('/', [StockConvertionController::class, 'store'])->name('store');
+            Route::get('/{id}', [StockConvertionController::class, 'show'])->name('show');
+            Route::put('/{id}', [StockConvertionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [StockConvertionController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('daily-purchase-invoice-report')->name('daily-invoice.')->group(function () {
@@ -853,6 +864,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/generator', [ScaffoldController::class, 'index'])->name('generator.index');
     Route::post('/generator', [ScaffoldController::class, 'store'])->name('generator.store');
+    
+    Route::get('/menu-search', [MenuSearchController::class, 'search'])->name('menu.search');
 
 });
 
