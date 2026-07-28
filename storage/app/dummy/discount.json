@@ -1,0 +1,7 @@
+[
+  {"id":"DSC-001","discount_id":"DSC-001","code":"DISC5","name":"Diskon 5%","type":"PERCENT","value":5,"description":"Diskon flat 5%","active":"Y"},
+  {"id":"DSC-002","discount_id":"DSC-002","code":"DISC10","name":"Diskon 10%","type":"PERCENT","value":10,"description":"Diskon flat 10%","active":"Y"},
+  {"id":"DSC-003","discount_id":"DSC-003","code":"DISC15","name":"Diskon 15%","type":"PERCENT","value":15,"description":"Diskon flat 15%","active":"Y"},
+  {"id":"DSC-004","discount_id":"DSC-004","code":"FLAT100K","name":"Potongan Rp100.000","type":"AMOUNT","value":100000,"description":"Potongan nominal Rp100.000","active":"Y"},
+  {"id":"DSC-005","discount_id":"DSC-005","code":"FLAT500K","name":"Potongan Rp500.000","type":"AMOUNT","value":500000,"description":"Potongan nominal Rp500.000","active":"N"}
+]
