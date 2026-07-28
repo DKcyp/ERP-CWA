@@ -28,6 +28,7 @@ use App\Http\Controllers\Master\CategoryController;
 use App\Http\Controllers\Master\SeriesController;
 use App\Http\Controllers\Master\HierarchyController;
 use App\Http\Controllers\Master\QualityController;
+use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
@@ -317,6 +318,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [QualityController::class, 'show'])->name('show');
             Route::put('/{id}', [QualityController::class, 'update'])->name('update');
             Route::delete('/{id}', [QualityController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('unit-of-measures')->name('uom.')->group(function () {
+            Route::get('/', [UomController::class, 'index'])->name('index');
+            Route::get('/table', [UomController::class, 'table'])->name('table');
+            Route::post('/', [UomController::class, 'store'])->name('store');
+            Route::get('/{id}', [UomController::class, 'show'])->name('show');
+            Route::put('/{id}', [UomController::class, 'update'])->name('update');
+            Route::delete('/{id}', [UomController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
