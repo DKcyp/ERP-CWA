@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use View;
 
-class DiscountController extends Controller
+class DiscountMasterController extends Controller
 {
     protected DummyStore $store;
 

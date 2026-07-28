@@ -28,9 +28,8 @@ use App\Http\Controllers\Master\CategoryController;
 use App\Http\Controllers\Master\SeriesController;
 use App\Http\Controllers\Master\HierarchyController;
 use App\Http\Controllers\Master\QualityController;
-use App\Http\Controllers\Master\DiscountController;
+use App\Http\Controllers\Master\DiscountMasterController;
 use App\Http\Controllers\Master\UomController;
-use App\Http\Controllers\Master\DiscountController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
@@ -332,12 +331,12 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('discount')->name('discount.')->group(function () {
-            Route::get('/', [DiscountController::class, 'index'])->name('index');
-            Route::get('/table', [DiscountController::class, 'table'])->name('table');
-            Route::post('/', [DiscountController::class, 'store'])->name('store');
-            Route::get('/{id}', [DiscountController::class, 'show'])->name('show');
-            Route::put('/{id}', [DiscountController::class, 'update'])->name('update');
-            Route::delete('/{id}', [DiscountController::class, 'destroy'])->name('destroy');
+            Route::get('/', [DiscountMasterController::class, 'index'])->name('index');
+            Route::get('/table', [DiscountMasterController::class, 'table'])->name('table');
+            Route::post('/', [DiscountMasterController::class, 'store'])->name('store');
+            Route::get('/{id}', [DiscountMasterController::class, 'show'])->name('show');
+            Route::put('/{id}', [DiscountMasterController::class, 'update'])->name('update');
+            Route::delete('/{id}', [DiscountMasterController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
