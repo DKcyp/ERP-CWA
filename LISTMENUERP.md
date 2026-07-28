@@ -50,15 +50,16 @@
     Penjelasan UI : Tampilan awal berupa table menampilkan Discount_Id, Code, Name, Type, Value, Active dan filter nama discount dan type. Tombol tambah akan muncul pop up dengan form Code, Name, Type, Value, Active. Untuk edit muncul pop up form Code, Name, Type, Value, Active. Hapus muncul alert konfirmasi.
 
   - Price List `price-list`
-    Komponen : Price_List_Id, Code, Name, Currency, Product, UOM, Price, Active
-    Fungsi : Mengatur daftar katalog harga jual produk berdasarkan segmen pelanggan, wilayah, atau skema komersial tertentu.
-    Penjelasan UI : Tampilan awal berupa table menampilkan Price_List_Id, Code, Name, Currency, Product, UOM, Price, Active dan filter nama price list dan product. Tombol tambah akan muncul pop up dengan form Code, Name, Currency, Product, UOM, Price, Active. Untuk edit muncul pop up form Code, Name, Currency, Product, UOM, Price, Active.tombol perbarui akan pop modal form yang sama dengan data yang ada untup pembaruan pricelist. Hapus muncul alert konfirmasi.
+    Komponen Header : Price_List_Id, Code, Name, Currency, Effective_Date, Expiry_Date, Active
+    Komponen Detail : Product_Id, Product_Name, UOM, Price, Min_Qty, Discount_Percent
+    Fungsi : Mengatur catalog/daftar harga jual berjenjang yang menampung banyak produk sekaligus berdasarkan segmen pelanggan, wilayah, atau skema komersial tertentu, serta mendukung pembuatan versi pembaruan catalog harga baru.
+    Penjelasan UI : Tampilan awal berupa table header menampilkan Price_List_Id, Code, Name, Currency, Effective_Date, Expiry_Date, Active dan filter nama price list, code, dan currency. Tombol Detail akan memicu pop-up modal yang menampilkan daftar produk beserta harga di dalam price list tersebut. Tombol Tambah akan memicu pop-up modal form Header (Code, Name, Currency, Effective_Date, Expiry_Date, Active) beserta tabel input multi-product detail (Product, UOM, Price). Tombol Edit memicu pop-up modal form untuk mengubah data price list yang ada. Tombol Pembaruan memicu pop-up modal form yang memuat seluruh data dari price list yang dipilih, di mana ketika disimpan akan membuat record Price List baru (versioning/duplikasi). Hapus muncul alert konfirmasi.
 
   - Sales Discount `sales-discount`
-    Komponen : Sales_Discount_Id, Name, Customer_Group, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active
-    Fungsi : Mengatur master matriks diskon khusus transaksi penjualan berdasarkan kategori pelanggan atau kuantitas pembelian.
-    Penjelasan UI : Tampilan awal berupa table menampilkan Sales_Discount_Id, Name, Customer_Group, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active dan filter customer group dan product. Tombol tambah akan muncul pop up dengan form Name, Customer_Group, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active. Untuk edit muncul pop up form Name, Customer_Group, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active. Hapus muncul alert konfirmasi.
-
+    Komponen : Sales_Discount_Id, Name, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active
+    Fungsi : Mengatur aturan diskon khusus produk (skema pilih produk lalu tentukan persentase/nominal diskon) yang otomatis terpotong pada transaksi penjualan berdasarkan kategori pelanggan, kuantitas minimum, atau periode promo tertentu.
+    Penjelasan UI : Tampilan awal berupa tabel menampilkan Sales_Discount_Id, Name, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active dan filter customer group dan product. Tombol tambah akan memunculkan pop-up dengan form Name, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active. Untuk edit memunculkan pop-up form Name, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active. Hapus memunculkan alert konfirmasi.
+  
   - Purchase Discount `purchase-discount`
     Komponen : Purchase_Discount_Id, Name, Supplier, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active
     Fungsi : Mengatur master matriks potongan harga/diskon yang didapatkan dari supplier dalam transaksi pembelian.

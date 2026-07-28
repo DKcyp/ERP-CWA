@@ -30,7 +30,7 @@ use App\Http\Controllers\Master\HierarchyController;
 use App\Http\Controllers\Master\QualityController;
 use App\Http\Controllers\Master\DiscountMasterController;
 use App\Http\Controllers\Master\PriceListController;
-use App\Http\Controllers\Master\PriceListController;
+use App\Http\Controllers\Master\SalesDiscountController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -350,6 +350,15 @@ Route::middleware('auth')->group(function () {
             Route::put('/{id}', [PriceListController::class, 'update'])->name('update');
             Route::post('/duplicate', [PriceListController::class, 'duplicate'])->name('duplicate');
             Route::delete('/{id}', [PriceListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('sales-discount')->name('sales-discount.')->group(function () {
+            Route::get('/', [SalesDiscountController::class, 'index'])->name('index');
+            Route::get('/table', [SalesDiscountController::class, 'table'])->name('table');
+            Route::post('/', [SalesDiscountController::class, 'store'])->name('store');
+            Route::get('/{id}', [SalesDiscountController::class, 'show'])->name('show');
+            Route::put('/{id}', [SalesDiscountController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SalesDiscountController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
