@@ -21,6 +21,7 @@ use App\Http\Controllers\Master\WaNameController;
 use App\Http\Controllers\Master\CustomerToolsController;
 use App\Http\Controllers\Master\CustomerCentreController;
 use App\Http\Controllers\Master\CustomerBalanceSummaryController;
+use App\Http\Controllers\Master\ProductController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
@@ -247,6 +248,15 @@ Route::middleware('auth')->group(function () {
         Route::prefix('customer-balance-summary')->name('customer-balance.')->group(function () {
             Route::get('/', [CustomerBalanceSummaryController::class, 'index'])->name('index');
             Route::get('/table', [CustomerBalanceSummaryController::class, 'table'])->name('table');
+        });
+
+        Route::prefix('product')->name('product.')->group(function () {
+            Route::get('/', [ProductController::class, 'index'])->name('index');
+            Route::get('/table', [ProductController::class, 'table'])->name('table');
+            Route::post('/', [ProductController::class, 'store'])->name('store');
+            Route::get('/{id}', [ProductController::class, 'show'])->name('show');
+            Route::put('/{id}', [ProductController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ProductController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {

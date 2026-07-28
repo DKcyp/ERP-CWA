@@ -166,6 +166,48 @@ class MenuSeeder extends Seeder
                     'Daily Sales Achievement Report' => '#',
                     'PMB (Penetapan & Monitoring Bonus)' => '#',
                 ]
+            ],
+            'Master Data' => [
+                'icon' => 'bi bi-database-fill',
+                'items' => [
+                    'Product' => [
+                        'Product' => '#',
+                        'Brand' => '#',
+                        'Group' => '#',
+                        'Category' => '#',
+                        'Series' => '#',
+                        'Hierarchie' => '#',
+                        'Quality' => '#',
+                        'Unit of Measures' => '#',
+                        'Discount' => '#',
+                        'Price List' => '#',
+                        'Sales Discount' => '#',
+                        'Purchase Discount' => '#',
+                        'Product Cash Back' => '#',
+                        'Supplier Product' => '#',
+                        'Product Price Log' => '#',
+                        'UOM General Convertion' => '#',
+                    ],
+                    'Warehouse' => '#',
+                    'Currency' => '#',
+                    'Rate' => '#',
+                    'Payment Term' => '#',
+                    'Notes' => '#',
+                    'Promo Buy N Get M' => '#',
+                    'Employee' => '#',
+                    'Commission' => '#',
+                    'Department' => '#',
+                    'Forwarder' => '#',
+                    'Edition' => '#',
+                    'Bank' => '#',
+                    'Document' => '#',
+                    'Supplier' => [
+                        'Supplier Master' => '#',
+                        'Supplier Group' => '#',
+                        'Supplier Center' => '#',
+                        'Supplier Balance Summary' => '#',
+                    ],
+                ]
             ]
         ];
 

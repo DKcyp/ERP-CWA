@@ -1,5 +1,179 @@
 # ERP Menu List
 
+## Master Data `#`
+
+# ERP Menu List - Master Data `#`
+- Product 
+  - Product `product`
+    Komponen : Product_Id, Name, Stock, UOM, Tonase, Kg, Def. Sales Price, Supplier, Barcode, Location, Type, Brand, Group, Category, Series, Quality, Active
+    Fungsi : Mengelola data induk (master data) barang/produk utama secara komprehensif mulai dari identitas, spesifikasi, hingga parameter persediaan.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Product_Id, Name, Stock, UOM, Tonase, Kg, Def. Sales Price, Supplier, Barcode, Location, Type, Brand, Group, Category, Series, Quality, Active dan filter nama product, brand, dan group. Tombol tambah akan muncul pop up dengan form Name, Stock, UOM, Tonase, Kg, Def. Sales Price, Supplier, Barcode, Location, Type, Brand, Group, Category, Series, Quality, Active. Untuk edit muncul pop up form Name, Stock, UOM, Tonase, Kg, Def. Sales Price, Supplier, Barcode, Location, Type, Brand, Group, Category, Series, Quality, Active. Hapus muncul alert konfirmasi.
+
+  - Brand `brand`
+    Komponen : Brand_Id, Code, Name, Description, Active
+    Fungsi : Mengelola data merek/brand dari produk untuk kebutuhan pengelompokan dan analisis laporan penjualan per merek.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Brand_Id, Code, Name, Description, Active dan filter nama brand dan code. Tombol tambah akan muncul pop up dengan form Code, Name, Description, Active. Untuk edit muncul pop up form Code, Name, Description, Active. Hapus muncul alert konfirmasi.
+
+  - Group `group`
+    Komponen : Group_Id, Code, Name, Description, Active
+    Fungsi : Mengelompokkan produk berdasarkan divisi atau kelompok besar lini bisnis perusahaan.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Group_Id, Code, Name, Description, Active dan filter nama group dan code. Tombol tambah akan muncul pop up dengan form Code, Name, Description, Active. Untuk edit muncul pop up form Code, Name, Description, Active. Hapus muncul alert konfirmasi.
+
+  - Category `category`
+    Komponen : Category_Id, Code, Name, Group, Description, Active
+    Fungsi : Mengelola kategorisasi produk yang lebih rinci di bawah struktur Group untuk pemetaan laporan dan aturan sistem.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Category_Id, Code, Name, Group, Description, Active dan filter nama category dan group. Tombol tambah akan muncul pop up dengan form Code, Name, Group, Description, Active. Untuk edit muncul pop up form Code, Name, Group, Description, Active. Hapus muncul alert konfirmasi.
+
+  - Series `series`
+    Komponen : Series_Id, Code, Name, Brand, Description, Active
+    Fungsi : Mengelompokkan produk berdasarkan seri atau varian rilis dari suatu merek.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Series_Id, Code, Name, Brand, Description, Active dan filter nama series dan brand. Tombol tambah akan muncul pop up dengan form Code, Name, Brand, Description, Active. Untuk edit muncul pop up form Code, Name, Brand, Description, Active. Hapus muncul alert konfirmasi.
+
+  - Hierarchie `hierarchie`
+    Komponen : Hierarchy_Id, Level, Parent_Hierarchy, Code, Name, Active
+    Fungsi : Membentuk struktur hirarki atau pohon taksonomi produk multi-tingkat (Parent-Child) untuk kebutuhan navigasi dan konsolidasi laporan.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Hierarchy_Id, Level, Parent_Hierarchy, Code, Name, Active dan filter nama hierarchy dan level. Tombol tambah akan muncul pop up dengan form Level, Parent_Hierarchy, Code, Name, Active. Untuk edit muncul pop up form Level, Parent_Hierarchy, Code, Name, Active. Hapus muncul alert konfirmasi.
+
+  - Quality `quality`
+    Komponen : Quality_Id, Code, Name, Grade, Description, Active
+    Fungsi : Menentukan klasifikasi tingkatan kualitas/grade dari barang persediaan.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Quality_Id, Code, Name, Grade, Description, Active dan filter nama quality dan grade. Tombol tambah akan muncul pop up dengan form Code, Name, Grade, Description, Active. Untuk edit muncul pop up form Code, Name, Grade, Description, Active. Hapus muncul alert konfirmasi.
+
+  - Unit of Measures `unit-of-measures`
+    Komponen : UOM_Id, Code, Name, Description, Active
+    Fungsi : Mengelola data induk satuan pengukuran standar barang (misal: PCS, KG, BOX, DUS, LTR).
+    Penjelasan UI : Tampilan awal berupa table menampilkan UOM_Id, Code, Name, Description, Active dan filter nama uom dan code. Tombol tambah akan muncul pop up dengan form Code, Name, Description, Active. Untuk edit muncul pop up form Code, Name, Description, Active. Hapus muncul alert konfirmasi.
+
+  - Discount `discount`
+    Komponen : Discount_Id, Code, Name, Type, Value, Active
+    Fungsi : Mengelola master skema potongan harga standar yang berlaku umum di sistem.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Discount_Id, Code, Name, Type, Value, Active dan filter nama discount dan type. Tombol tambah akan muncul pop up dengan form Code, Name, Type, Value, Active. Untuk edit muncul pop up form Code, Name, Type, Value, Active. Hapus muncul alert konfirmasi.
+
+  - Price List `price-list`
+    Komponen : Price_List_Id, Code, Name, Currency, Product, UOM, Price, Active
+    Fungsi : Mengatur daftar katalog harga jual produk berdasarkan segmen pelanggan, wilayah, atau skema komersial tertentu.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Price_List_Id, Code, Name, Currency, Product, UOM, Price, Active dan filter nama price list dan product. Tombol tambah akan muncul pop up dengan form Code, Name, Currency, Product, UOM, Price, Active. Untuk edit muncul pop up form Code, Name, Currency, Product, UOM, Price, Active.tombol perbarui akan pop modal form yang sama dengan data yang ada untup pembaruan pricelist. Hapus muncul alert konfirmasi.
+
+  - Sales Discount `sales-discount`
+    Komponen : Sales_Discount_Id, Name, Customer_Group, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active
+    Fungsi : Mengatur master matriks diskon khusus transaksi penjualan berdasarkan kategori pelanggan atau kuantitas pembelian.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Sales_Discount_Id, Name, Customer_Group, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active dan filter customer group dan product. Tombol tambah akan muncul pop up dengan form Name, Customer_Group, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active. Untuk edit muncul pop up form Name, Customer_Group, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active. Hapus muncul alert konfirmasi.
+
+  - Purchase Discount `purchase-discount`
+    Komponen : Purchase_Discount_Id, Name, Supplier, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active
+    Fungsi : Mengatur master matriks potongan harga/diskon yang didapatkan dari supplier dalam transaksi pembelian.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Purchase_Discount_Id, Name, Supplier, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active dan filter supplier dan product. Tombol tambah akan muncul pop up dengan form Name, Supplier, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active. Untuk edit muncul pop up form Name, Supplier, Product, Min_Qty, Disc_Percent, Disc_Amount, Valid_From, Valid_To, Active. Hapus muncul alert konfirmasi.
+
+  - Product Cash Back `product-cash-back`
+    Komponen : Cashback_Id, Name, Customer, Product, Min_Purchase, Cashback_Value, Valid_From, Valid_To, Active
+    Fungsi : Mengelola aturan program pengembalian dana (cashback) atas pembelian produk tertentu oleh pelanggan.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Cashback_Id, Name, Customer, Product, Min_Purchase, Cashback_Value, Valid_From, Valid_To, Active dan filter nama program dan product. Tombol tambah akan muncul pop up dengan form Name, Customer, Product, Min_Purchase, Cashback_Value, Valid_From, Valid_To, Active. Untuk edit muncul pop up form Name, Customer, Product, Min_Purchase, Cashback_Value, Valid_From, Valid_To, Active. Hapus muncul alert konfirmasi.
+
+  - Supplier Product `supplier-product`
+    Komponen : Supplier_Product_Id, Supplier, Product, Supplier_Item_Code, Supplier_Item_Name, Lead_Time_Days, Active
+    Fungsi : Memetakan hubungan silang (cross-reference) antara produk perusahaan dengan kode/nama produk milik supplier.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Supplier_Product_Id, Supplier, Product, Supplier_Item_Code, Supplier_Item_Name, Lead_Time_Days, Active dan filter supplier dan product. Tombol tambah akan muncul pop up dengan form Supplier, Product, Supplier_Item_Code, Supplier_Item_Name, Lead_Time_Days, Active. Untuk edit muncul pop up form Supplier, Product, Supplier_Item_Code, Supplier_Item_Name, Lead_Time_Days, Active. Hapus muncul alert konfirmasi.
+
+  - Product Price Log `product-price-log`
+    Komponen : Log_Id, Product, Price_List, Old_Price, New_Price, Changed_By, Change_Date, Reason
+    Fungsi : Mencatat riwayat (audit trail) perubahan harga jual produk untuk pengawasan integritas harga.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Log_Id, Product, Price_List, Old_Price, New_Price, Changed_By, Change_Date, Reason dan filter product dan tanggal perubahan. Halaman ini bersifat Read-Only (tidak ada tombol tambah, edit, dan hapus).
+
+  - UOM General Convertion `uom-general-convertion`
+    Komponen : UOM_Convertion_Id, Product, From_UOM, To_UOM, Multiplier, Operator
+    Fungsi : Mengatur rasio konversi antar satuan unit barang (misal: 1 BOX = 24 PCS) untuk perhitungan stok dan transaksi otomatis.
+    Penjelasan UI : Tampilan awal berupa table menampilkan UOM_Convertion_Id, Product, From_UOM, To_UOM, Multiplier, Operator dan filter product dan UOM. Tombol tambah akan muncul pop up dengan form Product, From_UOM, To_UOM, Multiplier, Operator. Untuk edit muncul pop up form Product, From_UOM, To_UOM, Multiplier, Operator. Hapus muncul alert konfirmasi.
+
+- Warehouse `warehouse`
+  Komponen : Warehouse_Id, Code, Name, Address, PIC_Name, Phone, Active
+  Fungsi : Mengelola data induk lokasi fisik/logis gudang penyimpanan barang persediaan.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Warehouse_Id, Code, Name, Address, PIC_Name, Phone, Active dan filter nama warehouse dan code. Tombol tambah akan muncul pop up dengan form Code, Name, Address, PIC_Name, Phone, Active. Untuk edit muncul pop up form Code, Name, Address, PIC_Name, Phone, Active. Hapus muncul alert konfirmasi.
+
+- Currency `currency`
+  Komponen : Currency_Id, Code, Name, Symbol, Is_Default, Active
+  Fungsi : Mengelola daftar mata uang resmi yang digunakan dalam seluruh transaksi sistem.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Currency_Id, Code, Name, Symbol, Is_Default, Active dan filter code dan name. Tombol tambah akan muncul pop up dengan form Code, Name, Symbol, Is_Default, Active. Untuk edit muncul pop up form Code, Name, Symbol, Is_Default, Active. Hapus muncul alert konfirmasi.
+
+- Rate `rate`
+  Komponen : Rate_Id, Currency, Rate_Date, Rate_Value, Updated_By
+  Fungsi : Mencatat dan mengelola riwayat nilai tukar kurs mata uang harian terhadap mata uang acuan (base currency).
+  Penjelasan UI : Tampilan awal berupa table menampilkan Rate_Id, Currency, Rate_Date, Rate_Value, Updated_By dan filter currency dan tanggal rate. Tombol tambah akan muncul pop up dengan form Currency, Rate_Date, Rate_Value. Untuk edit muncul pop up form Currency, Rate_Date, Rate_Value. Hapus muncul alert konfirmasi.
+
+- Payment Term `payment-term`
+  Komponen : Term_Id, Code, Name, Days_Count, Description, Active
+  Fungsi : Mengatur master ketentuan termin/jangka waktu jatuh tempo pembayaran transaksi.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Term_Id, Code, Name, Days_Count, Description, Active dan filter name dan code. Tombol tambah akan muncul pop up dengan form Code, Name, Days_Count, Description, Active. Untuk edit muncul pop up form Code, Name, Days_Count, Description, Active. Hapus muncul alert konfirmasi.
+
+- Notes `notes`
+  Komponen : Note_Id, Title, Module, Default_Text, Active
+  Fungsi : Mengelola templat teks catatan/ketentuan standar yang otomatis muncul pada cetakan dokumen transaksi.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Note_Id, Title, Module, Default_Text, Active dan filter title dan module. Tombol tambah akan muncul pop up dengan form Title, Module, Default_Text, Active. Untuk edit muncul pop up form Title, Module, Default_Text, Active. Hapus muncul alert konfirmasi.
+
+- Promo Buy N Get M `promo-buy-n-get-m`
+  Komponen : Promo_Id, Name, Buy_Product, Buy_Qty, Get_Product, Get_Qty, Valid_From, Valid_To, Active
+  Fungsi : Mengatur aturan promosi penjualan kustom beli N barang bonus M barang gratis.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Promo_Id, Name, Buy_Product, Buy_Qty, Get_Product, Get_Qty, Valid_From, Valid_To, Active dan filter promo name dan product. Tombol tambah akan muncul pop up dengan form Name, Buy_Product, Buy_Qty, Get_Product, Get_Qty, Valid_From, Valid_To, Active. Untuk edit muncul pop up form Name, Buy_Product, Buy_Qty, Get_Product, Get_Qty, Valid_From, Valid_To, Active. Hapus muncul alert konfirmasi.
+
+- Employee `employee`
+  Komponen : Employee_Id, NIK, Name, Department, Position, Email, Phone, Address, Active
+  Fungsi : Mengelola data induk karyawan perusahaan yang terhubung dengan akses sistem, kearsipan, maupun hak komisi.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Employee_Id, NIK, Name, Department, Position, Email, Phone, Address, Active dan filter NIK, name, dan department. Tombol tambah akan muncul pop up dengan form NIK, Name, Department, Position, Email, Phone, Address, Active. Untuk edit muncul pop up form NIK, Name, Department, Position, Email, Phone, Address, Active. Hapus muncul alert konfirmasi.
+
+- Commission `commission`
+  Komponen : Commission_Id, Name, Target_Type, Min_Achieve, Max_Achieve, Rate_Percent, Active
+  Fungsi : Mengatur tingkatan (tiering) dan parameter persentase komisi bagi staf penjualan.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Commission_Id, Name, Target_Type, Min_Achieve, Max_Achieve, Rate_Percent, Active dan filter name dan target_type. Tombol tambah akan muncul pop up dengan form Name, Target_Type, Min_Achieve, Max_Achieve, Rate_Percent, Active. Untuk edit muncul pop up form Name, Target_Type, Min_Achieve, Max_Achieve, Rate_Percent, Active. Hapus muncul alert konfirmasi.
+
+- Department `department`
+  Komponen : Department_Id, Code, Name, Manager, Description, Active
+  Fungsi : Mengelola struktur bagian/departemen internal perusahaan untuk kebutuhan alokasi biaya dan pemohon transaksi.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Department_Id, Code, Name, Manager, Description, Active dan filter code dan name. Tombol tambah akan muncul pop up dengan form Code, Name, Manager, Description, Active. Untuk edit muncul pop up form Code, Name, Manager, Description, Active. Hapus muncul alert konfirmasi.
+
+- Forwarder `forwarder`
+  Komponen : Forwarder_Id, Code, Name, Contact_Person, Phone, Email, Address, Active
+  Fungsi : Mengelola data induk mitra jasa pengiriman / ekspedisi pihak ketiga (3PL).
+  Penjelasan UI : Tampilan awal berupa table menampilkan Forwarder_Id, Code, Name, Contact_Person, Phone, Email, Address, Active dan filter code dan name. Tombol tambah akan muncul pop up dengan form Code, Name, Contact_Person, Phone, Email, Address, Active. Untuk edit muncul pop up form Code, Name, Contact_Person, Phone, Email, Address, Active. Hapus muncul alert konfirmasi.
+
+- Edition `edition`
+  Komponen : Edition_Id, Code, Name, Release_Date, Description, Active
+  Fungsi : Mengelola pengelompokan edisi atau versi rilis dari suatu produk (misal: Edisi Khusus, Edisi Impor, Edisi Musim).
+  Penjelasan UI : Tampilan awal berupa table menampilkan Edition_Id, Code, Name, Release_Date, Description, Active dan filter code dan name. Tombol tambah akan muncul pop up dengan form Code, Name, Release_Date, Description, Active. Untuk edit muncul pop up form Code, Name, Release_Date, Description, Active. Hapus muncul alert konfirmasi.
+
+- Bank `bank`
+  Komponen : Bank_Id, Bank_Code, Bank_Name, Branch, Account_Number, Account_Name, Active
+  Fungsi : Mengelola data akun rekening bank resmi perusahaan untuk transaksi penerimaan dan pengeluaran kas/bank.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Bank_Id, Bank_Code, Bank_Name, Branch, Account_Number, Account_Name, Active dan filter bank_name, account_number, dan account_name. Tombol tambah akan muncul pop up dengan form Bank_Code, Bank_Name, Branch, Account_Number, Account_Name, Active. Untuk edit muncul pop up form Bank_Code, Bank_Name, Branch, Account_Number, Account_Name, Active. Hapus muncul alert konfirmasi.
+
+- Document `document`
+  Komponen : Document_Id, Doc_Code, Doc_Name, Module, Numbering_Format, Last_Counter, Active
+  Fungsi : Mengatur penamaan, format penomoran otomatis, dan kategori dokumen resmi di seluruh modul ERP.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Document_Id, Doc_Code, Doc_Name, Module, Numbering_Format, Last_Counter, Active dan filter doc_code, doc_name, dan module. Tombol tambah akan muncul pop up dengan form Doc_Code, Doc_Name, Module, Numbering_Format, Last_Counter, Active. Untuk edit muncul pop up form Doc_Code, Doc_Name, Module, Numbering_Format, Last_Counter, Active. Hapus muncul alert konfirmasi.
+
+  - Supplier
+    - Supplier Master `supplier-master`
+      Komponen : Supplier_Id, Supplier_Code, Name, Supplier_Group, Supplier_Center, Phone, Email, Address, Term_of_Payment, Status, Contact_Person, NPWP
+      Fungsi : Mengelola data induk (master data) supplier/vendor mulai dari profil, kontak, alamat, hingga ketentuan termin pembayaran.
+      Penjelasan UI : Tampilan awal berupa table menampilkan Supplier_Id, Supplier_Code, Name, Supplier_Group, Supplier_Center, Phone, Email, Address, Term_of_Payment, Status, Contact_Person, NPWP dan filter nama supplier, supplier group, dan supplier center. Tombol tambah akan muncul pop up dengan form Supplier_Code, Name, Supplier_Group, Supplier_Center, Phone, Email, Address, Term_of_Payment, Status, Contact_Person, NPWP. Untuk edit muncul pop up form Supplier_Code, Name, Supplier_Group, Supplier_Center, Phone, Email, Address, Term_of_Payment, Status, Contact_Person, NPWP. Hapus muncul alert konfirmasi.
+
+    - Supplier Group `supplier-group`
+      Komponen : Group_Id, Code, Name, Description, AP_Account
+      Fungsi : Mengelompokkan supplier berdasarkan jenis/kategori serta pemetaan akun Hutang (AP Account) pada buku besar.
+      Penjelasan UI : Tampilan awal berupa table menampilkan Group_Id, Code, Name, Description, AP_Account dan filter nama group dan code. Tombol tambah akan muncul pop up dengan form Code, Name, Description, AP_Account. Untuk edit muncul pop up form Code, Name, Description, AP_Account. Hapus muncul alert konfirmasi.
+
+    - Supplier Center `supplier-center`
+      Komponen : Center_Id, Code, Name
+      Fungsi : Mengelola pembagian wilayah/pusat area pemasok untuk kebutuhan pengelompokan geografis.
+      Penjelasan UI : Tampilan awal berupa table menampilkan Center_Id, Code, Name dan filter nama center dan code. Tombol tambah akan muncul pop up dengan form Code, Name. Untuk edit muncul pop up form Code, Name. Hapus muncul alert konfirmasi.
+
+    - Supplier Balance Summary `supplier-balance-summary`
+      Komponen : Supplier_Id, Name, Currency, Beginning_Balance, Total_Invoice, Total_Payment, Total_Return, Ending_Balance, Total_AP
+      Fungsi : Menyajikan ringkasan posisi saldo hutang usaha per supplier beserta mutasi penambahan tagihan dan pelunasan secara real-time.
+      Penjelasan UI : Tampilan awal berupa table menampilkan Supplier_Id, Name, Currency, Beginning_Balance, Total_Invoice, Total_Payment, Total_Return, Ending_Balance, Total_AP dan filter nama supplier, currency, dan rentang tanggal. Halaman ini bersifat Read-Only (Laporan/Ringkasan), sehingga tidak terdapat tombol tambah, edit, maupun hapus.
+
+##
+
+Create Doc. From CSV
+
 ## Material Management `#`
 
 - Supplier Master `supplier-master`

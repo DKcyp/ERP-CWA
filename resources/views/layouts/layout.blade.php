@@ -79,19 +79,25 @@
                     @include('layouts.sidebar')
                 </div>
             </div>
+            {{-- Floating edge toggle button (desktop only) --}}
+            <button type="button" class="hz-sidebar-edge-btn d-none d-xl-flex" id="hz-sidebar-toggle" title="Toggle Sidebar">
+                <i class="bi bi-chevron-left" id="hz-sidebar-arrow"></i>
+            </button>
         </div>
 
         <div id="main" class="px-4 py-3">
             <header class="hz-header">
                 <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                    <div>
-                        <a href="#" class="burger-btn d-inline-block d-xl-none me-2">
-                            <i class="bi bi-justify fs-3"></i>
-                        </a>
-                        <div class="hz-breadcrumb">
-                            Pages / <span>@yield('title', 'Main Dashboard')</span>
+                    <div class="d-flex align-items-center gap-3">
+                        <div>
+                            <a href="#" class="burger-btn d-inline-block d-xl-none me-2">
+                                <i class="bi bi-justify fs-3"></i>
+                            </a>
+                            <div class="hz-breadcrumb">
+                                Pages / <span>@yield('title', 'Main Dashboard')</span>
+                            </div>
+                            <h1 class="hz-page-title">@yield('title', 'Main Dashboard')</h1>
                         </div>
-                        <h1 class="hz-page-title">@yield('title', 'Main Dashboard')</h1>
                     </div>
 
                     <div class="hz-topbar-pill">
@@ -372,6 +378,32 @@
                 localStorage.setItem('theme', newTheme);
                 updateIcon(newTheme);
             });
+        })();
+
+        // Desktop Sidebar Hide/Show Toggle
+        (function() {
+            const sidebarToggleBtn = document.getElementById('hz-sidebar-toggle');
+            if (!sidebarToggleBtn) return;
+
+            const isCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
+            if (isCollapsed) {
+                document.body.classList.add('sidebar-collapsed');
+            }
+            updateArrow();
+
+            sidebarToggleBtn.addEventListener('click', function() {
+                document.body.classList.toggle('sidebar-collapsed');
+                const collapsedNow = document.body.classList.contains('sidebar-collapsed');
+                localStorage.setItem('sidebar_collapsed', collapsedNow);
+                updateArrow();
+            });
+
+            function updateArrow() {
+                const arrow = document.getElementById('hz-sidebar-arrow');
+                if (!arrow) return;
+                const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+                arrow.className = isCollapsed ? 'bi bi-chevron-right' : 'bi bi-chevron-left';
+            }
         })();
     </script>
 

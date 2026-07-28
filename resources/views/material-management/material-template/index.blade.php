@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title','Material Template (BOM)')
+@section('title','Material Template')
 @section('content')
 <div class="page-content">
     <div class="card border-0 shadow-sm hz-card mb-4"><div class="card-body">
