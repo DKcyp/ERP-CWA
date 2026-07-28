@@ -29,6 +29,8 @@ use App\Http\Controllers\Master\SeriesController;
 use App\Http\Controllers\Master\HierarchyController;
 use App\Http\Controllers\Master\QualityController;
 use App\Http\Controllers\Master\DiscountMasterController;
+use App\Http\Controllers\Master\PriceListController;
+use App\Http\Controllers\Master\PriceListController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -337,6 +339,17 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [DiscountMasterController::class, 'show'])->name('show');
             Route::put('/{id}', [DiscountMasterController::class, 'update'])->name('update');
             Route::delete('/{id}', [DiscountMasterController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('price-list')->name('price-list.')->group(function () {
+            Route::get('/', [PriceListController::class, 'index'])->name('index');
+            Route::get('/table', [PriceListController::class, 'table'])->name('table');
+            Route::get('/detail/{id}', [PriceListController::class, 'detail'])->name('detail');
+            Route::post('/', [PriceListController::class, 'store'])->name('store');
+            Route::get('/{id}', [PriceListController::class, 'show'])->name('show');
+            Route::put('/{id}', [PriceListController::class, 'update'])->name('update');
+            Route::post('/duplicate', [PriceListController::class, 'duplicate'])->name('duplicate');
+            Route::delete('/{id}', [PriceListController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
