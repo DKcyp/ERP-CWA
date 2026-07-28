@@ -25,6 +25,7 @@ use App\Http\Controllers\Master\ProductController;
 use App\Http\Controllers\Master\BrandController;
 use App\Http\Controllers\Master\GroupController;
 use App\Http\Controllers\Master\CategoryController;
+use App\Http\Controllers\Master\SeriesController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
@@ -287,6 +288,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [CategoryController::class, 'show'])->name('show');
             Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
             Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('series')->name('series.')->group(function () {
+            Route::get('/', [SeriesController::class, 'index'])->name('index');
+            Route::get('/table', [SeriesController::class, 'table'])->name('table');
+            Route::post('/', [SeriesController::class, 'store'])->name('store');
+            Route::get('/{id}', [SeriesController::class, 'show'])->name('show');
+            Route::put('/{id}', [SeriesController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SeriesController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
