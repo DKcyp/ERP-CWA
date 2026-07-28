@@ -22,6 +22,7 @@ use App\Http\Controllers\Master\CustomerToolsController;
 use App\Http\Controllers\Master\CustomerCentreController;
 use App\Http\Controllers\Master\CustomerBalanceSummaryController;
 use App\Http\Controllers\Master\ProductController;
+use App\Http\Controllers\Master\BrandController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
@@ -257,6 +258,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [ProductController::class, 'show'])->name('show');
             Route::put('/{id}', [ProductController::class, 'update'])->name('update');
             Route::delete('/{id}', [ProductController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('brand')->name('brand.')->group(function () {
+            Route::get('/', [BrandController::class, 'index'])->name('index');
+            Route::get('/table', [BrandController::class, 'table'])->name('table');
+            Route::post('/', [BrandController::class, 'store'])->name('store');
+            Route::get('/{id}', [BrandController::class, 'show'])->name('show');
+            Route::put('/{id}', [BrandController::class, 'update'])->name('update');
+            Route::delete('/{id}', [BrandController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
