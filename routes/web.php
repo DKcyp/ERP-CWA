@@ -32,6 +32,7 @@ use App\Http\Controllers\Master\DiscountMasterController;
 use App\Http\Controllers\Master\PriceListController;
 use App\Http\Controllers\Master\SalesDiscountController;
 use App\Http\Controllers\Master\PurchaseDiscountController;
+use App\Http\Controllers\Master\ProductCashBackController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -369,6 +370,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [PurchaseDiscountController::class, 'show'])->name('show');
             Route::put('/{id}', [PurchaseDiscountController::class, 'update'])->name('update');
             Route::delete('/{id}', [PurchaseDiscountController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('product-cash-back')->name('product-cash-back.')->group(function () {
+            Route::get('/', [ProductCashBackController::class, 'index'])->name('index');
+            Route::get('/table', [ProductCashBackController::class, 'table'])->name('table');
+            Route::post('/', [ProductCashBackController::class, 'store'])->name('store');
+            Route::get('/{id}', [ProductCashBackController::class, 'show'])->name('show');
+            Route::put('/{id}', [ProductCashBackController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ProductCashBackController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
