@@ -40,14 +40,11 @@ class WarehouseController extends Controller
             ->addColumn('active_badge', fn($r) => ($r['active'] ?? 'Y') === 'Y'
                 ? '<span class="badge bg-success">Active</span>'
                 : '<span class="badge bg-secondary">Inactive</span>')
-            ->addColumn('badge_yes_no', fn($r, $k) => ($r[$k] ?? 'N') === 'Y'
-                ? '<span class="badge bg-success">Yes</span>'
-                : '<span class="badge bg-secondary">No</span>')
             ->addColumn('action', fn($row) => '<div class="btn-group btn-group-sm">
                 <button type="button" class="btn btn-outline-primary btn-edit" data-id="'.$row['id'].'"><i class="bi bi-pencil"></i></button>
                 <button type="button" class="btn btn-outline-danger btn-delete" data-id="'.$row['id'].'"><i class="bi bi-trash"></i></button>
             </div>')
-            ->rawColumns(['active_badge', 'badge_yes_no', 'action'])->make(true);
+            ->rawColumns(['active_badge', 'action'])->make(true);
     }
 
     public function store(Request $request)
