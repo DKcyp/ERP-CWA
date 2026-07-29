@@ -1,0 +1,6 @@
+[
+  {"id":"CB-001","cashback_id":"CB-001","name":"Cashback Semen Q1","supplier":"PT Maju Jaya","product":"Semen 50kg","min_purchase":100,"cashback_value":500000,"valid_from":"2026-01-01","valid_to":"2026-03-31","active":"Y"},
+  {"id":"CB-002","cashback_id":"CB-002","name":"Cashback Cat Semester 1","supplier":"CV Bumi Sejahtera","product":"Cat Tembok Putih 5kg","min_purchase":50,"cashback_value":250000,"valid_from":"2026-01-01","valid_to":"2026-06-30","active":"Y"},
+  {"id":"CB-003","cashback_id":"CB-003","name":"Cashback Besi Tahunan","supplier":"PT Maju Jaya","product":"Besi Beton 12mm","min_purchase":500,"cashback_value":1000000,"valid_from":"2026-01-01","valid_to":"2026-12-31","active":"Y"},
+  {"id":"CB-004","cashback_id":"CB-004","name":"Cashback Pipa Promosi","supplier":"PT Abadi Makmur","product":"Pipa PVC 1/2 inch","min_purchase":200,"cashback_value":0,"valid_from":"2026-07-01","valid_to":"","active":"N"}
+]
