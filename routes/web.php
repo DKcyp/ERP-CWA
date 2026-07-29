@@ -38,6 +38,7 @@ use App\Http\Controllers\Master\UomGeneralConvertionController;
 use App\Http\Controllers\Master\WarehouseController;
 use App\Http\Controllers\Master\CurrencyController;
 use App\Http\Controllers\Master\RateController;
+use App\Http\Controllers\Master\PaymentTermController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -429,6 +430,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [RateController::class, 'show'])->name('show');
             Route::put('/{id}', [RateController::class, 'update'])->name('update');
             Route::delete('/{id}', [RateController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('payment-term')->name('payment-term.')->group(function () {
+            Route::get('/', [PaymentTermController::class, 'index'])->name('index');
+            Route::get('/table', [PaymentTermController::class, 'table'])->name('table');
+            Route::post('/', [PaymentTermController::class, 'store'])->name('store');
+            Route::get('/{id}', [PaymentTermController::class, 'show'])->name('show');
+            Route::put('/{id}', [PaymentTermController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PaymentTermController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
