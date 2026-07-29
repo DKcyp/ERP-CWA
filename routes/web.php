@@ -35,6 +35,7 @@ use App\Http\Controllers\Master\PurchaseDiscountController;
 use App\Http\Controllers\Master\ProductCashBackController;
 use App\Http\Controllers\Master\SupplierProductController;
 use App\Http\Controllers\Master\UomGeneralConvertionController;
+use App\Http\Controllers\Master\WarehouseController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -399,6 +400,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [UomGeneralConvertionController::class, 'show'])->name('show');
             Route::put('/{id}', [UomGeneralConvertionController::class, 'update'])->name('update');
             Route::delete('/{id}', [UomGeneralConvertionController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('warehouse')->name('warehouse.')->group(function () {
+            Route::get('/', [WarehouseController::class, 'index'])->name('index');
+            Route::get('/table', [WarehouseController::class, 'table'])->name('table');
+            Route::post('/', [WarehouseController::class, 'store'])->name('store');
+            Route::get('/{id}', [WarehouseController::class, 'show'])->name('show');
+            Route::put('/{id}', [WarehouseController::class, 'update'])->name('update');
+            Route::delete('/{id}', [WarehouseController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
