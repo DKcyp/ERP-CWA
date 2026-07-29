@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-6"><label class="form-label fw-semibold">Product <span class="text-danger">*</span></label>
                         <select class="form-select" name="product_id" id="f_product_id"><option value="">-- Pilih Product --</option>
-                            @foreach($products as $p)<option value="{{$p['product_id']}}" data-name="{{$p['product_name']}}">{{$p['product_id']}} - {{$p['product_name']}}</option>@endforeach
+                            @foreach($products as $p)<option value="{{$p['product_id']}}" data-name="{{$p['name']}}">{{$p['product_id']}} - {{$p['name']}}</option>@endforeach
                         </select>
                     </div>
                     <div class="col-6"><label class="form-label fw-semibold">Min Qty</label><input type="number" class="form-control" name="min_qty" id="f_min_qty" step="0.01" min="0"></div>
