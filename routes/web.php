@@ -44,6 +44,7 @@ use App\Http\Controllers\Master\PromoBuyNGetMController;
 use App\Http\Controllers\Master\EmployeeController;
 use App\Http\Controllers\Master\CommissionController;
 use App\Http\Controllers\Master\DepartmentController;
+use App\Http\Controllers\Master\ForwarderController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -489,6 +490,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [DepartmentController::class, 'show'])->name('show');
             Route::put('/{id}', [DepartmentController::class, 'update'])->name('update');
             Route::delete('/{id}', [DepartmentController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('forwarder')->name('forwarder.')->group(function () {
+            Route::get('/', [ForwarderController::class, 'index'])->name('index');
+            Route::get('/table', [ForwarderController::class, 'table'])->name('table');
+            Route::post('/', [ForwarderController::class, 'store'])->name('store');
+            Route::get('/{id}', [ForwarderController::class, 'show'])->name('show');
+            Route::put('/{id}', [ForwarderController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ForwarderController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
