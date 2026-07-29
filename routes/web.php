@@ -39,6 +39,7 @@ use App\Http\Controllers\Master\WarehouseController;
 use App\Http\Controllers\Master\CurrencyController;
 use App\Http\Controllers\Master\RateController;
 use App\Http\Controllers\Master\PaymentTermController;
+use App\Http\Controllers\Master\NotesController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -439,6 +440,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [PaymentTermController::class, 'show'])->name('show');
             Route::put('/{id}', [PaymentTermController::class, 'update'])->name('update');
             Route::delete('/{id}', [PaymentTermController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('notes')->name('notes.')->group(function () {
+            Route::get('/', [NotesController::class, 'index'])->name('index');
+            Route::get('/table', [NotesController::class, 'table'])->name('table');
+            Route::post('/', [NotesController::class, 'store'])->name('store');
+            Route::get('/{id}', [NotesController::class, 'show'])->name('show');
+            Route::put('/{id}', [NotesController::class, 'update'])->name('update');
+            Route::delete('/{id}', [NotesController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
