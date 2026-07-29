@@ -13,12 +13,14 @@ class PurchaseDiscountController extends Controller
     protected DummyStore $store;
     protected DummyStore $productStore;
     protected DummyStore $supplierStore;
+    protected DummyStore $discountStore;
 
     public function __construct()
     {
         $this->store = new DummyStore('purchase-discount');
         $this->productStore = new DummyStore('product');
         $this->supplierStore = new DummyStore('suppliers');
+        $this->discountStore = new DummyStore('discount');
         View::share('activeMenu', 'purchase-discount');
     }
 
@@ -26,7 +28,8 @@ class PurchaseDiscountController extends Controller
     {
         $products = $this->productStore->all();
         $suppliers = $this->supplierStore->all();
-        return view('master.purchase-discount.index', compact('products', 'suppliers'));
+        $discounts = $this->discountStore->all();
+        return view('master.purchase-discount.index', compact('products', 'suppliers', 'discounts'));
     }
 
     public function table(Request $request)
@@ -36,8 +39,8 @@ class PurchaseDiscountController extends Controller
         if ($request->filled('filter_search')) {
             $q = $request->filter_search;
             $data = array_filter($data, fn($i) =>
-                stripos($i['supplier'] ?? '', $q) !== false ||
-                stripos($i['product'] ?? '', $q) !== false ||
+                stripos($i['supplier_name'] ?? '', $q) !== false ||
+                stripos($i['product_name'] ?? '', $q) !== false ||
                 stripos($i['name'] ?? '', $q) !== false
             );
         }
@@ -58,8 +61,10 @@ class PurchaseDiscountController extends Controller
     {
         $request->validate([
             'name'            => ['required', 'string', 'max:200'],
-            'supplier'        => ['required', 'string', 'max:200'],
-            'product'         => ['required', 'string', 'max:200'],
+            'supplier_id'     => ['required', 'string', 'max:50'],
+            'supplier_name'   => ['required', 'string', 'max:200'],
+            'product_id'      => ['required', 'string', 'max:50'],
+            'product_name'    => ['required', 'string', 'max:200'],
             'min_qty'         => ['nullable', 'numeric', 'min:0'],
             'disc_percent'    => ['nullable', 'numeric', 'min:0', 'max:100'],
             'disc_amount'     => ['nullable', 'numeric', 'min:0'],
@@ -67,7 +72,7 @@ class PurchaseDiscountController extends Controller
             'valid_to'        => ['nullable', 'date', 'after_or_equal:valid_from'],
             'active'          => ['required', 'string', 'in:Y,N'],
         ]);
-        $this->store->create($request->only('name', 'supplier', 'product', 'min_qty', 'disc_percent', 'disc_amount', 'valid_from', 'valid_to', 'active'));
+        $this->store->create($request->only('name', 'supplier_id', 'supplier_name', 'product_id', 'product_name', 'min_qty', 'disc_percent', 'disc_amount', 'valid_from', 'valid_to', 'active'));
         return response()->json(['message' => 'Data berhasil disimpan.']);
     }
 
@@ -81,8 +86,10 @@ class PurchaseDiscountController extends Controller
     {
         $request->validate([
             'name'            => ['required', 'string', 'max:200'],
-            'supplier'        => ['required', 'string', 'max:200'],
-            'product'         => ['required', 'string', 'max:200'],
+            'supplier_id'     => ['required', 'string', 'max:50'],
+            'supplier_name'   => ['required', 'string', 'max:200'],
+            'product_id'      => ['required', 'string', 'max:50'],
+            'product_name'    => ['required', 'string', 'max:200'],
             'min_qty'         => ['nullable', 'numeric', 'min:0'],
             'disc_percent'    => ['nullable', 'numeric', 'min:0', 'max:100'],
             'disc_amount'     => ['nullable', 'numeric', 'min:0'],
@@ -90,7 +97,7 @@ class PurchaseDiscountController extends Controller
             'valid_to'        => ['nullable', 'date', 'after_or_equal:valid_from'],
             'active'          => ['required', 'string', 'in:Y,N'],
         ]);
-        $this->store->update($id, $request->only('name', 'supplier', 'product', 'min_qty', 'disc_percent', 'disc_amount', 'valid_from', 'valid_to', 'active'));
+        $this->store->update($id, $request->only('name', 'supplier_id', 'supplier_name', 'product_id', 'product_name', 'min_qty', 'disc_percent', 'disc_amount', 'valid_from', 'valid_to', 'active'));
         return response()->json(['message' => 'Data berhasil diperbarui.']);
     }
 
