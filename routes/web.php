@@ -41,6 +41,7 @@ use App\Http\Controllers\Master\RateController;
 use App\Http\Controllers\Master\PaymentTermController;
 use App\Http\Controllers\Master\NotesController;
 use App\Http\Controllers\Master\PromoBuyNGetMController;
+use App\Http\Controllers\Master\EmployeeController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -459,6 +460,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [PromoBuyNGetMController::class, 'show'])->name('show');
             Route::put('/{id}', [PromoBuyNGetMController::class, 'update'])->name('update');
             Route::delete('/{id}', [PromoBuyNGetMController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('employee')->name('employee.')->group(function () {
+            Route::get('/', [EmployeeController::class, 'index'])->name('index');
+            Route::get('/table', [EmployeeController::class, 'table'])->name('table');
+            Route::post('/', [EmployeeController::class, 'store'])->name('store');
+            Route::get('/{id}', [EmployeeController::class, 'show'])->name('show');
+            Route::put('/{id}', [EmployeeController::class, 'update'])->name('update');
+            Route::delete('/{id}', [EmployeeController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
