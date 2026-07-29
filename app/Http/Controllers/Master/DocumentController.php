@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Http\Controllers\Master;
+
+use App\Http\Controllers\Controller;
+use App\Services\DummyStore;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use View;
+
+class DocumentController extends Controller
+{
+    protected DummyStore $store;
+
+    public function __construct()
+    {
+        $this->store = new DummyStore('document');
+        View::share('activeMenu', 'document');
+    }
+
+    public function index()
+    {
+        return view('master.document.index');
+    }
+
+    public function table(Request $request)
+    {
+        $data = $this->store->all();
+
+        if ($request->filled('filter_search')) {
+            $q = $request->filter_search;
+            $data = array_filter($data, fn($i) =>
+                stripos($i['doc_code'] ?? '', $q) !== false ||
+                stripos($i['doc_name'] ?? '', $q) !== false ||
+                stripos($i['module'] ?? '', $q) !== false
+            );
+        }
+
+        return DataTables::of(array_values($data))
+            ->addIndexColumn()
+            ->addColumn('active_badge', fn($r) => ($r['active'] ?? 'Y') === 'Y'
+                ? '<span class="badge bg-success">Active</span>'
+                : '<span class="badge bg-secondary">Inactive</span>')
+            ->addColumn('action', fn($row) => '<div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-outline-primary btn-edit" data-id="'.$row['id'].'"><i class="bi bi-pencil"></i></button>
+                <button type="button" class="btn btn-outline-danger btn-delete" data-id="'.$row['id'].'"><i class="bi bi-trash"></i></button>
+            </div>')
+            ->rawColumns(['active_badge', 'action'])->make(true);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'doc_code'         => ['required','string','max:20'],
+            'doc_name'         => ['required','string','max:100'],
+            'module'           => ['required','string','max:100'],
+            'numbering_format' => ['nullable','string','max:100'],
+            'last_counter'     => ['nullable','integer'],
+            'active'           => ['required','string','in:Y,N'],
+        ]);
+        $this->store->create($request->only('doc_code','doc_name','module','numbering_format','last_counter','active'));
+        return response()->json(['message' => 'Data berhasil disimpan.']);
+    }
+
+    public function show($id)
+    {
+        $d = $this->store->find($id);
+        return $d ? response()->json(['success'=>true,'data'=>$d]) : response()->json(['message'=>'Data tidak ditemukan.'],404);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'doc_code'         => ['required','string','max:20'],
+            'doc_name'         => ['required','string','max:100'],
+            'module'           => ['required','string','max:100'],
+            'numbering_format' => ['nullable','string','max:100'],
+            'last_counter'     => ['nullable','integer'],
+            'active'           => ['required','string','in:Y,N'],
+        ]);
+        $this->store->update($id, $request->only('doc_code','doc_name','module','numbering_format','last_counter','active'));
+        return response()->json(['message' => 'Data berhasil diperbarui.']);
+    }
+
+    public function destroy($id)
+    {
+        $this->store->delete($id);
+        return response()->json(['message' => 'Data berhasil dihapus.']);
+    }
+}

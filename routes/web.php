@@ -47,6 +47,7 @@ use App\Http\Controllers\Master\DepartmentController;
 use App\Http\Controllers\Master\ForwarderController;
 use App\Http\Controllers\Master\EditionController;
 use App\Http\Controllers\Master\BankController;
+use App\Http\Controllers\Master\DocumentController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -519,6 +520,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [BankController::class, 'show'])->name('show');
             Route::put('/{id}', [BankController::class, 'update'])->name('update');
             Route::delete('/{id}', [BankController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('document')->name('document.')->group(function () {
+            Route::get('/', [DocumentController::class, 'index'])->name('index');
+            Route::get('/table', [DocumentController::class, 'table'])->name('table');
+            Route::post('/', [DocumentController::class, 'store'])->name('store');
+            Route::get('/{id}', [DocumentController::class, 'show'])->name('show');
+            Route::put('/{id}', [DocumentController::class, 'update'])->name('update');
+            Route::delete('/{id}', [DocumentController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
