@@ -78,10 +78,10 @@
     {{-- Charts --}}
     <div class="row g-3 mb-4">
         <div class="col-lg-6">
-            <div class="card border-0 shadow-sm hz-card h-100"><div class="card-header bg-transparent border-0"><h6 class="mb-0 fw-bold"><i class="bi bi-bar-chart me-2"></i>PO vs STBJ</h6></div><div class="card-body"><canvas id="chart-po-stbj" height="280"></canvas></div></div>
+            <div class="card border-0 shadow-sm hz-card h-100"><div class="card-header bg-transparent border-0"><h6 class="mb-0 fw-bold"><i class="bi bi-bar-chart me-2"></i>PO vs STBJ</h6></div><div class="card-body"><div style="height:280px;position:relative;"><canvas id="chart-po-stbj"></canvas></div></div></div>
         </div>
         <div class="col-lg-6">
-            <div class="card border-0 shadow-sm hz-card h-100"><div class="card-header bg-transparent border-0"><h6 class="mb-0 fw-bold"><i class="bi bi-graph-up me-2"></i>Monthly Purchase Trend</h6></div><div class="card-body"><canvas id="chart-monthly" height="280"></canvas></div></div>
+            <div class="card border-0 shadow-sm hz-card h-100"><div class="card-header bg-transparent border-0"><h6 class="mb-0 fw-bold"><i class="bi bi-graph-up me-2"></i>Monthly Purchase Trend</h6></div><div class="card-body"><div style="height:280px;position:relative;"><canvas id="chart-monthly"></canvas></div></div></div>
         </div>
     </div>
 
