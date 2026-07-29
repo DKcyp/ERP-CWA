@@ -71,8 +71,9 @@
                                         <tr>
                                             <th style="width:40px;" class="text-center">No</th>
                                             <th>Nama Material <span class="text-danger">*</span></th>
-                                            <th style="width:120px;" class="text-center">Qty <span class="text-danger">*</span></th>
-                                            <th style="width:130px;">Satuan</th>
+                                            <th style="width:100px;" class="text-center">Qty <span class="text-danger">*</span></th>
+                                            <th style="width:100px;">Satuan</th>
+                                            <th style="width:130px;">Required Date</th>
                                             <th style="width:60px;" class="text-center">Aksi</th>
                                         </tr>
                                     </thead>

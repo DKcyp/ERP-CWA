@@ -12,7 +12,8 @@
     }
     #table-items .item-material,
     #table-items .item-qty,
-    #table-items .item-unit {
+    #table-items .item-unit,
+    #table-items .item-required-date {
         border-radius: 0.45rem;
     }
     #table-items .btn-remove-item {
@@ -37,9 +38,6 @@
 
 @push('after-script')
 <script>
-    // ─────────────────────────────────────────────
-    // URLS & REFERENCES
-    // ─────────────────────────────────────────────
     const prTableUrl   = "{{ route('purchase-request.table') }}";
     const prStoreUrl   = "{{ route('purchase-request.store') }}";
     const prShowUrl    = "{{ route('purchase-request.show', '__ID__') }}";
@@ -50,46 +48,47 @@
 
     $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': csrfToken } });
 
-    // ─────────────────────────────────────────────
-    // DATATABLE
-    // ─────────────────────────────────────────────
     const tablePR = $('#table-pr').DataTable({
         processing: true,
         serverSide: true,
+        scrollX: true,
         ajax: {
             url: prTableUrl,
             data: function(d) {
                 d.filter_search = $('#filter-search').val();
                 d.filter_status = $('#filter-status').val();
+                d.filter_date_from = $('#filter-date-from').val();
+                d.filter_date_to = $('#filter-date-to').val();
             }
         },
         columns: [
-            { data: 'DT_RowIndex',   name: 'DT_RowIndex',   orderable: false, searchable: false, className: 'text-center' },
-            { data: 'pr_number',     name: 'pr_number' },
-            { data: 'pr_date_fmt',   name: 'pr_date',       className: 'text-center' },
-            { data: 'requester',     name: 'requester' },
-            { data: 'department',    name: 'department' },
-            { data: 'total_items',   name: 'total_items',   className: 'text-center' },
-            { data: 'status_badge',  name: 'status',        orderable: false, searchable: false, className: 'text-center' },
-            { data: 'action',        name: 'action',        orderable: false, searchable: false, className: 'text-end' },
+            { data: 'DT_RowIndex',          name: 'DT_RowIndex',          orderable: false, searchable: false, className: 'text-center' },
+            { data: 'pr_number',            name: 'pr_number' },
+            { data: 'pr_date_fmt',          name: 'pr_date',              className: 'text-center' },
+            { data: 'requester',            name: 'requester' },
+            { data: 'department',           name: 'department' },
+            { data: 'total_items',          name: 'total_items',          className: 'text-center' },
+            { data: 'total_qty_requested',  name: 'total_qty_requested',  className: 'text-center' },
+            { data: 'total_qty_ordered',    name: 'total_qty_ordered',    className: 'text-center' },
+            { data: 'status_badge',         name: 'status',               orderable: false, searchable: false, className: 'text-center' },
+            { data: 'note',                 name: 'note',                 render: function(d){ return d || '-'; } },
+            { data: 'action',               name: 'action',               orderable: false, searchable: false, className: 'text-end' },
         ],
     });
 
-    // ─────────────────────────────────────────────
-    // FILTER
-    // ─────────────────────────────────────────────
     $('#filter-search').on('keyup', function () { tablePR.ajax.reload(); });
     $('#filter-status').on('change', function () { tablePR.ajax.reload(); });
+    $('#filter-date-from').on('change', function () { tablePR.ajax.reload(); });
+    $('#filter-date-to').on('change', function () { tablePR.ajax.reload(); });
 
     $('#btn-reset-filter').on('click', function () {
         $('#filter-search').val('');
         $('#filter-status').val('all');
+        $('#filter-date-from').val('');
+        $('#filter-date-to').val('');
         tablePR.ajax.reload();
     });
 
-    // ─────────────────────────────────────────────
-    // DYNAMIC ITEMS
-    // ─────────────────────────────────────────────
     let itemIndex = 0;
 
     function addItemRow(data) {
@@ -97,9 +96,10 @@
         $('#row-empty').hide();
 
         const i = itemIndex++;
-        const material = data?.material ?? '';
-        const qty      = data?.qty ?? '';
-        const unit     = data?.unit ?? '';
+        const material      = data?.material ?? '';
+        const qty           = data?.qty ?? '';
+        const unit          = data?.unit ?? '';
+        const required_date = data?.required_date ?? '';
 
         const row = `
             <tr>
@@ -115,6 +115,10 @@
                 <td>
                     <input type="text" class="form-control form-control-sm item-unit" name="items[${i}][unit]"
                            value="${unit}" placeholder="Cth: Pcs" maxlength="50">
+                </td>
+                <td>
+                    <input type="date" class="form-control form-control-sm item-required-date" name="items[${i}][required_date]"
+                           value="${required_date}">
                 </td>
                 <td class="text-center">
                     <button type="button" class="btn btn-sm btn-outline-danger btn-remove-item">
@@ -164,26 +168,21 @@
     function collectItems() {
         const items = [];
         $('#items-tbody tr:visible').not('#row-empty').each(function () {
-            const material = $(this).find('.item-material').val() || '';
-            const qty      = parseInt($(this).find('.item-qty').val()) || 0;
-            const unit     = $(this).find('.item-unit').val() || '';
+            const material      = $(this).find('.item-material').val() || '';
+            const qty           = parseInt($(this).find('.item-qty').val()) || 0;
+            const unit          = $(this).find('.item-unit').val() || '';
+            const required_date = $(this).find('.item-required-date').val() || '';
             if (material) {
-                items.push({ material, qty, unit });
+                items.push({ material, qty, unit, required_date });
             }
         });
         return items;
     }
 
-    // ─────────────────────────────────────────────
-    // MODAL REFERENCES
-    // ─────────────────────────────────────────────
     const modalPR   = $('#modal-pr');
     const formPR    = $('#form-pr');
     const idInputPR = $('#pr_id');
 
-    // ─────────────────────────────────────────────
-    // RESET FORM
-    // ─────────────────────────────────────────────
     function resetFormPR() {
         formPR[0].reset();
         idInputPR.val('');
@@ -193,9 +192,6 @@
         resetItems();
     }
 
-    // ─────────────────────────────────────────────
-    // OPEN MODAL (ADD)
-    // ─────────────────────────────────────────────
     $('#btn-add-pr').on('click', function () {
         resetFormPR();
         modalPR.modal('show');
@@ -205,9 +201,6 @@
         resetFormPR();
     });
 
-    // ─────────────────────────────────────────────
-    // HANDLE VALIDATION ERRORS
-    // ─────────────────────────────────────────────
     function handleErrors(errors) {
         Object.entries(errors).forEach(([key, messages]) => {
             const input = formPR.find('[name="' + key + '"]').first();
@@ -218,9 +211,6 @@
         });
     }
 
-    // ─────────────────────────────────────────────
-    // SAVE
-    // ─────────────────────────────────────────────
     window.onSavePR = () => {
         const id     = idInputPR.val();
         const url    = id ? prUpdateUrl.replace('__ID__', id) : prStoreUrl;
@@ -253,9 +243,6 @@
         });
     };
 
-    // ─────────────────────────────────────────────
-    // EDIT
-    // ─────────────────────────────────────────────
     $('#table-pr').on('click', '.btn-edit', function () {
         const id = $(this).data('id');
         resetFormPR();
@@ -281,9 +268,6 @@
             });
     });
 
-    // ─────────────────────────────────────────────
-    // APPROVE / REJECT
-    // ─────────────────────────────────────────────
     function updateStatusPR(id, status) {
         const label = status === 'APPROVED' ? 'approve' : 'reject';
         Swal.fire({
@@ -314,9 +298,6 @@
     $('#table-pr').on('click', '.btn-approve', function () { updateStatusPR($(this).data('id'), 'APPROVED'); });
     $('#table-pr').on('click', '.btn-reject', function () { updateStatusPR($(this).data('id'), 'REJECTED'); });
 
-    // ─────────────────────────────────────────────
-    // DELETE
-    // ─────────────────────────────────────────────
     $('#table-pr').on('click', '.btn-delete', function () {
         const id = $(this).data('id');
         Swal.fire({
