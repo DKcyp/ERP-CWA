@@ -36,6 +36,7 @@ use App\Http\Controllers\Master\ProductCashBackController;
 use App\Http\Controllers\Master\SupplierProductController;
 use App\Http\Controllers\Master\UomGeneralConvertionController;
 use App\Http\Controllers\Master\WarehouseController;
+use App\Http\Controllers\Master\CurrencyController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -409,6 +410,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [WarehouseController::class, 'show'])->name('show');
             Route::put('/{id}', [WarehouseController::class, 'update'])->name('update');
             Route::delete('/{id}', [WarehouseController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('currency')->name('currency.')->group(function () {
+            Route::get('/', [CurrencyController::class, 'index'])->name('index');
+            Route::get('/table', [CurrencyController::class, 'table'])->name('table');
+            Route::post('/', [CurrencyController::class, 'store'])->name('store');
+            Route::get('/{id}', [CurrencyController::class, 'show'])->name('show');
+            Route::put('/{id}', [CurrencyController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CurrencyController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
