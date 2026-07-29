@@ -555,7 +555,6 @@ Route::middleware('auth')->group(function () {
         Route::prefix('purchase-request-fulfilment-report')->name('purchase-request-fulfilment.')->group(function () {
             Route::get('/', [PurchaseRequestFulfilmentController::class, 'index'])->name('index');
             Route::get('/table', [PurchaseRequestFulfilmentController::class, 'table'])->name('table');
-            Route::get('/{id}', [PurchaseRequestFulfilmentController::class, 'show'])->name('show');
         });
 
         Route::prefix('purchase-order-list')->name('purchase-order.')->group(function () {
