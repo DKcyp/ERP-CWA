@@ -51,6 +51,7 @@ use App\Http\Controllers\Master\DocumentController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
+use App\Http\Controllers\MaterialManagement\StockTransferRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -555,6 +556,15 @@ Route::middleware('auth')->group(function () {
         Route::prefix('purchase-request-fulfilment-report')->name('purchase-request-fulfilment.')->group(function () {
             Route::get('/', [PurchaseRequestFulfilmentController::class, 'index'])->name('index');
             Route::get('/table', [PurchaseRequestFulfilmentController::class, 'table'])->name('table');
+        });
+
+        Route::prefix('stock-transfer-request-list')->name('stock-transfer-request-list.')->group(function () {
+            Route::get('/', [StockTransferRequestController::class, 'index'])->name('index');
+            Route::get('/table', [StockTransferRequestController::class, 'table'])->name('table');
+            Route::post('/', [StockTransferRequestController::class, 'store'])->name('store');
+            Route::get('/{id}', [StockTransferRequestController::class, 'show'])->name('show');
+            Route::put('/{id}', [StockTransferRequestController::class, 'update'])->name('update');
+            Route::delete('/{id}', [StockTransferRequestController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('purchase-order-list')->name('purchase-order.')->group(function () {
