@@ -40,14 +40,11 @@ class PaymentTermController extends Controller
 
         return DataTables::of(array_values($data))
             ->addIndexColumn()
-            ->addColumn('yn_badge', fn($r, $k) => ($r[$k] ?? 'N') === 'Y'
-                ? '<span class="badge bg-success">Yes</span>'
-                : '<span class="badge bg-secondary">No</span>')
             ->addColumn('action', fn($row) => '<div class="btn-group btn-group-sm">
                 <button type="button" class="btn btn-outline-primary btn-edit" data-id="'.$row['id'].'"><i class="bi bi-pencil"></i></button>
                 <button type="button" class="btn btn-outline-danger btn-delete" data-id="'.$row['id'].'"><i class="bi bi-trash"></i></button>
             </div>')
-            ->rawColumns(['yn_badge', 'action'])->make(true);
+            ->rawColumns(['action'])->make(true);
     }
 
     public function store(Request $request)
