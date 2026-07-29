@@ -45,6 +45,7 @@ use App\Http\Controllers\Master\EmployeeController;
 use App\Http\Controllers\Master\CommissionController;
 use App\Http\Controllers\Master\DepartmentController;
 use App\Http\Controllers\Master\ForwarderController;
+use App\Http\Controllers\Master\EditionController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -499,6 +500,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [ForwarderController::class, 'show'])->name('show');
             Route::put('/{id}', [ForwarderController::class, 'update'])->name('update');
             Route::delete('/{id}', [ForwarderController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('edition')->name('edition.')->group(function () {
+            Route::get('/', [EditionController::class, 'index'])->name('index');
+            Route::get('/table', [EditionController::class, 'table'])->name('table');
+            Route::post('/', [EditionController::class, 'store'])->name('store');
+            Route::get('/{id}', [EditionController::class, 'show'])->name('show');
+            Route::put('/{id}', [EditionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [EditionController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
