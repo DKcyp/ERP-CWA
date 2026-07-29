@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MaterialManagement;
 use App\Http\Controllers\Controller;
 use App\Services\DummyStore;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 use View;
 
 class PurchaseRequestFulfilmentController extends Controller
