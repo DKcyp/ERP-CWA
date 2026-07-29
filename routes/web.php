@@ -74,6 +74,7 @@ use App\Http\Controllers\MaterialManagement\StockTransferFulfilmentController;
 use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentCostReportController;
 use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentTrackReportController;
 use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentReportController;
+use App\Http\Controllers\MaterialManagement\DashboardMaterialController;
 use App\Http\Controllers\SalesDistribution\ArWarehouseReportController;
 use App\Http\Controllers\SalesDistribution\PointSettingController;
 use App\Http\Controllers\SalesDistribution\CustomerPointPromoRuleController;
@@ -534,6 +535,11 @@ Route::middleware('auth')->group(function () {
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
             Route::get('/', [SupplierBalanceSummaryController::class, 'index'])->name('index');
             Route::get('/table', [SupplierBalanceSummaryController::class, 'table'])->name('table');
+        });
+
+        Route::prefix('material-dashboard')->name('material-dashboard.')->group(function () {
+            Route::get('/', [DashboardMaterialController::class, 'index'])->name('index');
+            Route::get('/data', [DashboardMaterialController::class, 'data'])->name('data');
         });
 
         Route::prefix('purchase-request-list')->name('purchase-request.')->group(function () {

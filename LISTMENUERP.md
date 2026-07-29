@@ -67,7 +67,7 @@
 
   - Product Cash Back `product-cash-back`
     Komponen : Cashback_Id, Name, Supplier, Product, Min_Purchase, Cashback_Value, Valid_From, Valid_To, Active
-    Fungsi : Mengelola aturan program pengembalian dana (cashback) atas pembelian produk tertentu oleh pelanggan.
+    Fungsi : Mengelola aturan program pengembalian dana (cashback) atas pembelian produk tertentu oleh supplier.
     Penjelasan UI : Tampilan awal berupa table menampilkan Cashback_Id, Name, Supplier, Product, Min_Purchase, Cashback_Value, Valid_From, Valid_To, Active dan filter nama program dan product. Tombol tambah akan muncul pop up dengan form Name, Supplier, Product, Min_Purchase, Cashback_Value, Valid_From, Valid_To, Active. Untuk edit muncul pop up form Name, Supplier, Product, Min_Purchase, Cashback_Value, Valid_From, Valid_To, Active. Hapus muncul alert konfirmasi.
 
   - Supplier Product `supplier-product`
@@ -75,20 +75,15 @@
     Fungsi : Memetakan hubungan silang (cross-reference) antara produk perusahaan dengan kode/nama produk milik supplier.
     Penjelasan UI : Tampilan awal berupa table menampilkan Supplier_Product_Id, Supplier, Product, Supplier_Item_Code, Supplier_Item_Name, Lead_Time_Days, Active dan filter supplier dan product. Tombol tambah akan muncul pop up dengan form Supplier, Product, Supplier_Item_Code, Supplier_Item_Name, Lead_Time_Days, Active. Untuk edit muncul pop up form Supplier, Product, Supplier_Item_Code, Supplier_Item_Name, Lead_Time_Days, Active. Hapus muncul alert konfirmasi.
 
-  - Product Price Log `product-price-log`
-    Komponen : Log_Id, Product, Price_List, Old_Price, New_Price, Changed_By, Change_Date, Reason
-    Fungsi : Mencatat riwayat (audit trail) perubahan harga jual produk untuk pengawasan integritas harga.
-    Penjelasan UI : Tampilan awal berupa table menampilkan Log_Id, Product, Price_List, Old_Price, New_Price, Changed_By, Change_Date, Reason dan filter product dan tanggal perubahan. Halaman ini bersifat Read-Only (tidak ada tombol tambah, edit, dan hapus).
-
   - UOM General Convertion `uom-general-convertion`
     Komponen : UOM_Convertion_Id, Product, From_UOM, To_UOM, Multiplier, Operator
     Fungsi : Mengatur rasio konversi antar satuan unit barang (misal: 1 BOX = 24 PCS) untuk perhitungan stok dan transaksi otomatis.
     Penjelasan UI : Tampilan awal berupa table menampilkan UOM_Convertion_Id, Product, From_UOM, To_UOM, Multiplier, Operator dan filter product dan UOM. Tombol tambah akan muncul pop up dengan form Product, From_UOM, To_UOM, Multiplier, Operator. Untuk edit muncul pop up form Product, From_UOM, To_UOM, Multiplier, Operator. Hapus muncul alert konfirmasi.
 
 - Warehouse `warehouse`
-  Komponen : Warehouse_Id, Code, Name, Address, PIC_Name, Phone, Active
-  Fungsi : Mengelola data induk lokasi fisik/logis gudang penyimpanan barang persediaan.
-  Penjelasan UI : Tampilan awal berupa table menampilkan Warehouse_Id, Code, Name, Address, PIC_Name, Phone, Active dan filter nama warehouse dan code. Tombol tambah akan muncul pop up dengan form Code, Name, Address, PIC_Name, Phone, Active. Untuk edit muncul pop up form Code, Name, Address, PIC_Name, Phone, Active. Hapus muncul alert konfirmasi.
+  Komponen : Warehouse_Id, Code, Name, Address, PIC_Name, Phone, Note, Use_VAT, Active, Allow_Negative_Stock, View_In_Sales_Return
+  Fungsi : Mengelola data induk lokasi fisik/logis gudang penyimpanan barang persediaan beserta pengaturan aturan operasionalnya (seperti pajak VAT, izin stok minus, pencatatan retur penjualan, dan catatan internal).
+  Penjelasan UI : Tampilan awal berupa table menampilkan Warehouse_Id, Code, Name, Address, PIC_Name, Phone, Note, Use_VAT, Active, Allow_Negative_Stock, View_In_Sales_Return dan filter nama warehouse serta code. Tombol Tambah akan memunculkan pop-up modal form dengan field input Code, Name, Address, PIC_Name, Phone, Note, serta checkbox opsi Use_VAT, Active, Allow_Negative_Stock, dan View_In_Sales_Return. Untuk Edit akan memunculkan pop-up modal form dengan field dan checkbox yang sama untuk memperbarui data gudang. Hapus memunculkan alert konfirmasi.
 
 - Currency `currency`
   Komponen : Currency_Id, Code, Name, Symbol, Is_Default, Active
@@ -101,9 +96,9 @@
   Penjelasan UI : Tampilan awal berupa table menampilkan Rate_Id, Currency, Rate_Date, Rate_Value, Updated_By dan filter currency dan tanggal rate. Tombol tambah akan muncul pop up dengan form Currency, Rate_Date, Rate_Value. Untuk edit muncul pop up form Currency, Rate_Date, Rate_Value. Hapus muncul alert konfirmasi.
 
 - Payment Term `payment-term`
-  Komponen : Term_Id, Code, Name, Days_Count, Description, Active
-  Fungsi : Mengatur master ketentuan termin/jangka waktu jatuh tempo pembayaran transaksi.
-  Penjelasan UI : Tampilan awal berupa table menampilkan Term_Id, Code, Name, Days_Count, Description, Active dan filter name dan code. Tombol tambah akan muncul pop up dengan form Code, Name, Days_Count, Description, Active. Untuk edit muncul pop up form Code, Name, Days_Count, Description, Active. Hapus muncul alert konfirmasi.
+  Komponen : Term_Id, Payment_Discount_Percent, If_Paid_Within_Days, Net_Due_In_Days, Cash_On_Delivery, Default_Term_For_Not_COD, Sales_Discount_Id
+  Fungsi : Mengatur master ketentuan termin pembayaran transaksi, potongan harga pembayaran awal (early payment discount), periode jatuh tempo bersih, opsi Cash On Delivery (COD), serta pengaitan ke skema diskon penjualan.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Term_Id, Payment_Discount_Percent, If_Paid_Within_Days, Net_Due_In_Days, Cash_On_Delivery, Default_Term_For_Not_COD, Sales_Discount dan filter Term_Id serta Sales_Discount. Tombol Tambah akan memunculkan pop-up modal form dengan field input Id, Payment Discount (%), If paid within (day(s)), Net Due in (day(s)), checkbox Cash On Delivery, checkbox Default Term for Not COD, serta dropdown Sales Discount (pilih dari Master Sales Discount). Untuk Edit akan memunculkan pop-up modal form dengan field dan checkbox yang sama untuk memperbarui data termin pembayaran. Hapus memunculkan alert konfirmasi.
 
 - Notes `notes`
   Komponen : Note_Id, Title, Module, Default_Text, Active
@@ -111,14 +106,19 @@
   Penjelasan UI : Tampilan awal berupa table menampilkan Note_Id, Title, Module, Default_Text, Active dan filter title dan module. Tombol tambah akan muncul pop up dengan form Title, Module, Default_Text, Active. Untuk edit muncul pop up form Title, Module, Default_Text, Active. Hapus muncul alert konfirmasi.
 
 - Promo Buy N Get M `promo-buy-n-get-m`
-  Komponen : Promo_Id, Name, Buy_Product, Buy_Qty, Get_Product, Get_Qty, Valid_From, Valid_To, Active
-  Fungsi : Mengatur aturan promosi penjualan kustom beli N barang bonus M barang gratis.
-  Penjelasan UI : Tampilan awal berupa table menampilkan Promo_Id, Name, Buy_Product, Buy_Qty, Get_Product, Get_Qty, Valid_From, Valid_To, Active dan filter promo name dan product. Tombol tambah akan muncul pop up dengan form Name, Buy_Product, Buy_Qty, Get_Product, Get_Qty, Valid_From, Valid_To, Active. Untuk edit muncul pop up form Name, Buy_Product, Buy_Qty, Get_Product, Get_Qty, Valid_From, Valid_To, Active. Hapus muncul alert konfirmasi.
+  Komponen : Promo_Id, Name, Date_From, Date_To, Buy_Product_Id, Buy_Product_Name, Buy_Qty, Get_Product_Id, Get_Product_Name, Get_Qty, Get_Discount_Amount, Get_Discount_Percentage, Sales_Invoice_Discount_Amount, Sales_Invoice_Discount_Percentage
+  Fungsi : Mengatur aturan promosi penjualan kustom "Beli N Barang Bonus M Barang" beserta pengaturan potongan harga/diskon tambahan pada produk bonus maupun pada level Faktur Penjualan (Sales Invoice).
+  Penjelasan UI : Tampilan awal berupa table menampilkan Promo_Id, Name, Date_From, Date_To, Buy_Product_Name, Buy_Qty, Get_Product_Name, Get_Qty, Get_Discount_Percentage, Sales_Invoice_Discount_Percentage dan filter promo name serta product. Tombol Tambah akan memunculkan pop-up modal form berstruktur:
+    1. Header Info : Promo Id, Name, Date From (DatePicker), Date To (DatePicker).
+    2. Seksi Buy   : Product Id (Lookup Search), Name (Read-only), Buy Qty.
+    3. Seksi Get   : Product Id (Lookup Search), Name (Read-only), Get Qty, Discount Amount, Discount Percentage.
+    4. Seksi Sales Invoice : Discount Amount, Discount Percentage.
+  Untuk Edit akan memunculkan pop-up modal form dengan struktur dan field yang sama untuk memperbarui data promosi. Hapus memunculkan alert konfirmasi.
 
 - Employee `employee`
-  Komponen : Employee_Id, NIK, Name, Department, Position, Email, Phone, Address, Active
-  Fungsi : Mengelola data induk karyawan perusahaan yang terhubung dengan akses sistem, kearsipan, maupun hak komisi.
-  Penjelasan UI : Tampilan awal berupa table menampilkan Employee_Id, NIK, Name, Department, Position, Email, Phone, Address, Active dan filter NIK, name, dan department. Tombol tambah akan muncul pop up dengan form NIK, Name, Department, Position, Email, Phone, Address, Active. Untuk edit muncul pop up form NIK, Name, Department, Position, Email, Phone, Address, Active. Hapus muncul alert konfirmasi.
+  Komponen : Employee_Id, Name, User_Id, Commission_Id, Active, Transit_Area_Id
+  Fungsi : Mengelola data induk karyawan perusahaan serta menghubungkan profil karyawan dengan akun sistem (User Id), skema komisi (Commission Id), dan wilayah/gudang penugasan (Transit Area).
+  Penjelasan UI : Tampilan awal berupa table menampilkan Employee_Id, Name, User_Id, Commission_Id, Active, Transit_Area dan filter Name, User_Id, serta Transit_Area. Tombol Tambah akan memunculkan pop-up modal form dengan field input Employee_Id, Name, dropdown User_Id (pilih dari Master User), dropdown Commission_Id (pilih dari Master Commission), checkbox Active, serta dropdown Transit_Area (pilih dari Master Warehouse/Transit Area). Untuk Edit akan memunculkan pop-up modal form dengan field, dropdown, dan checkbox yang sama untuk memperbarui data karyawan. Hapus memunculkan alert konfirmasi.
 
 - Commission `commission`
   Komponen : Commission_Id, Name, Target_Type, Min_Achieve, Max_Achieve, Rate_Percent, Active
@@ -136,9 +136,9 @@
   Penjelasan UI : Tampilan awal berupa table menampilkan Forwarder_Id, Code, Name, Contact_Person, Phone, Email, Address, Active dan filter code dan name. Tombol tambah akan muncul pop up dengan form Code, Name, Contact_Person, Phone, Email, Address, Active. Untuk edit muncul pop up form Code, Name, Contact_Person, Phone, Email, Address, Active. Hapus muncul alert konfirmasi.
 
 - Edition `edition`
-  Komponen : Edition_Id, Code, Name, Release_Date, Description, Active
-  Fungsi : Mengelola pengelompokan edisi atau versi rilis dari suatu produk (misal: Edisi Khusus, Edisi Impor, Edisi Musim).
-  Penjelasan UI : Tampilan awal berupa table menampilkan Edition_Id, Code, Name, Release_Date, Description, Active dan filter code dan name. Tombol tambah akan muncul pop up dengan form Code, Name, Release_Date, Description, Active. Untuk edit muncul pop up form Code, Name, Release_Date, Description, Active. Hapus muncul alert konfirmasi.
+  Komponen : Edition_Id, Code, Name, Start_Date, End_Date, Description, Active
+  Fungsi : Mengelola pengelompokan edisi atau versi rilis dari suatu produk (misal: Edisi Khusus, Edisi Impor, Edisi Musim) beserta penentuan batas periode awal (Start Date) dan akhir (End Date) berlakunya edisi tersebut.
+  Penjelasan UI : Tampilan awal berupa table menampilkan Edition_Id, Code, Name, Start_Date, End_Date, Description, Active dan filter code, name, serta rentang tanggal (Start/End Date). Tombol Tambah akan memunculkan pop-up modal form dengan field input Code, Name, Start_Date (DatePicker), End_Date (DatePicker), Description, dan checkbox Active. Untuk Edit akan memunculkan pop-up modal form dengan field input, DatePicker, dan checkbox yang sama untuk memperbarui data edisi. Hapus memunculkan alert konfirmasi.
 
 - Bank `bank`
   Komponen : Bank_Id, Bank_Code, Bank_Name, Branch, Account_Number, Account_Name, Active
@@ -165,166 +165,154 @@
       Komponen : Center_Id, Code, Name
       Fungsi : Mengelola pembagian wilayah/pusat area pemasok untuk kebutuhan pengelompokan geografis.
       Penjelasan UI : Tampilan awal berupa table menampilkan Center_Id, Code, Name dan filter nama center dan code. Tombol tambah akan muncul pop up dengan form Code, Name. Untuk edit muncul pop up form Code, Name. Hapus muncul alert konfirmasi.
-
-    - Supplier Balance Summary `supplier-balance-summary`
-      Komponen : Supplier_Id, Name, Currency, Beginning_Balance, Total_Invoice, Total_Payment, Total_Return, Ending_Balance, Total_AP
-      Fungsi : Menyajikan ringkasan posisi saldo hutang usaha per supplier beserta mutasi penambahan tagihan dan pelunasan secara real-time.
-      Penjelasan UI : Tampilan awal berupa table menampilkan Supplier_Id, Name, Currency, Beginning_Balance, Total_Invoice, Total_Payment, Total_Return, Ending_Balance, Total_AP dan filter nama supplier, currency, dan rentang tanggal. Halaman ini bersifat Read-Only (Laporan/Ringkasan), sehingga tidak terdapat tombol tambah, edit, maupun hapus.
-
 ##
 
 Create Doc. From CSV
 
 ## Material Management `#`
 
-- Supplier Master `supplier-master`
-  Komponen : Supplier ID, Supplier Code, Name, Supplier Group ID, Supplier Center ID, Phone, Email, Address, Term of Payment, Status, Contact Person, NPWP
-  Fungsi : Mengelola data induk (master data) supplier/vendor mulai dari profil, kontak, alamat, hingga ketentuan termin pembayaran.
-
-- Supplier Group `supplier-group`
-  Komponen : Group ID, Code, Name, Description, AP Account
-  Fungsi : Mengelompokkan supplier berdasarkan jenis/kategori serta pemetaan akun Hutang (AP Account) pada buku besar.
-
-- Supplier Center `supplier-center`
-  Komponen : Center ID, Code, Name
-  Fungsi : Mengelola pembagian wilayah/pusat area pemasok untuk kebutuhan pengelompokan geografis.
-
-- Supplier Balance Summary `supplier-balance-summary`
-  Komponen : Supplier ID, Name, Currency, Beginning Balance, Total Invoice, Total Payment, Total Return, Ending Balance, Total AP
-  Fungsi : Menyajikan ringkasan posisi saldo hutang usaha per supplier beserta mutasi penambahan tagihan dan pelunasan secara real-time.
+- Dashboard Material Management `material-dashboard`
+  Komponen : Total_PR_Pending, Total_PO_Active, Total_STBJ_Today, Total_AP_Outstanding, Stock_Alert_Count, Purchasing_Progress_Tracker (PR -> PO -> STBJ -> Invoice), Chart_PO_Vs_STBJ, Chart_Monthly_Purchase
+  Fungsi : Menyajikan gambaran umum secara visual mengenai metrik kunci operasional material management, pemantauan alur progres pembelian (purchasing progress pipeline) secara kontinu, status dokumen (PR/PO/STBJ), posisi hutang usaha, dan peringatan stok.
+  Penjelasan UI : Tampilan awal berupa dashboard interaktif berisi ringkasan widget angka (card stat), modul visual widget/pipeline Monitoring Progres Purchasing (menampilkan persentase & tahap penyelesaian pengajuan PR hingga penagihan Invoice), diagram grafik batang/garis trend transaksi pembelian, serta tabel ringkas notifikasi dokumen pending. Halaman bersifat Read-Only dan hanya menyediakan filter periode tanggal dan gudang.
 
 - Purchase Request `#`
-  - New Purchase Request `new-purchase-request`
-    Komponen : PR No, Date, Requester User, Department, Warehouse ID, Material ID, Qty Requested, UOM ID, Note
-    Fungsi : Form pengajuan permintaan pemesanan barang/material baru oleh departemen internal sebelum dibuatkan PO.
   - Purchase Request List `purchase-request-list`
-    Komponen : PR No, Date, Requester, Department, Total Item, Status (Draft/Pending/Approved/Rejected/Fulfilled), Note
-    Fungsi : Menampilkan dan mengelola daftar seluruh dokumen pengajuan Permintaan Pembelian (PR) beserta status persetujuannya.
+    Komponen : PR_No, Date, Requester, Department, Total_Item, Total_Qty_Requested, Total_Qty_Ordered, Status, Note
+    Fungsi : Menampilkan dan mengelola daftar seluruh dokumen pengajuan Permintaan Pembelian (PR) beserta status pemenuhannya (Draft / Approved / Partial PO / Fulfilled / Rejected).
+    Penjelasan UI : Tampilan awal berupa table menampilkan PR_No, Date, Requester, Department, Total_Item, Total_Qty_Requested, Total_Qty_Ordered, Status, Note dan filter PR_No, department, status, serta rentang tanggal. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, Requester, Department, Note) dan Table Detail Items (Material, Qty Requested, UOM, Required Date). Untuk Edit memunculkan pop-up form dengan struktur yang sama. Hapus memunculkan alert konfirmasi.
+
   - Purchase Request Fulfilment Report `purchase-request-fulfilment-report`
-    Komponen : PR No, Date, Department, Material ID, Name, Qty Requested, Qty Fulfilled, Qty Outstanding, Status
-    Fungsi : Memantau tingkat pemenuhan barang yang diminta pada PR menjadi dokumen Purchase Order (PO).
+    Komponen : PR_No, PR_Date, Department, Material_Id, Material_Name, Qty_Requested, Qty_Ordered_Total, Qty_Outstanding, Linked_PO_Numbers, Status
+    Fungsi : Memantau tingkat pemenuhan dan histori penarikan item barang pada PR yang dipecah menjadi beberapa PO secara bertahap dan di tanggal berbeda.
+    Penjelasan UI : Tampilan awal berupa table menampilkan PR_No, PR_Date, Department, Material_Id, Material_Name, Qty_Requested, Qty_Ordered_Total, Qty_Outstanding, Linked_PO_Numbers, Status dan filter PR_No, department, material, dan status pemenuhan (Unfulfilled / Partial / Completed). Halaman bersifat Read-Only (Laporan/Report) tanpa tombol tambah, edit, dan hapus.
 
 - Purchase Order `#`
-  - New Purchase Order `new-purchase-order`
-    Komponen : PO No, Date, Supplier ID, PR No Ref, Payment Term, Material ID, Qty Ordered, Unit Price, Discount, Tax, Subtotal, Total Amount, Note
-    Fungsi : Form pembuatan surat pesanan pembelian resmi kepada supplier berdasarkan kesepakatan harga dan termin.
   - Purchase Order List `purchase-order-list`
-    Komponen : PO No, Date, Supplier Name, PR Ref, Subtotal, Tax, Discount, Total Amount, Status (Draft/Approved/Partial/Closed/Cancelled)
-    Fungsi : Menampilkan dan mengelola daftar seluruh dokumen Purchase Order (PO) yang telah diterbitkan.
-  - Purchase Fulfillment Report `purchase-fulfillment-report`
-    Komponen : PO No, PO Date, Supplier Name, Material ID, Qty Ordered, Qty Received (STBJ), Qty Outstanding, Fulfilment Rate (%)
-    Fungsi : Memantau rasio pemenuhan penerimaan barang fisik oleh supplier terhadap pesanan PO.
-  - Daily Purchase Order Report `daily-purchase-order-report`
-    Komponen : Date, PO No, Supplier Name, Total Amount, Status, User ID
-    Fungsi : Laporan harian rekapitulasi pembuatan dan status dokumen Purchase Order.
+    Komponen : PO_No, Date, Supplier_Name, PR_Ref_No, Subtotal, Tax, Discount, Total_Amount, Status
+    Fungsi : Menampilkan dan mengelola daftar dokumen Purchase Order (PO) yang diterbitkan (termasuk PO parsial yang menarik sisa barang dari satu dokumen PR di tanggal berbeda).
+    Penjelasan UI : Tampilan awal berupa table menampilkan PO_No, Date, Supplier_Name, PR_Ref_No, Subtotal, Tax, Discount, Total_Amount, Status dan filter PO_No, PR_Ref_No, supplier, status, dan rentang tanggal. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, Supplier, PR_Ref_No [Lookup PR], Payment Term, Tax, Discount) di mana saat PR dipilih, sistem otomatis menampilkan sisa kuantitas barang yang belum di-PO (Outstanding Qty) pada Table Detail Items (Material, Qty Available from PR, Qty to Order, Unit Price, Subtotal). Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
 
+  - Purchase Fulfillment Report `purchase-fulfillment-report`
+    Komponen : PO_No, PO_Date, Supplier_Name, PR_Ref_No, Material_Id, Qty_Ordered, Qty_Received, Qty_Outstanding, Fulfilment_Rate
+    Fungsi : Memantau rasio pemenuhan penerimaan barang fisik (STBJ) oleh supplier atas pesanan PO yang terhubung ke referensi PR.
+    Penjelasan UI : Tampilan awal berupa table menampilkan PO_No, PO_Date, Supplier_Name, PR_Ref_No, Material_Id, Qty_Ordered, Qty_Received, Qty_Outstanding, Fulfilment_Rate dan filter PO_No, PR_Ref_No, supplier, material, dan rentang tanggal. Halaman bersifat Read-Only (Laporan/Report) tanpa tombol tambah, edit, dan hapus.
+
+  - Daily Purchase Order Report `daily-purchase-order-report`
+    Komponen : Date, PO_No, PR_Ref_No, Supplier_Name, Total_Amount, Status, User_Id
+    Fungsi : Laporan harian rekapitulasi pembuatan dan status dokumen Purchase Order harian beserta jejak nomor PR referensinya.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Date, PO_No, PR_Ref_No, Supplier_Name, Total_Amount, Status, User_Id dan filter tanggal harian, supplier, status, dan user. Halaman bersifat Read-Only (Laporan/Report) tanpa tombol tambah, edit, dan hapus.
+    
 - Purchase Invoice `#`
-  - New Purchase Invoice `new-purchase-invoice`
-    Komponen : Invoice No, Date, Due Date, Supplier ID, PO No Ref, STBJ No Ref, Material ID, Qty, Unit Price, Subtotal, Total Amount, Note
-    Fungsi : Form pencatatan tagihan/faktur pembelian resmi dari supplier atas barang yang telah diterima.
   - Purchase Invoice List `purchase-invoice-list`
-    Komponen : Invoice No, Date, Due Date, Supplier Name, PO Ref, STBJ Ref, Total Amount, Paid Amount, Outstanding, Status (Unpaid/Partial/Paid)
+    Komponen : Invoice_No, Date, Due_Date, Supplier_Name, PO_Ref, STBJ_No_Ref, Total_Amount, Paid_Amount, Outstanding, Status
     Fungsi : Menampilkan daftar seluruh faktur tagihan pembelian beserta status pelunasannya.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Invoice_No, Date, Due_Date, Supplier_Name, PO_Ref, STBJ_No_Ref, Total_Amount, Paid_Amount, Outstanding, Status dan filter Invoice_No, supplier, status pembayaran, dan rentang tanggal. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, Supplier, PO Ref / STBJ Ref, Due Date, Tax) dan Table Detail Items. Untuk Edit memunculkan pop-up form dengan data terisi. Hapus memunculkan alert konfirmasi.
+
   - Daily Purchase Invoice Report `daily-purchase-invoice-report`
-    Komponen : Date, Invoice No, Supplier Name, Total Amount, Status, Due Date
+    Komponen : Date, Invoice_No, Supplier_Name, Total_Amount, Status, Due_Date
     Fungsi : Laporan harian rincian penerbitan faktur pembelian dari supplier.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Date, Invoice_No, Supplier_Name, Total_Amount, Status, Due_Date dan filter tanggal harian, supplier, dan status invoice. Halaman bersifat Read-Only (Laporan/Report) tanpa tombol tambah, edit, dan hapus.
+
   - Monthly Purchase by Supplier Report `monthly-purchase-by-supplier-report`
-    Komponen : Period, Supplier ID, Name, Total PO Count, Total Invoice Amount, Total Paid Amount, Total Outstanding
+    Komponen : Period, Supplier_Id, Supplier_Name, Total_PO_Count, Total_Invoice_Amount, Total_Paid_Amount, Total_Outstanding
     Fungsi : Laporan akumulasi nilai transaksi pembelian per supplier dalam periode bulanan.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Period, Supplier_Id, Supplier_Name, Total_PO_Count, Total_Invoice_Amount, Total_Paid_Amount, Total_Outstanding dan filter periode bulan/tahun serta supplier. Halaman bersifat Read-Only (Laporan/Report) tanpa tombol tambah, edit, dan hapus.
 
 - STBJ `stbj`
-  Komponen : STBJ No, Date, Supplier ID, PO No Ref, Warehouse ID, SJ Supplier No, Material ID, Qty Received, Qty Accepted, Qty Rejected, UOM ID, Note
+  Komponen : STBJ_No, Date, Supplier_Id, PO_No_Ref, Warehouse_Id, SJ_Supplier_No, Material_Id, Qty_Received, Qty_Accepted, Qty_Rejected, UOM_Id, Note
   Fungsi : Mengelola pencatatan Surat Tanda Bukti Jalan (STBJ/Goods Receipt) atas penerimaan fisik barang dari supplier di gudang.
+  Penjelasan UI : Tampilan awal berupa table menampilkan STBJ_No, Date, Supplier_Id, PO_No_Ref, Warehouse_Id, SJ_Supplier_No, Status dan filter STBJ_No, PO_No_Ref, supplier, dan warehouse. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, Supplier, PO Ref, Warehouse, SJ Supplier No) dan Table Detail Items (Material, Qty Received, Qty Accepted, Qty Rejected, UOM, Note). Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
 
 - Supplier Payment `#`
-  - New Supplier Payment `new-supplier-payment`
-    Komponen : Payment No, Date, Supplier ID, Payment Method (Transfer/Cash/Giro), Account ID, Invoice No Ref, Amount Paid, Total Paid, Ref No, Note
-    Fungsi : Form pencatatan transaksi pembayaran/pelunasan hutang atas faktur pembelian ke supplier.
-  - New Supplier Down Payment `new-supplier-down-payment`
-    Komponen : Payment No, Date, Supplier ID, PO No Ref, Payment Method, Account ID, Total DP Amount, Ref No, Note
-    Fungsi : Form pencatatan pembayaran uang muka (Down Payment) kepada supplier sebelum barang diterima/faktur terbit.
   - Supplier Payment List `supplier-payment-list`
-    Komponen : Payment No, Date, Supplier Name, Payment Type (Regular/DP), Payment Method, Total Paid, Ref No, Status
+    Komponen : Payment_No, Date, Supplier_Name, Payment_Type, Payment_Method, Total_Paid, Ref_No, Status
     Fungsi : Menampilkan daftar riwayat transaksi pembayaran dan uang muka ke supplier.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Payment_No, Date, Supplier_Name, Payment_Type, Payment_Method, Total_Paid, Ref_No, Status dan filter Payment_No, supplier, payment_type, dan rentang tanggal. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, Supplier, Payment Type, Payment Method, Account Bank, Ref No) dan Table Allocation Invoice (Invoice No, Outstanding, Amount Paid). Untuk Edit memunculkan pop-up form dengan data terisi. Hapus memunculkan alert konfirmasi.
+
   - Supp. Outstanding List `supp-outstanding-list`
-    Komponen : Invoice No, Supplier ID, Supplier Name, Invoice Date, Due Date, Age (Days), Total Amount, Paid Amount, Outstanding Amount
+    Komponen : Invoice_No, Supplier_Id, Supplier_Name, Invoice_Date, Due_Date, Age_Days, Total_Amount, Paid_Amount, Outstanding_Amount
     Fungsi : Memantau rincian faktur hutang pembelian yang belum dilunasi beserta analisis umur hutang (AP Aging).
+    Penjelasan UI : Tampilan awal berupa table menampilkan Invoice_No, Supplier_Id, Supplier_Name, Invoice_Date, Due_Date, Age_Days, Total_Amount, Paid_Amount, Outstanding_Amount dan filter supplier, kriteria umur hutang (AP Aging Bracket), dan due date. Halaman bersifat Read-Only (Laporan/Monitoring) tanpa tombol tambah, edit, dan hapus.
+
   - Daily Supplier Payment Report `daily-supplier-payment-report`
-    Komponen : Date, Payment No, Supplier Name, Payment Method, Total Paid, Account Name, User ID
+    Komponen : Date, Payment_No, Supplier_Name, Payment_Method, Total_Paid, Account_Name, User_Id
     Fungsi : Laporan harian pengeluaran kas/bank untuk pembayaran hutang supplier.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Date, Payment_No, Supplier_Name, Payment_Method, Total_Paid, Account_Name, User_Id dan filter tanggal harian, payment method, dan account name. Halaman bersifat Read-Only (Laporan/Report) tanpa tombol tambah, edit, dan hapus.
+
   - Daily Supplier Payment List `daily-supplier-payment-list`
-    Komponen : Date, Payment No, Supplier ID, Supplier Name, Payment Type, Total Amount, Ref No
+    Komponen : Date, Payment_No, Supplier_Id, Supplier_Name, Payment_Type, Total_Amount, Ref_No
     Fungsi : Menampilkan daftar transaksi harian pembayaran supplier untuk pengawasan kas/bank keluar.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Date, Payment_No, Supplier_Id, Supplier_Name, Payment_Type, Total_Amount, Ref_No dan filter tanggal harian, supplier, dan payment type. Halaman ini berfungsi sebagai ringkasan harian log transaksi tanpa tombol tambah, edit, dan hapus.
 
 - Purchase Return `#`
-  - New Purchase Return `new-purchase-return`
-    Komponen : Return No, Date, Supplier ID, Invoice No Ref, STBJ No Ref, Material ID, Qty Returned, Unit Price, Subtotal, Total Return Amount, Reason, Status
-    Fungsi : Form pengajuan retur/pengembalian barang ke supplier akibat kerusakan, ketidaksesuaian, atau klaim komersial.
   - Purchase Return List `purchase-return-list`
-    Komponen : Return No, Date, Supplier Name, Invoice Ref, Total Return Amount, Reason, Status (Draft/Approved/Completed)
+    Komponen : Return_No, Date, Supplier_Name, Invoice_Ref, Total_Return_Amount, Reason, Status
     Fungsi : Menampilkan dan mengelola daftar dokumen retur pembelian barang.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Return_No, Date, Supplier_Name, Invoice_Ref, Total_Return_Amount, Reason, Status dan filter Return_No, supplier, invoice_ref, dan status. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, Supplier, Invoice Ref, Reason) dan Table Detail Items (Material, Qty Return, Unit Price, Total Return Amount). Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
 
 - SJBB `sjbb`
-  Komponen : SJBB No, Date, Supplier ID, Type (IN/OUT), Status, Material ID, Qty, UOM ID, Notes
+  Komponen : SJBB_No, Date, Supplier_Id, Type, Status, Material_Id, Qty, UOM_Id, Notes
   Fungsi : Mengelola Surat Jalan Bukti Barter (SJBB) untuk pencatatan transaksi penukaran/barter barang dengan pihak supplier/partner.
+  Penjelasan UI : Tampilan awal berupa table menampilkan SJBB_No, Date, Supplier_Id, Type, Status, Notes dan filter SJBB_No, supplier, type (IN/OUT), dan status. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, Supplier, Type IN/OUT, Notes) dan Table Detail Items (Material, Qty, UOM). Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
 
 - Stock Adjustment `#`
-  - Stock Adjustment Use `stock-adjustment-use`
-    Komponen : Adjustment No, Date, Warehouse ID, Material ID, System Qty, Physical Qty, Qty Diff, Cost Per Unit, Total Cost, Reason, User
-    Fungsi : Mengelola alokasi pemakaian barang persediaan untuk kebutuhan internal operasional perusahaan.
-  - New Stock Adjustment (Standard) `new-stock-adjustment-standard`
-    Komponen : Adjustment No, Date, Warehouse ID, Material ID, System Qty, Physical Qty, Qty Diff, Cost Per Unit, Total Cost Diff, Reason, Status
-    Fungsi : Form pencatatan penyesuaian stok standar berdasarkan hasil perbandingan hitung fisik (Stock Opname) vs sistem.
-  - New Stock Adjustment (Internal Use) `new-stock-adjustment-internal-use`
-    Komponen : Adjustment No, Date, Warehouse ID, Department ID, Material ID, Qty Used, Cost Per Unit, Total Cost, Reason, Status
-    Fungsi : Form pencatatan penyesuaian stok khusus untuk barang yang dikeluarkan demi pemakaian internal.
   - Stock Adjustment List `stock-adjustment-list`
-    Komponen : Adjustment No, Date, Warehouse Name, Adjustment Type (Standard/Internal Use), Total Cost Diff, Reason, Status
+    Komponen : Adjustment_No, Date, Warehouse_Name, Adjustment_Type, Total_Cost_Diff, Reason, Status
     Fungsi : Menampilkan daftar seluruh transaksi penyesuaian stok dan pemakaian internal.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Adjustment_No, Date, Warehouse_Name, Adjustment_Type, Total_Cost_Diff, Reason, Status dan filter Adjustment_No, warehouse, adjustment_type, dan rentang tanggal. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, Warehouse, Adjustment Type, Reason) dan Table Detail Items (Material, System Qty, Physical Qty, Qty Diff, Unit Cost). Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
+
   - Daily Stock Adjustment Report `daily-stock-adjustment-report`
-    Komponen : Date, Adjustment No, Warehouse Name, Adjustment Type, Total Item, Total Cost Diff, User ID
+    Komponen : Date, Adjustment_No, Warehouse_Name, Adjustment_Type, Total_Item, Total_Cost_Diff, User_Id
     Fungsi : Laporan harian rekapitulasi transaksi penyesuaian stok gudang.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Date, Adjustment_No, Warehouse_Name, Adjustment_Type, Total_Item, Total_Cost_Diff, User_Id dan filter tanggal harian, warehouse, dan adjustment type. Halaman bersifat Read-Only (Laporan/Report) tanpa tombol tambah, edit, dan hapus.
+
   - Daily Stock Adjustment Track Report `daily-stock-adjustment-track-report`
-    Komponen : Date, Adjustment No, Warehouse Name, Material ID, Material Name, System Qty, Physical Qty, Qty Diff, Reason
+    Komponen : Date, Adjustment_No, Warehouse_Name, Material_Id, Material_Name, System_Qty, Physical_Qty, Qty_Diff, Reason
     Fungsi : Laporan rekapitulasi audit jejak mutasi kuantitas barang yang mengalami penyesuaian stok.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Date, Adjustment_No, Warehouse_Name, Material_Id, Material_Name, System_Qty, Physical_Qty, Qty_Diff, Reason dan filter tanggal, warehouse, dan material. Halaman bersifat Read-Only (Laporan/Audit Track) tanpa tombol tambah, edit, dan hapus.
+
   - Daily Stock Adjustment Cost Report `daily-stock-adjustment-cost-report`
-    Komponen : Date, Adjustment No, Warehouse Name, Material ID, Material Name, Qty Diff, Unit Cost, Total Valuation Diff
+    Komponen : Date, Adjustment_No, Warehouse_Name, Material_Id, Material_Name, Qty_Diff, Unit_Cost, Total_Valuation_Diff
     Fungsi : Laporan analisis dampak finansial (nilai selisih biaya) dari transaksi penyesuaian stok harian.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Date, Adjustment_No, Warehouse_Name, Material_Id, Material_Name, Qty_Diff, Unit_Cost, Total_Valuation_Diff dan filter tanggal, warehouse, dan material. Halaman bersifat Read-Only (Laporan/Financial Impact) tanpa tombol tambah, edit, dan hapus.
 
 - Stock Transfer `#`
-  - New Stock Transfer `new-stock-transfer`
-    Komponen : Transfer No, Date, From Warehouse ID, To Warehouse ID, Material ID, Qty Requested, Qty Shipped, Status, Notes
-    Fungsi : Form pengiriman mutasi stok barang langsung antar gudang.
   - Stock Transfer List `stock-transfer-list`
-    Komponen : Transfer No, Date, From Warehouse, To Warehouse, Total Items, Status (Requested/Prepared/In-Transit/Completed/Cancelled)
+    Komponen : Transfer_No, Date, From_Warehouse, To_Warehouse, Total_Items, Status
     Fungsi : Menampilkan daftar seluruh dokumen mutasi/transfer barang antar gudang.
-  - Stock Transfer Shipment Preparation `stock-transfer-shipment-preparation`
-    Komponen : Prep No, Prep Date, Stock Transfer No Ref, Driver Name, Vehicle No, Total Weight, Status
-    Fungsi : Form persiapan muat barang dan alokasi armada pengangkutan untuk proses transfer stok antar gudang.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Transfer_No, Date, From_Warehouse, To_Warehouse, Total_Items, Status dan filter Transfer_No, from_warehouse, to_warehouse, dan status. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, From Warehouse, To Warehouse, Notes) dan Table Detail Items (Material, Qty Transfer, UOM). Untuk Edit memunculkan pop-up form dengan data terisi. Hapus memunculkan alert konfirmasi.
+
   - Stock Transfer Shipment Preparation List `stock-transfer-shipment-preparation-list`
-    Komponen : Prep No, Prep Date, Transfer No Ref, Driver Name, Vehicle No, Status
+    Komponen : Prep_No, Prep_Date, Transfer_No_Ref, Driver_Name, Vehicle_No, Status
     Fungsi : Menampilkan daftar dokumen persiapan armada pengiriman transfer stok.
-  - New Stock Transfer Request `new-stock-transfer-request`
-    Komponen : Request No, Date, Requester Warehouse ID, Source Warehouse ID, Material ID, Qty Requested, Notes, Status
-    Fungsi : Form pengajuan permintaan pasokan stok dari gudang pemohon ke gudang sumber.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Prep_No, Prep_Date, Transfer_No_Ref, Driver_Name, Vehicle_No, Status dan filter Prep_No, Transfer_No_Ref, driver, dan status. Tombol Tambah akan memunculkan pop-up modal form berisi Prep Date, Transfer No Ref, Driver Name, Vehicle No, dan Status. Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
+
   - Stock Transfer Request List `stock-transfer-request-list`
-    Komponen : Request No, Date, Requester Warehouse, Source Warehouse, Total Items, Status
+    Komponen : Request_No, Date, Requester_Warehouse, Source_Warehouse, Total_Items, Status
     Fungsi : Menampilkan daftar dokumen permintaan transfer stok antar gudang.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Request_No, Date, Requester_Warehouse, Source_Warehouse, Total_Items, Status dan filter Request_No, requester_warehouse, source_warehouse, dan status. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, Requester Warehouse, Source Warehouse, Reason) dan Table Detail Items (Material, Qty Requested). Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
+
   - Daily Stock Transfer Report `daily-stock-transfer-report`
-    Komponen : Date, Transfer No, From Warehouse, To Warehouse, Material ID, Qty Shipped, Qty Received, Status
+    Komponen : Date, Transfer_No, From_Warehouse, To_Warehouse, Material_Id, Qty_Shipped, Qty_Received, Status
     Fungsi : Laporan harian rekapitulasi aktivitas pengiriman dan penerimaan mutasi barang antar gudang.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Date, Transfer_No, From_Warehouse, To_Warehouse, Material_Id, Qty_Shipped, Qty_Received, Status dan filter tanggal harian, warehouse, material, dan status. Halaman bersifat Read-Only (Laporan/Report) tanpa tombol tambah, edit, dan hapus.
+
   - Stock Transfer Fulfilment `stock-transfer-fulfilment`
-    Komponen : Request No, Transfer No, Material ID, Qty Requested, Qty Shipped, Qty Received, Qty Balance, Fulfilment Rate (%)
+    Komponen : Request_No, Transfer_No, Material_Id, Qty_Requested, Qty_Shipped, Qty_Received, Qty_Balance, Fulfilment_Rate
     Fungsi : Memantau tingkat pemenuhan pengiriman barang berdasarkan pengajuan permintaan transfer stok.
+    Penjelasan UI : Tampilan awal berupa table menampilkan Request_No, Transfer_No, Material_Id, Qty_Requested, Qty_Shipped, Qty_Received, Qty_Balance, Fulfilment_Rate dan filter Request_No, Transfer_No, material, dan status pemenuhan. Halaman bersifat Read-Only (Laporan/Monitoring) tanpa tombol tambah, edit, dan hapus.
 
 - Stock Conversion `stock-convertion`
-  Komponen : Conversion No, Date, Warehouse ID, Material Template ID, Output Material ID, Output Qty Produced, Raw Material ID, Qty Consumed, Notes
+  Komponen : Conversion_No, Date, Warehouse_Id, Material_Template_Id, Output_Material_Id, Output_Qty_Produced, Raw_Material_Id, Qty_Consumed, Notes
   Fungsi : Mengelola transaksi perakitan/konversi stok (mengonversi beberapa stok bahan baku menjadi produk jadi berdasarkan resep).
+  Penjelasan UI : Tampilan awal berupa table menampilkan Conversion_No, Date, Warehouse_Id, Material_Template_Id, Output_Material_Id, Output_Qty_Produced, Notes dan filter Conversion_No, warehouse, material_template, dan rentang tanggal. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Date, Warehouse, Material Template [Lookup Template], Output Material, Output Qty Produced) dan Table Detail Raw Materials Consumed (Raw Material, Qty Needed, Qty Consumed). Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
 
 - Material Template `material-template`
-  Komponen : Template ID, Template Code, Template Name, Target Material ID, Target Output Qty, Raw Material ID, Qty Needed, UOM ID, Description
+  Komponen : Template_Id, Template_Code, Template_Name, Target_Material_Id, Target_Output_Qty, Raw_Material_Id, Qty_Needed, UOM_Id, Description
   Fungsi : Mengelola formulasi resep / Bill of Materials (BOM) standar yang digunakan sebagai acuan proses konversi/perakitan stok.
-
+  Penjelasan UI : Tampilan awal berupa table menampilkan Template_Id, Template_Code, Template_Name, Target_Material_Id, Target_Output_Qty, Description dan filter template_code, template_name, dan target_material. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Template Code, Template Name, Target Material [Lookup Product], Target Output Qty, Description) dan Table Detail Raw Materials (Raw Material [Lookup Product], Qty Needed, UOM). Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
+  
 ## Sales & Distribution `#`
 
 - Customer Master `customer-master`
