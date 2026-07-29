@@ -33,6 +33,7 @@ use App\Http\Controllers\Master\PriceListController;
 use App\Http\Controllers\Master\SalesDiscountController;
 use App\Http\Controllers\Master\PurchaseDiscountController;
 use App\Http\Controllers\Master\ProductCashBackController;
+use App\Http\Controllers\Master\SupplierProductController;
 use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
@@ -379,6 +380,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [ProductCashBackController::class, 'show'])->name('show');
             Route::put('/{id}', [ProductCashBackController::class, 'update'])->name('update');
             Route::delete('/{id}', [ProductCashBackController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('supplier-product')->name('supplier-product.')->group(function () {
+            Route::get('/', [SupplierProductController::class, 'index'])->name('index');
+            Route::get('/table', [SupplierProductController::class, 'table'])->name('table');
+            Route::post('/', [SupplierProductController::class, 'store'])->name('store');
+            Route::get('/{id}', [SupplierProductController::class, 'show'])->name('show');
+            Route::put('/{id}', [SupplierProductController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SupplierProductController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('supplier-balance-summary')->name('supplier-balance-summary.')->group(function () {
