@@ -2,7 +2,7 @@
 @section('title','Monitoring Mesin Grinding Report')
 @section('content')
 <div class="page-content">
-    <div class="card border-0 shadow-sm hz-card mb-4"><div class="card-body">
+    <div class="card border-0 shadow-sm hz-card mb-3"><div class="card-body py-2">
         <div class="row g-2 align-items-end">
             <div class="col-md-2"><label class="form-label fw-semibold mb-1 small text-muted"><i class="bi bi-search me-1"></i>Cari</label><input type="text" class="form-control" id="filter-search" placeholder="Doc ID, Mesin, Produk..."></div>
             <div class="col-md-1"><label class="form-label fw-semibold mb-1 small text-muted">Dari</label><input type="date" class="form-control" id="filter-date-from"></div>
@@ -15,24 +15,24 @@
         </div>
     </div></div>
 
-    <div class="row g-3 mb-4">
-        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card h-100"><div class="card-body text-center">
-            <p class="text-muted mb-1 small">Total Tonase</p><h5 class="fw-bold mb-0 text-primary" id="sum-ton">0</h5><small class="text-muted">Ton</small>
+    <div class="row g-2 mb-4">
+        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card py-2"><div class="card-body text-center py-1">
+            <p class="text-muted mb-0 small" style="font-size:0.75rem">Total Tonase</p><h6 class="fw-bold mb-0 text-primary" id="sum-ton" style="font-size:0.95rem">0</h6><small class="text-muted" style="font-size:0.7rem">Ton</small>
         </div></div></div>
-        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card h-100"><div class="card-body text-center">
-            <p class="text-muted mb-1 small">Avg Kehalusan</p><h5 class="fw-bold mb-0 text-success" id="sum-micron">0</h5><small class="text-muted">u (micron)</small>
+        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card py-2"><div class="card-body text-center py-1">
+            <p class="text-muted mb-0 small" style="font-size:0.75rem">Avg Kehalusan</p><h6 class="fw-bold mb-0 text-success" id="sum-micron" style="font-size:0.95rem">0</h6><small class="text-muted" style="font-size:0.7rem">u (micron)</small>
         </div></div></div>
-        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card h-100"><div class="card-body text-center">
-            <p class="text-muted mb-1 small">Avg Gear Pump</p><h5 class="fw-bold mb-0 text-info" id="sum-gear">0</h5><small class="text-muted">RPM</small>
+        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card py-2"><div class="card-body text-center py-1">
+            <p class="text-muted mb-0 small" style="font-size:0.75rem">Avg Gear Pump</p><h6 class="fw-bold mb-0 text-info" id="sum-gear" style="font-size:0.95rem">0</h6><small class="text-muted" style="font-size:0.7rem">RPM</small>
         </div></div></div>
-        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card h-100"><div class="card-body text-center">
-            <p class="text-muted mb-1 small">Avg Blade</p><h5 class="fw-bold mb-0 text-warning" id="sum-blade">0</h5><small class="text-muted">RPM</small>
+        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card py-2"><div class="card-body text-center py-1">
+            <p class="text-muted mb-0 small" style="font-size:0.75rem">Avg Blade</p><h6 class="fw-bold mb-0 text-warning" id="sum-blade" style="font-size:0.95rem">0</h6><small class="text-muted" style="font-size:0.7rem">RPM</small>
         </div></div></div>
-        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card h-100"><div class="card-body text-center">
-            <p class="text-muted mb-1 small">Total Siklus</p><h5 class="fw-bold mb-0" id="sum-siklus">0</h5><small class="text-muted">pass</small>
+        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card py-2"><div class="card-body text-center py-1">
+            <p class="text-muted mb-0 small" style="font-size:0.75rem">Total Siklus</p><h6 class="fw-bold mb-0" id="sum-siklus" style="font-size:0.95rem">0</h6><small class="text-muted" style="font-size:0.7rem">pass</small>
         </div></div></div>
-        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card h-100"><div class="card-body text-center">
-            <p class="text-muted mb-1 small">Total Batch</p><h5 class="fw-bold mb-0" id="sum-count">0</h5>
+        <div class="col-md-2"><div class="card border-0 shadow-sm hz-card py-2"><div class="card-body text-center py-1">
+            <p class="text-muted mb-0 small" style="font-size:0.75rem">Total Batch</p><h6 class="fw-bold mb-0" id="sum-count" style="font-size:0.95rem">0</h6>
         </div></div></div>
     </div>
 
