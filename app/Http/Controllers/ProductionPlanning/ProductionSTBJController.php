@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use View;
 
-class STBJController extends Controller
+class ProductionSTBJController extends Controller
 {
     protected DummyStore $store;
 

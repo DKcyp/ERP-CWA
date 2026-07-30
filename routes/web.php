@@ -86,7 +86,7 @@ use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingListControlle
 use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingReportController;
 use App\Http\Controllers\ProductionPlanning\ProductionMaterialCheckStockController;
 use App\Http\Controllers\ProductionPlanning\ProductionStockLevelController;
-use App\Http\Controllers\ProductionPlanning\STBJController;
+use App\Http\Controllers\ProductionPlanning\ProductionSTBJController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -1026,14 +1026,14 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('stbj')->name('stbj.')->group(function () {
-            Route::get('/', [STBJController::class, 'index'])->name('index');
-            Route::get('/table', [STBJController::class, 'table'])->name('table');
-            Route::post('/', [STBJController::class, 'store'])->name('store');
-            Route::get('/{id}', [STBJController::class, 'show'])->name('show');
-            Route::put('/{id}', [STBJController::class, 'update'])->name('update');
-            Route::post('/{id}/issue', [STBJController::class, 'issue'])->name('issue');
-            Route::post('/{id}/verify', [STBJController::class, 'verify'])->name('verify');
-            Route::delete('/{id}', [STBJController::class, 'destroy'])->name('destroy');
+            Route::get('/', [ProductionSTBJController::class, 'index'])->name('index');
+            Route::get('/table', [ProductionSTBJController::class, 'table'])->name('table');
+            Route::post('/', [ProductionSTBJController::class, 'store'])->name('store');
+            Route::get('/{id}', [ProductionSTBJController::class, 'show'])->name('show');
+            Route::put('/{id}', [ProductionSTBJController::class, 'update'])->name('update');
+            Route::post('/{id}/issue', [ProductionSTBJController::class, 'issue'])->name('issue');
+            Route::post('/{id}/verify', [ProductionSTBJController::class, 'verify'])->name('verify');
+            Route::delete('/{id}', [ProductionSTBJController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
