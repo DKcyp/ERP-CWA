@@ -60,6 +60,7 @@ use App\Http\Controllers\ProductionPlanning\ProductionSchedulingController;
 use App\Http\Controllers\ProductionPlanning\DailyScheduleReportController;
 use App\Http\Controllers\ProductionPlanning\SpkKemasanController;
 use App\Http\Controllers\ProductionPlanning\JadwalKemasanController;
+use App\Http\Controllers\ProductionPlanning\ProductionListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -814,6 +815,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [JadwalKemasanController::class, 'show'])->name('show');
             Route::put('/{id}', [JadwalKemasanController::class, 'update'])->name('update');
             Route::delete('/{id}', [JadwalKemasanController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('production-list')->name('production-list.')->group(function () {
+            Route::get('/', [ProductionListController::class, 'index'])->name('index');
+            Route::get('/table', [ProductionListController::class, 'table'])->name('table');
+            Route::post('/', [ProductionListController::class, 'store'])->name('store');
+            Route::get('/{id}', [ProductionListController::class, 'show'])->name('show');
+            Route::put('/{id}', [ProductionListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ProductionListController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
