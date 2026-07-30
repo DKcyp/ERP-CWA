@@ -81,6 +81,7 @@ use App\Http\Controllers\ProductionPlanning\RealisasiJadwalCanningPackingListCon
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalCanningPackingReportController;
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalBasePerMesinListController;
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalPastaListController;
+use App\Http\Controllers\ProductionPlanning\RealisasiJadwalPastaReportController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -984,6 +985,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [RealisasiJadwalPastaListController::class, 'show'])->name('show');
             Route::put('/{id}', [RealisasiJadwalPastaListController::class, 'update'])->name('update');
             Route::delete('/{id}', [RealisasiJadwalPastaListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('realisasi-jadwal-pasta-report')->name('realisasi-jadwal-pasta-report.')->group(function () {
+            Route::get('/', [RealisasiJadwalPastaReportController::class, 'index'])->name('index');
+            Route::get('/table', [RealisasiJadwalPastaReportController::class, 'table'])->name('table');
+            Route::get('/export', [RealisasiJadwalPastaReportController::class, 'export'])->name('export');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
