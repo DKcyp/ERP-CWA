@@ -115,6 +115,7 @@ use App\Http\Controllers\MaterialManagement\ProductStockController;
 use App\Http\Controllers\MaterialManagement\ProductStockSummaryController;
 use App\Http\Controllers\MaterialManagement\ProductStockDailySummaryController;
 use App\Http\Controllers\MaterialManagement\ProductStockQuickViewController;
+use App\Http\Controllers\MaterialManagement\ProductPriceInfoController;
 use App\Http\Controllers\SalesDistribution\ArWarehouseReportController;
 use App\Http\Controllers\SalesDistribution\PointSettingController;
 use App\Http\Controllers\SalesDistribution\CustomerPointPromoRuleController;
@@ -809,6 +810,11 @@ Route::middleware('auth')->group(function () {
         Route::prefix('product-stock-quick-view')->name('product-stock-quick-view.')->group(function () {
             Route::get('/', [ProductStockQuickViewController::class, 'index'])->name('index');
             Route::get('/data', [ProductStockQuickViewController::class, 'data'])->name('data');
+        });
+
+        Route::prefix('product-price-info')->name('product-price-info.')->group(function () {
+            Route::get('/', [ProductPriceInfoController::class, 'index'])->name('index');
+            Route::get('/table', [ProductPriceInfoController::class, 'table'])->name('table');
         });
 
         Route::prefix('production-planning-dashboard')->name('production-planning-dashboard.')->group(function () {
