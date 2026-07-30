@@ -61,6 +61,7 @@ use App\Http\Controllers\ProductionPlanning\DailyScheduleReportController;
 use App\Http\Controllers\ProductionPlanning\SpkKemasanController;
 use App\Http\Controllers\ProductionPlanning\JadwalKemasanController;
 use App\Http\Controllers\ProductionPlanning\ProductionListController;
+use App\Http\Controllers\ProductionPlanning\ReleaseProductionController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -824,6 +825,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [ProductionListController::class, 'show'])->name('show');
             Route::put('/{id}', [ProductionListController::class, 'update'])->name('update');
             Route::delete('/{id}', [ProductionListController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('release-production')->name('release-production.')->group(function () {
+            Route::get('/', [ReleaseProductionController::class, 'index'])->name('index');
+            Route::get('/table', [ReleaseProductionController::class, 'table'])->name('table');
+            Route::get('/{id}', [ReleaseProductionController::class, 'show'])->name('show');
+            Route::put('/{id}/status', [ReleaseProductionController::class, 'updateStatus'])->name('status');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
