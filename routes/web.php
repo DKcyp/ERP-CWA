@@ -57,6 +57,7 @@ use App\Http\Controllers\ProductionPlanning\PreSpkController;
 use App\Http\Controllers\ProductionPlanning\DashboardProductionPlanningController;
 use App\Http\Controllers\ProductionPlanning\SpkController;
 use App\Http\Controllers\ProductionPlanning\ProductionSchedulingController;
+use App\Http\Controllers\ProductionPlanning\DailyScheduleReportController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -787,6 +788,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [ProductionSchedulingController::class, 'show'])->name('show');
             Route::put('/{id}', [ProductionSchedulingController::class, 'update'])->name('update');
             Route::delete('/{id}', [ProductionSchedulingController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('daily-schedule-report')->name('daily-schedule-report.')->group(function () {
+            Route::get('/', [DailyScheduleReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyScheduleReportController::class, 'table'])->name('table');
+            Route::get('/export', [DailyScheduleReportController::class, 'export'])->name('export');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
