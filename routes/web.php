@@ -54,6 +54,7 @@ use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
 use App\Http\Controllers\MaterialManagement\StockTransferRequestController;
 
 use App\Http\Controllers\ProductionPlanning\PreSpkController;
+use App\Http\Controllers\ProductionPlanning\DashboardProductionPlanningController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -752,6 +753,11 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', [DailyStockAdjustmentReportController::class, 'table'])->name('table');
             Route::get('/summary', [DailyStockAdjustmentReportController::class, 'summary'])->name('summary');
             Route::get('/{id}', [DailyStockAdjustmentReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('production-planning-dashboard')->name('production-planning-dashboard.')->group(function () {
+            Route::get('/', [DashboardProductionPlanningController::class, 'index'])->name('index');
+            Route::get('/data', [DashboardProductionPlanningController::class, 'data'])->name('data');
         });
 
         Route::prefix('pre-spk-list')->name('pre-spk-list.')->group(function () {

@@ -212,6 +212,7 @@ class MenuSeeder extends Seeder
             'Production Planning' => [
                 'icon' => 'bi bi-gear-wide-connected',
                 'items' => [
+                    'Dashboard Production Planning' => 'production-planning-dashboard',
                     'Pre Production' => [
                         'Pre SPK List' => 'pre-spk-list',
                         'SPK List' => 'spk-list',
