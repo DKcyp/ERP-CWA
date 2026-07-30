@@ -55,6 +55,7 @@ use App\Http\Controllers\MaterialManagement\StockTransferRequestController;
 
 use App\Http\Controllers\ProductionPlanning\PreSpkController;
 use App\Http\Controllers\ProductionPlanning\DashboardProductionPlanningController;
+use App\Http\Controllers\ProductionPlanning\SpkController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -767,6 +768,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [PreSpkController::class, 'show'])->name('show');
             Route::put('/{id}', [PreSpkController::class, 'update'])->name('update');
             Route::delete('/{id}', [PreSpkController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('spk-list')->name('spk-list.')->group(function () {
+            Route::get('/', [SpkController::class, 'index'])->name('index');
+            Route::get('/table', [SpkController::class, 'table'])->name('table');
+            Route::post('/', [SpkController::class, 'store'])->name('store');
+            Route::get('/{id}', [SpkController::class, 'show'])->name('show');
+            Route::put('/{id}', [SpkController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SpkController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
