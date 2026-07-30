@@ -14,7 +14,7 @@ class ProductionSTBJController extends Controller
 
     public function __construct()
     {
-        $this->store = new DummyStore('stbj');
+        $this->store = new DummyStore('production-stbj');
         $this->initDummyData();
         View::share('activeMenu', 'stbj');
     }
