@@ -68,6 +68,7 @@ use App\Http\Controllers\ProductionPlanning\DailyProductionBaseReportController;
 use App\Http\Controllers\ProductionPlanning\DailyProductionResultReportController;
 use App\Http\Controllers\ProductionPlanning\DailyProductionResultBatchReportSTBJController;
 use App\Http\Controllers\ProductionPlanning\DailyProductionCommissionReportController;
+use App\Http\Controllers\ProductionPlanning\DailyProductionMaterialCostReportController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -877,6 +878,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [DailyProductionCommissionReportController::class, 'index'])->name('index');
             Route::get('/table', [DailyProductionCommissionReportController::class, 'table'])->name('table');
             Route::get('/export', [DailyProductionCommissionReportController::class, 'export'])->name('export');
+        });
+
+        Route::prefix('daily-production-material-cost-report')->name('daily-production-material-cost-report.')->group(function () {
+            Route::get('/', [DailyProductionMaterialCostReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyProductionMaterialCostReportController::class, 'table'])->name('table');
+            Route::get('/export', [DailyProductionMaterialCostReportController::class, 'export'])->name('export');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
