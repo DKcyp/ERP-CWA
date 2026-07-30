@@ -84,6 +84,7 @@ use App\Http\Controllers\ProductionPlanning\RealisasiJadwalPastaListController;
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalPastaReportController;
 use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingListController;
 use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingReportController;
+use App\Http\Controllers\ProductionPlanning\ProductionMaterialCheckStockController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -1008,6 +1009,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [MonitoringMesinGrindingReportController::class, 'index'])->name('index');
             Route::get('/table', [MonitoringMesinGrindingReportController::class, 'table'])->name('table');
             Route::get('/export', [MonitoringMesinGrindingReportController::class, 'export'])->name('export');
+        });
+
+        Route::prefix('production-material-check-stock')->name('production-material-check-stock.')->group(function () {
+            Route::get('/', [ProductionMaterialCheckStockController::class, 'index'])->name('index');
+            Route::get('/table', [ProductionMaterialCheckStockController::class, 'table'])->name('table');
+            Route::get('/export', [ProductionMaterialCheckStockController::class, 'export'])->name('export');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
