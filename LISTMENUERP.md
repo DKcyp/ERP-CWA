@@ -368,12 +368,12 @@ Create Doc. From CSV
     Penjelasan UI: Tampilan awal berupa kalender kerja/grid jadwal harian per packaging line dengan penanda warna shift. Dilengkapi filter tanggal, lini kemasan, dan shift. Tombol Tambah memunculkan modal form pemilihan SPK Kemasan Ref, Line ID, Shift, dan penetapan Operator In Charge.
 
 - Production
-  - Production List
+  - Production List `production-list`
     Komponen: Production Id, Template Name, Formulasi, Basis, Qty Jadwal, FK, Jadwal, Produksi, Recanning, Batch No, No. SPKP, Date, No. Box Arsip, Tipe Product, Product Group, Reference, Machine, Status, User Id, Notes, Stock Release, Stock Receive, QC, Adjustment, Total Material, Total Realisasi, Selisih, Adj. Batch, Kesimpulan, Keputusan
     Fungsi: Hub utama pusat pencatatan dan pengelolaan dokumen eksekusi produksi menyeluruh, mulai dari penimbangan formulasi bahan, penarikan stok (Stock Release), pengolahan, pengujian QC, hingga penyesuaian batch.
     Penjelasan UI: Tampilan awal berupa data grid komprehensif berfitur pencarian cepat dan multi-filter status. Tombol Tambah memunculkan Form Modal berstruktur Tab Navigasi: Tab Header (Info Dokumen, SPKP, Mesin), Tab Formulasi & Material (Stock Release & Timbang), Tab Hasil Realisasi & Selisih, serta Tab Status QC & Keputusan Kelulusan. Edit memunculkan form terisi lengkap, Hapus memunculkan alert konfirmasi.
 
-  - Release Production
+  - Release Production `release-production`
     Komponen: Production Id, User, Tanggal, Status, QC_Notes, Batch_No, Warehouse_Target
     Fungsi: Memproses otorisasi kelulusan produk jadi dari tim QC/Supervisor agar stok siap dirilis dan ditransfer dari lini produksi ke gudang penyimpanan.
     Penjelasan UI: Tampilan awal berupa daftar antrean verifikasi kelulusan batch produksi. Pengguna dapat memilih baris dokumen untuk memunculkan modal detail hasil QC, catatan pengujian, serta tombol aksi utama [ Approve / Release Stock ] atau [ Hold / Reject ] dengan penentuan gudang tujuan penerimaan.
@@ -391,47 +391,47 @@ Create Doc. From CSV
         * Tab Payment : Menampilkan tombol Print Payment Doc., tabel riwayat pembayaran komisi (Id, Date, Account, Total, Notes) pada atas, serta tabel Payment Detail (Production Id, Commission, Qty, Amount, Total, Total_Detail) pada bawah.
 
 - Production Report
-  - Daily Production Report
+  - Daily Production Report `daily-production-report`
     Komponen: Date, Production_Id, Product_Name, Batch_No, Qty_Planned_Kg, Qty_Actual_Kg, Efficiency_Percent, Machine_ID, Status, Notes
     Fungsi: Menyajikan laporan harian rekapitulasi seluruh aktivitas produksi dan pencapaian efisiensi output produksi.
     Penjelasan UI: Tampilan berupa table analitik Read-Only dilengkapi Summary Card (Total Batch Diproduksi, Total Tonase, Rata-rata Efisiensi) di bagian atas, serta filter tanggal produksi, mesin, dan tipe produk.
 
-  - Daily Production Base Report
+  - Daily Production Base Report `daily-production-base-report`
     Komponen: Date, Production_Id, Base_Name, Batch_No, Machine_ID, Target_Base_Kg, Actual_Base_Kg, Variance_Kg, Operator, Notes
     Fungsi: Laporan harian khusus pemantauan hasil pencapaian pengolahan adonan dasar (base) dan selisih kuantitas target.
     Penjelasan UI: Tampilan berupa table analitik Read-Only dengan indikator warna deviasi (Variance KG) serta filter tanggal produksi, mesin, dan jenis base.
 
-  - Daily Production Result Report
+  - Daily Production Result Report `daily-production-result-report`
     Komponen: Date, Production_Id, Product_Name, Batch_No, Total_Output_Pcs, Total_Output_Kg, Reject_Qty_Kg, Yield_Percent, Notes
     Fungsi: Laporan rekapitulasi harian kuantitas produk jadi yang berhasil diproduksi beserta persentase perolehan (yield).
     Penjelasan UI: Tampilan berupa table Read-Only dengan ringkasan total produk jadi (Pcs/Kg) dan persentase afval/reject, dilengkapi filter tanggal dan kelompok produk.
 
-  - Daily Production Result Batch Report (STBJ)
+  - Daily Production Result Batch Report (STBJ) `daily-production-result-batch-report`
     Komponen: Date, STBJ_No, Production_Id, Batch_No, Warehouse_Target, Total_Qty_Received_Pcs, Total_Weight_Kg, User_ID, Status
     Fungsi: Laporan penyerahan dan penerimaan harian hasil produksi ke gudang berbasis dokumen STBJ.
     Penjelasan UI: Tampilan berupa table verifikasi penerimaan barang fisik di gudang dengan filter tanggal STBJ, nomor batch, dan gudang tujuan.
 
-  - Daily Production Commission
+  - Daily Production Commission `daily-production-commission-report`
     Komponen: Date, Employee_ID, Employee_Name, Machine_ID, Total_Batch_Handled, Total_Qty_Produced, Total_Commission_Amount, Notes
     Fungsi: Laporan harian rekapitulasi perolehan nilai komisi operator berdasarkan jumlah batch dan volume produksi.
     Penjelasan UI: Tampilan berupa table Read-Only terurut berdasarkan nama operator/karyawan dilengkapi ringkasan akumulasi komisi harian dan filter rentang tanggal.
 
-  - Daily Production Material Cost Report
+  - Daily Production Material Cost Report `daily-production-material-cost-report`
     Komponen: Date, Production_Id, Material_ID, Material_Name, Qty_Used, UOM, Unit_Cost, Total_Material_Cost, Batch_No
     Fungsi: Laporan harian pemakaian bahan baku/penolong beserta total nilai biaya bahan pada setiap batch produksi.
     Penjelasan UI: Tampilan berupa table breakdown biaya bahan baku per nomor adonan/batch, dilengkapi filter tanggal, material ID, dan fitur ekspor data.
 
-  - Daily Production Result COGS Report
+  - Daily Production Result COGS Report `daily-production-result-cogs-report`
     Komponen: Date, Production_Id, Product_Name, Batch_No, Total_Material_Cost, Overhead_Cost, Labor_Cost, Total_COGS, COGS_Per_Kg, COGS_Per_Pcs
     Fungsi: Laporan analisis perhitungan Harga Pokok Produksi (HPP/COGS) harian produk jadi secara komprehensif.
     Penjelasan UI: Tampilan berupa table analitik COGS yang mengurai komponen Biaya Material, Tenaga Kerja, dan Overhead per Kg/Pcs produk jadi dengan filter tanggal dan nama produk.
 
-  - Daily Production Packaging Report
+  - Daily Production Packaging Report `daily-production-packaging-report`
     Komponen: Date, Production_Id, Package_Type, Qty_Used_Pcs, Qty_Damaged_Pcs, Unit_Packaging_Cost, Total_Packaging_Cost, Notes
     Fungsi: Laporan harian penggunaan dan efisiensi material kemasan beserta analisis tingkat kemasan rusak (damage rate).
     Penjelasan UI: Tampilan berupa table laporan pemakaian kemasan (kaleng/galon/pail) dilengkapi persentase kemasan rusak dan filter jenis kemasan.
 
-  - Daily Production Material Cost Recap Report
+  - Daily Production Material Cost Recap Report `daily-production-material-cost-recap-report`
     Komponen: Period, Product_Group, Total_Production_Count, Total_Material_Cost_Accumulated, Average_Cost_Per_Kg, Variance_To_Standard
     Fungsi: Laporan rekapitulasi akumulasi nilai biaya bahan baku dalam periode harian/mingguan/bulanan terhadap standar biaya.
     Penjelasan UI: Tampilan berupa ringkasan eksekutif berbasis tabel dan grafik garis tren konsumsi biaya material dengan filter periode dan grup produk.

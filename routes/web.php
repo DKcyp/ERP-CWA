@@ -75,6 +75,7 @@ use App\Http\Controllers\ProductionPlanning\DailyProductionMaterialCostRecapRepo
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalBaseListController;
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalBasePerMesinReportController;
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalBaseReportController;
+use App\Http\Controllers\ProductionPlanning\RealisasiJadwalCMListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -930,6 +931,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [RealisasiJadwalBaseReportController::class, 'index'])->name('index');
             Route::get('/table', [RealisasiJadwalBaseReportController::class, 'table'])->name('table');
             Route::get('/export', [RealisasiJadwalBaseReportController::class, 'export'])->name('export');
+        });
+
+        Route::prefix('realisasi-jadwal-cm-list')->name('realisasi-jadwal-cm-list.')->group(function () {
+            Route::get('/', [RealisasiJadwalCMListController::class, 'index'])->name('index');
+            Route::get('/table', [RealisasiJadwalCMListController::class, 'table'])->name('table');
+            Route::post('/', [RealisasiJadwalCMListController::class, 'store'])->name('store');
+            Route::get('/{id}', [RealisasiJadwalCMListController::class, 'show'])->name('show');
+            Route::put('/{id}', [RealisasiJadwalCMListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [RealisasiJadwalCMListController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
