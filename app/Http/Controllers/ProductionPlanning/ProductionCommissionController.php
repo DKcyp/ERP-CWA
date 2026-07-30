@@ -47,20 +47,20 @@ class ProductionCommissionController extends Controller
 
         $payments = [
             [
-                'id'          => 'PAY-2026-001','date' => '2026-07-30','account' => 'BCA 1234567890','total' => 175000,'notes' => 'Pembayaran komisi Andi Kurniawan',
+                'payment_id'  => 'PAY-2026-001','date' => '2026-07-30','account' => 'BCA 1234567890','total' => 175000,'notes' => 'Pembayaran komisi Andi Kurniawan',
                 'details' => [
                     ['production_id' => 'PRD-LST-0001', 'commission' => 500, 'qty' => 200, 'amount' => 100000, 'total_detail' => 100000],
                     ['production_id' => 'PRD-LST-0002', 'commission' => 500, 'qty' => 150, 'amount' => 75000, 'total_detail' => 75000],
                 ],
             ],
             [
-                'id'          => 'PAY-2026-002','date' => '2026-07-29','account' => 'BCA 1234567890','total' => 99000,'notes' => 'Pembayaran komisi Siti Rahayu',
+                'payment_id'  => 'PAY-2026-002','date' => '2026-07-29','account' => 'BCA 1234567890','total' => 99000,'notes' => 'Pembayaran komisi Siti Rahayu',
                 'details' => [
                     ['production_id' => 'PRD-LST-0006', 'commission' => 450, 'qty' => 220, 'amount' => 99000, 'total_detail' => 99000],
                 ],
             ],
             [
-                'id'          => 'PAY-2026-003','date' => '2026-07-28','account' => 'BRI 0987654321','total' => 220000,'notes' => 'Pembayaran komisi Budi Santoso',
+                'payment_id'  => 'PAY-2026-003','date' => '2026-07-28','account' => 'BRI 0987654321','total' => 220000,'notes' => 'Pembayaran komisi Budi Santoso',
                 'details' => [
                     ['production_id' => 'PRD-LST-0007', 'commission' => 550, 'qty' => 400, 'amount' => 220000, 'total_detail' => 220000],
                 ],
@@ -153,7 +153,7 @@ class ProductionCommissionController extends Controller
         }
 
         $this->paymentStore->create([
-            'id' => $paymentId, 'date' => $payDate, 'account' => $request->account, 'total' => $totalPaid,
+            'payment_id' => $paymentId, 'date' => $payDate, 'account' => $request->account, 'total' => $totalPaid,
             'notes' => $request->notes ?? 'Pembayaran '.count($selected).' komisi', 'details' => $details,
         ]);
 

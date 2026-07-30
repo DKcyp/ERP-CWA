@@ -91,7 +91,7 @@ const tblComm=$('#table-commission').DataTable({processing:true,serverSide:true,
 
 const tblPay=$('#table-payment').DataTable({processing:true,serverSide:true,scrollX:true,ajax:{url:payTableUrl},columns:[
 {data:'DT_RowIndex',name:'DT_RowIndex',orderable:false,searchable:false,className:'text-center'},
-{data:'id',name:'id'},{data:'date_fmt',name:'date',className:'text-center'},{data:'account',name:'account'},
+{data:'payment_id',name:'payment_id'},{data:'date_fmt',name:'date',className:'text-center'},{data:'account',name:'account'},
 {data:'total',name:'total',className:'text-end',render:function(d){return 'Rp '+d.toLocaleString('id-ID')}},
 {data:'notes',name:'notes',render:function(d){return d||'-'}},
 {data:null,orderable:false,searchable:false,className:'text-center',render:function(){return '<button type="button" class="btn btn-sm btn-outline-info btn-view-detail"><i class="bi bi-eye"></i></button>'}}
