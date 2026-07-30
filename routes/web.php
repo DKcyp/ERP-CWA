@@ -85,6 +85,7 @@ use App\Http\Controllers\ProductionPlanning\RealisasiJadwalPastaReportController
 use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingListController;
 use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingReportController;
 use App\Http\Controllers\ProductionPlanning\ProductionMaterialCheckStockController;
+use App\Http\Controllers\ProductionPlanning\ProductionStockLevelController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -1015,6 +1016,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [ProductionMaterialCheckStockController::class, 'index'])->name('index');
             Route::get('/table', [ProductionMaterialCheckStockController::class, 'table'])->name('table');
             Route::get('/export', [ProductionMaterialCheckStockController::class, 'export'])->name('export');
+        });
+
+        Route::prefix('production-stock-level')->name('production-stock-level.')->group(function () {
+            Route::get('/', [ProductionStockLevelController::class, 'index'])->name('index');
+            Route::get('/table', [ProductionStockLevelController::class, 'table'])->name('table');
+            Route::post('/refresh', [ProductionStockLevelController::class, 'refresh'])->name('refresh');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
