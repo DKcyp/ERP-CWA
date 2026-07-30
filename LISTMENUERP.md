@@ -607,17 +607,17 @@ Create Doc. From CSV
     Fungsi : Menyajikan laporan analitik rekapitulasi pencatatan monitoring mesin giling, evaluasi konsistensi kecepatan mesin (Speed Gear Pump & Blade), jumlah siklus giling (pass count), serta pencapaian tingkat kehalusan hasil gilingan (micron/u).
     Penjelasan UI : Tampilan awal berupa table analitik interaktif (Read-Only) menampilkan Doc_ID, Prod_Date, Shift, Machine, Type, Nama_Product, Batch_No, Tonase, No_Mesin, Jam Operasional (Mulai - Finish), Siklus Ke-, Jam Pengamatan, Speed Gear Pump, Speed Blade, Hasil Kehalusan (u), Operator, dan Notes. Dilengkapi dengan filter interaktif (Prod Date, Shift, Mesin, Type, Nama Product, Operator), tombol Export Excel/PDF, serta summary card total tonase digiling dan rata-rata tingkat kehalusan (u) di bagian atas tabel.
 
-- Production Material Check Stock
+- Production Material Check Stock `production-material-check-stock`
   Komponen: Schedule ID, Product ID, Product Name, Total Qty, Current Stock, UOM, Warehouse, Shortage Qty, Stock Status
   Fungsi: Memeriksa dan menguji ketersediaan stok bahan baku di gudang terhadap kebutuhan rencana produksi sebelum jadwal dijalankan.
   Penjelasan UI: Tampilan awal berupa dashboard tabel simulasi ketersediaan stok yang membandingkan Total Qty kebutuhan jadwal dengan Current Stock. Kolom Stock Status dilengkapi indikator warna visual otomatis: Hijau (Sufficient / Cukup) dan Merah (Shortage / Kurang) beserta kalkulasi selisih kekurangan (Shortage Qty). Filter interaktif berdasarkan Schedule ID, Warehouse, dan Stock Status.
 
-- Production Stock Level
+- Production Stock Level `production-stock-level`
   Komponen: Product ID, Name, Warehouse, Current Stock, Reserved Stock, Available Stock, UOM
   Fungsi: Memantau saldo tingkat stok bahan baku, barang setengah jadi (WIP), dan material penolong secara real-time di lokasi gudang produksi.
   Penjelasan UI: Tampilan berupa data grid interaktif menampilkan saldo fisik (Current Stock), stok yang terkunci jadwal produksi (Reserved Stock), dan stok bebas yang siap pakai (Available Stock). Dilengkapi filter lokasi gudang, pencarian produk, serta tombol penyegaran data (Refresh).
 
-- STBJ
+- STBJ `stbj`
   Komponen: STBJ No, Date, Production Id, Batch No, From Production Line, To Warehouse ID, Total Qty Pcs, Total Weight Kg, Received By, Notes, Status
   Fungsi: Mengelola penerbitan dokumen Surat Tanda Barang Jadi (STBJ) sebagai bukti serah terima resmi produk hasil produksi dari bagian pabrik ke gudang.
   Penjelasan UI: Tampilan awal berupa table data grid memuat daftar seluruh dokumen STBJ. Tombol Tambah memunculkan Modal Form berstruktur Header (STBJ No, Date, Production Ref, Batch No, From Line, To Warehouse) dan Detail Items Kuantitas & Berat. Dilengkapi tombol aksi cetak dokumen/barcode STBJ fisik dan konfirmasi verifikasi serah terima.

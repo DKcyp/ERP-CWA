@@ -111,6 +111,7 @@ use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentCostReportContro
 use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentTrackReportController;
 use App\Http\Controllers\MaterialManagement\DailyStockAdjustmentReportController;
 use App\Http\Controllers\MaterialManagement\DashboardMaterialController;
+use App\Http\Controllers\MaterialManagement\ProductStockController;
 use App\Http\Controllers\SalesDistribution\ArWarehouseReportController;
 use App\Http\Controllers\SalesDistribution\PointSettingController;
 use App\Http\Controllers\SalesDistribution\CustomerPointPromoRuleController;
@@ -785,6 +786,11 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', [DailyStockAdjustmentReportController::class, 'table'])->name('table');
             Route::get('/summary', [DailyStockAdjustmentReportController::class, 'summary'])->name('summary');
             Route::get('/{id}', [DailyStockAdjustmentReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('product-stock')->name('product-stock.')->group(function () {
+            Route::get('/', [ProductStockController::class, 'index'])->name('index');
+            Route::get('/table', [ProductStockController::class, 'table'])->name('table');
         });
 
         Route::prefix('production-planning-dashboard')->name('production-planning-dashboard.')->group(function () {
