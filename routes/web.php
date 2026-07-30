@@ -82,6 +82,7 @@ use App\Http\Controllers\ProductionPlanning\RealisasiJadwalCanningPackingReportC
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalBasePerMesinListController;
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalPastaListController;
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalPastaReportController;
+use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -991,6 +992,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [RealisasiJadwalPastaReportController::class, 'index'])->name('index');
             Route::get('/table', [RealisasiJadwalPastaReportController::class, 'table'])->name('table');
             Route::get('/export', [RealisasiJadwalPastaReportController::class, 'export'])->name('export');
+        });
+
+        Route::prefix('monitoring-mesin-grinding-list')->name('monitoring-mesin-grinding-list.')->group(function () {
+            Route::get('/', [MonitoringMesinGrindingListController::class, 'index'])->name('index');
+            Route::get('/table', [MonitoringMesinGrindingListController::class, 'table'])->name('table');
+            Route::post('/', [MonitoringMesinGrindingListController::class, 'store'])->name('store');
+            Route::get('/{id}', [MonitoringMesinGrindingListController::class, 'show'])->name('show');
+            Route::put('/{id}', [MonitoringMesinGrindingListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [MonitoringMesinGrindingListController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
