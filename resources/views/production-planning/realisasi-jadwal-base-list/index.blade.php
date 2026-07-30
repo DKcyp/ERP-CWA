@@ -154,7 +154,7 @@ $('#btn-load-jadwal').on('click',function(){
 });
 
 function editRecord(id){
-    $.get('{{route("realisasi-jadwal-base-list.show","")}}/'+id,function(d){
+    $.get('/realisasi-jadwal-base-list/'+id,function(d){
         $('#modal-title').text('Edit Realisasi Jadwal Base');
         $('#form-id').val(d.id);$('#form-doc-id').val(d.doc_id);
         $('#form-date').val(d.date);$('#form-user-id').val(d.user_id);
@@ -178,14 +178,14 @@ $('#btn-save').on('click',function(){
     };
     if(!payload.date||!payload.prod_date||!payload.shift||!payload.type){alert('Lengkapi field wajib.');return;}
     if(!payload.items.length){alert('Minimal add 1 item.');return;}
-    const url=id?'{{route("realisasi-jadwal-base-list.update","")}}/'+id:'{{route("realisasi-jadwal-base-list.store")}}';
+    const url=id?'/realisasi-jadwal-base-list/'+id:'{{route("realisasi-jadwal-base-list.store")}}';
     const method=id?'PUT':'POST';
     $.ajax({url:url,type:'POST',data:{...payload,_method:method},success:function(r){bootstrap.Modal.getInstance('#formModal').hide();tbl.ajax.reload(null,false);alert(r.message)},error:function(e){alert(e.responseJSON?.error||'Terjadi kesalahan.')}});
 });
 
 function deleteRecord(id){deleteId=id;$('#delete-name').text('dokumen ini');new bootstrap.Modal('#deleteModal').show();}
 $('#btn-confirm-delete').on('click',function(){
-    $.ajax({url:'{{route("realisasi-jadwal-base-list.destroy","")}}/'+deleteId,type:'POST',data:{_method:'DELETE'},success:function(r){bootstrap.Modal.getInstance('#deleteModal').hide();tbl.ajax.reload(null,false);alert(r.message)}});
+    $.ajax({url:'/realisasi-jadwal-base-list/'+deleteId,type:'POST',data:{_method:'DELETE'},success:function(r){bootstrap.Modal.getInstance('#deleteModal').hide();tbl.ajax.reload(null,false);alert(r.message)}});
 });
 
 $('#filter-search').on('keyup',function(){tbl.ajax.reload()});$('#filter-date-from').on('change',function(){tbl.ajax.reload()});$('#filter-date-to').on('change',function(){tbl.ajax.reload()});$('#filter-shift').on('change',function(){tbl.ajax.reload()});$('#filter-type').on('change',function(){tbl.ajax.reload()});
