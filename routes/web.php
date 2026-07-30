@@ -71,6 +71,7 @@ use App\Http\Controllers\ProductionPlanning\DailyProductionCommissionReportContr
 use App\Http\Controllers\ProductionPlanning\DailyProductionMaterialCostReportController;
 use App\Http\Controllers\ProductionPlanning\DailyProductionResultCOGSReportController;
 use App\Http\Controllers\ProductionPlanning\DailyProductionPackagingReportController;
+use App\Http\Controllers\ProductionPlanning\DailyProductionMaterialCostRecapReportController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -898,6 +899,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [DailyProductionPackagingReportController::class, 'index'])->name('index');
             Route::get('/table', [DailyProductionPackagingReportController::class, 'table'])->name('table');
             Route::get('/export', [DailyProductionPackagingReportController::class, 'export'])->name('export');
+        });
+
+        Route::prefix('daily-production-material-cost-recap-report')->name('daily-production-material-cost-recap-report.')->group(function () {
+            Route::get('/', [DailyProductionMaterialCostRecapReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyProductionMaterialCostRecapReportController::class, 'table'])->name('table');
+            Route::get('/chart', [DailyProductionMaterialCostRecapReportController::class, 'chart'])->name('chart');
+            Route::get('/export', [DailyProductionMaterialCostRecapReportController::class, 'export'])->name('export');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
