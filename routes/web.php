@@ -62,6 +62,7 @@ use App\Http\Controllers\ProductionPlanning\SpkKemasanController;
 use App\Http\Controllers\ProductionPlanning\JadwalKemasanController;
 use App\Http\Controllers\ProductionPlanning\ProductionListController;
 use App\Http\Controllers\ProductionPlanning\ReleaseProductionController;
+use App\Http\Controllers\ProductionPlanning\ProductionCommissionController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -832,6 +833,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', [ReleaseProductionController::class, 'table'])->name('table');
             Route::get('/{id}', [ReleaseProductionController::class, 'show'])->name('show');
             Route::put('/{id}/status', [ReleaseProductionController::class, 'updateStatus'])->name('status');
+        });
+
+        Route::prefix('production-commission')->name('production-commission.')->group(function () {
+            Route::get('/', [ProductionCommissionController::class, 'index'])->name('index');
+            Route::get('/commission-table', [ProductionCommissionController::class, 'commissionTable'])->name('commission-table');
+            Route::get('/payment-table', [ProductionCommissionController::class, 'paymentTable'])->name('payment-table');
+            Route::get('/payment/{id}', [ProductionCommissionController::class, 'paymentShow'])->name('payment-show');
+            Route::post('/pay', [ProductionCommissionController::class, 'paySelected'])->name('pay');
+            Route::get('/employees', [ProductionCommissionController::class, 'employees'])->name('employees');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
