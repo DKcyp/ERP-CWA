@@ -208,7 +208,79 @@ class MenuSeeder extends Seeder
                         'Supplier Balance Summary' => '#',
                     ],
                 ]
-            ]
+            ],
+            'Production Planning' => [
+                'icon' => 'bi bi-gear-wide-connected',
+                'items' => [
+                    'Pre Production' => [
+                        'Pre SPK List' => 'pre-spk-list',
+                        'SPK List' => 'spk-list',
+                        'Production Scheduling' => 'production-scheduling',
+                        'Daily Schedule Report' => 'daily-schedule-report',
+                    ],
+                    'Kemasan' => [
+                        'SPK Kemasan' => 'spk-kemasan',
+                        'Jadwal Kemasan' => 'jadwal-kemasan',
+                    ],
+                    'Production' => [
+                        'Production List' => 'production-list',
+                        'Release Production' => 'release-production',
+                        'Production Commission' => 'production-commission',
+                    ],
+                    'Production Report' => [
+                        'Daily Production Report' => 'daily-production-report',
+                        'Daily Production Base Report' => 'daily-production-base-report',
+                        'Daily Production Result Report' => 'daily-production-result-report',
+                        'Daily Production Result Batch Report (STBJ)' => 'daily-production-result-batch-report',
+                        'Daily Production Commission' => 'daily-production-commission-report',
+                        'Daily Production Material Cost Report' => 'daily-production-material-cost-report',
+                        'Daily Production Result COGS Report' => 'daily-production-result-cogs-report',
+                        'Daily Production Packaging Report' => 'daily-production-packaging-report',
+                        'Daily Production Material Cost Recap Report' => 'daily-production-material-cost-recap-report',
+                    ],
+                    'Realisasi Jadwal Base' => [
+                        'Realisasi Jadwal Base List' => 'realisasi-jadwal-base-list',
+                        'Realisasi Jadwal Base Report' => 'realisasi-jadwal-base-report',
+                    ],
+                    'Realisasi Jadwal CM' => [
+                        'Realisasi Jadwal CM List' => 'realisasi-jadwal-cm-list',
+                        'Realisasi Jadwal CM Report' => 'realisasi-jadwal-cm-report',
+                    ],
+                    'Realisasi Jadwal Canning dan Packing' => [
+                        'Realisasi Jadwal Canning dan Packing List' => 'realisasi-jadwal-canning-packing-list',
+                        'Realisasi Jadwal Canning dan Packing Report' => 'realisasi-jadwal-canning-packing-report',
+                    ],
+                    'Realisasi Jadwal Base per Mesin' => [
+                        'Realisasi Jadwal Base per Mesin List' => 'realisasi-jadwal-base-per-mesin-list',
+                        'Realisasi Jadwal Base per Mesin Report' => 'realisasi-jadwal-base-per-mesin-report',
+                    ],
+                    'Realisasi Jadwal Pasta' => [
+                        'Realisasi Jadwal Pasta List' => 'realisasi-jadwal-pasta-list',
+                        'Realisasi Jadwal Pasta Report' => 'realisasi-jadwal-pasta-report',
+                    ],
+                    'Monitoring Mesin Grinding' => [
+                        'Monitoring Mesin Grinding List' => 'monitoring-mesin-grinding-list',
+                        'Monitoring Mesin Grinding Report' => 'monitoring-mesin-grinding-report',
+                    ],
+                    'Production Material Check Stock' => 'production-material-check-stock',
+                    'Production Stock Level' => 'production-stock-level',
+                    'STBJ' => 'stbj-production',
+                    'Product Report' => [
+                        'Product Stock' => '#',
+                        'Product Stock Summary' => '#',
+                        'Product Stock Daily Summary' => '#',
+                        'Product Stock Quick View' => '#',
+                        'Product Price Info' => '#',
+                        'Product Stock Track Report' => '#',
+                        'Product Stock Track Date Report' => '#',
+                        'Product Stock Track with Price Report' => '#',
+                        'Product Stock Minus Report' => '#',
+                        'Product Min Max Stock Check' => '#',
+                        'Product COGS Monthly Report' => '#',
+                        'Product COGS Daily Report' => '#',
+                    ],
+                ]
+            ],
         ];
 
         $sortIndex = 1;

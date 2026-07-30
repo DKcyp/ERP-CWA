@@ -37,7 +37,7 @@
                     <div class="col-md-4"><label class="form-label fw-semibold">Date To</label><input type="date" class="form-control" name="date_to" id="f_date_to"></div>
                 </div>
                 <div class="row g-3 mb-3">
-                    <div class="col-12"><h6 class="fw-bold text-success"><i class="bi bi-cart-plus me-1"></i>Seksi Buy (Beli)</h6><hr class="mt-1"></div>
+                    <div class="col-12"><h6 class="fw-bold text-success"><i class="bi bi-cart-plus me-1"></i>Buy (Beli)</h6><hr class="mt-1"></div>
                     <div class="col-md-4"><label class="form-label fw-semibold">Product <span class="text-danger">*</span></label>
                         <select class="form-select" name="buy_product_id" id="f_buy_product_id"><option value="">-- Pilih Product --</option>
                             @foreach($products as $p)<option value="{{$p['product_id']}}" data-name="{{$p['name']}}">{{$p['product_id']}} - {{$p['name']}}</option>@endforeach
@@ -47,7 +47,7 @@
                     <div class="col-md-4"><label class="form-label fw-semibold">Buy Qty <span class="text-danger">*</span></label><input type="number" class="form-control" name="buy_qty" id="f_buy_qty" min="1"></div>
                 </div>
                 <div class="row g-3 mb-3">
-                    <div class="col-12"><h6 class="fw-bold text-warning"><i class="bi bi-gift me-1"></i>Seksi Get (Bonus)</h6><hr class="mt-1"></div>
+                    <div class="col-12"><h6 class="fw-bold text-warning"><i class="bi bi-gift me-1"></i>Get (Bonus)</h6><hr class="mt-1"></div>
                     <div class="col-md-4"><label class="form-label fw-semibold">Product <span class="text-danger">*</span></label>
                         <select class="form-select" name="get_product_id" id="f_get_product_id"><option value="">-- Pilih Product --</option>
                             @foreach($products as $p)<option value="{{$p['product_id']}}" data-name="{{$p['name']}}">{{$p['product_id']}} - {{$p['name']}}</option>@endforeach

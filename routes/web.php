@@ -52,6 +52,8 @@ use App\Http\Controllers\Master\UomController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestController;
 use App\Http\Controllers\MaterialManagement\PurchaseRequestFulfilmentController;
 use App\Http\Controllers\MaterialManagement\StockTransferRequestController;
+
+use App\Http\Controllers\ProductionPlanning\PreSpkController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -750,6 +752,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', [DailyStockAdjustmentReportController::class, 'table'])->name('table');
             Route::get('/summary', [DailyStockAdjustmentReportController::class, 'summary'])->name('summary');
             Route::get('/{id}', [DailyStockAdjustmentReportController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('pre-spk-list')->name('pre-spk-list.')->group(function () {
+            Route::get('/', [PreSpkController::class, 'index'])->name('index');
+            Route::get('/table', [PreSpkController::class, 'table'])->name('table');
+            Route::post('/', [PreSpkController::class, 'store'])->name('store');
+            Route::get('/{id}', [PreSpkController::class, 'show'])->name('show');
+            Route::put('/{id}', [PreSpkController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PreSpkController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {

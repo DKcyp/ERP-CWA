@@ -80,6 +80,22 @@
     Fungsi : Mengatur rasio konversi antar satuan unit barang (misal: 1 BOX = 24 PCS) untuk perhitungan stok dan transaksi otomatis.
     Penjelasan UI : Tampilan awal berupa table menampilkan UOM_Convertion_Id, Product, From_UOM, To_UOM, Multiplier, Operator dan filter product dan UOM. Tombol tambah akan muncul pop up dengan form Product, From_UOM, To_UOM, Multiplier, Operator. Untuk edit muncul pop up form Product, From_UOM, To_UOM, Multiplier, Operator. Hapus muncul alert konfirmasi.
 
+- Production
+  - Specification Rule `specification-rule`
+  - Product Specification Rule `product-specification-rule`
+  - Production Setup `production-setup`
+  - Product Template `product-template`
+  - Default Warehouse `default-warehouse`
+  - Machine `machine`
+  - Labour Commission `labour-commission`
+  - Production Plan Name `production-plan-name`
+  - Product Type `product-type`
+  - Product HPP Master `product-hpp-master`
+  - Product Base `product-base`
+  - Production Reference `production-reference`
+  - Production Jadwal `production-jadwal`
+  - Production Produksi `production-produksi`
+
 - Warehouse `warehouse`
   Komponen : Warehouse_Id, Code, Name, Address, PIC_Name, Phone, Note, Use_VAT, Active, Allow_Negative_Stock, View_In_Sales_Return
   Fungsi : Mengelola data induk lokasi fisik/logis gudang penyimpanan barang persediaan beserta pengaturan aturan operasionalnya (seperti pajak VAT, izin stok minus, pencatatan retur penjualan, dan catatan internal).
@@ -110,9 +126,9 @@
   Fungsi : Mengatur aturan promosi penjualan kustom "Beli N Barang Bonus M Barang" beserta pengaturan potongan harga/diskon tambahan pada produk bonus maupun pada level Faktur Penjualan (Sales Invoice).
   Penjelasan UI : Tampilan awal berupa table menampilkan Promo_Id, Name, Date_From, Date_To, Buy_Product_Name, Buy_Qty, Get_Product_Name, Get_Qty, Get_Discount_Percentage, Sales_Invoice_Discount_Percentage dan filter promo name serta product. Tombol Tambah akan memunculkan pop-up modal form berstruktur:
     1. Header Info : Promo Id, Name, Date From (DatePicker), Date To (DatePicker).
-    2. Seksi Buy   : Product Id (Lookup Search), Name (Read-only), Buy Qty.
-    3. Seksi Get   : Product Id (Lookup Search), Name (Read-only), Get Qty, Discount Amount, Discount Percentage.
-    4. Seksi Sales Invoice : Discount Amount, Discount Percentage.
+    2. Buy   : Product Id (Lookup Search), Name (Read-only), Buy Qty.
+    3. Get   : Product Id (Lookup Search), Name (Read-only), Get Qty, Discount Amount, Discount Percentage.
+    4. Sales Invoice : Discount Amount, Discount Percentage.
   Untuk Edit akan memunculkan pop-up modal form dengan struktur dan field yang sama untuk memperbarui data promosi. Hapus memunculkan alert konfirmasi.
 
 - Employee `employee`
@@ -312,7 +328,356 @@ Create Doc. From CSV
   Komponen : Template_Id, Template_Code, Template_Name, Target_Material_Id, Target_Output_Qty, Raw_Material_Id, Qty_Needed, UOM_Id, Description
   Fungsi : Mengelola formulasi resep / Bill of Materials (BOM) standar yang digunakan sebagai acuan proses konversi/perakitan stok.
   Penjelasan UI : Tampilan awal berupa table menampilkan Template_Id, Template_Code, Template_Name, Target_Material_Id, Target_Output_Qty, Description dan filter template_code, template_name, dan target_material. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Template Code, Template Name, Target Material [Lookup Product], Target Output Qty, Description) dan Table Detail Raw Materials (Raw Material [Lookup Product], Qty Needed, UOM). Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
-  
+
+## Production Planing
+- Pre Production
+  - Pre SPK List
+    Komponen: Doc. ID, Date, Customer ID, Name, Total Qty, Total Tonase, Notes, User ID, Status
+    Fungsi: Mengelola draf pengajuan Surat Perintah Kerja (SPK) awal berdasarkan pesanan pelanggan sebelum divalidasi menjadi dokumen SPK resmi.
+    Penjelasan UI: Tampilan awal berupa table data grid menampilkan Doc. ID, Date, Customer ID, Name, Total Qty, Total Tonase, Status, dan Notes beserta filter rentang tanggal, customer, dan status. Tombol Tambah memunculkan Pop-up Modal Form berstruktur Header (Date, Customer ID, Name, Notes) dan Table Detail Items (Product ID, Target Qty, Target Tonase). Edit memunculkan modal form terisi, Hapus memunculkan alert konfirmasi.
+
+  - SPK List
+    Komponen: Doc. ID, Date, Delivery Date, Total Qty, Total Tonase, Total Qty Needs, Total Tonase Needs, Warehouse, Notes, User ID, Status
+    Fungsi: Menampilkan dan mengelola dokumen Perintah Kerja produksi resmi yang menjadi acuan jadwal pabrik serta kalkulasi pemenuhan stok material.
+    Penjelasan UI: Tampilan awal berupa table data grid menampilkan Doc. ID, Date, Delivery Date, Warehouse, Total Qty, Total Tonase, Status, dan User ID beserta filter tanggal, warehouse, dan status. Tombol Tambah memunculkan Pop-up Modal Form dengan penarikan data dari Pre SPK, mengalkulasi otomatis sisa kebutuhan (Total Qty Needs / Tonase Needs), serta menentukan gudang alokasi. Edit memunculkan modal form terisi, Hapus memunculkan alert konfirmasi.
+
+  - Production Scheduling
+    Komponen: Doc. ID, Tipe, FK, Date, SPK, SPK From Date, SPK To Date, Notes, User ID, Line Machine ID
+    Fungsi: Mengatur plotting waktu, durasi pengerjaan, dan pengalokasian mesin/lini produksi berdasarkan dokumen SPK yang terbit.
+    Penjelasan UI: Tampilan awal berupa visualisasi Gantt Chart interaktif dan tabel grid jadwal produksi. Dilengkapi filter rentang tanggal SPK (From-To Date), tipe adonan, dan pilihan mesin. Pengguna dapat menggeser/mengatur alokasi waktu jadwal produksi secara drag-and-drop atau memunculkan modal form input plotting jadwal baru.
+
+  - Daily Schedule Report
+    Komponen: Tanggal, Product Id, Name, Base, Formulasi, Batch NR, Basis, Basis (Kg), Total Basis (Kg), Hasil CM, Kode Mesin, Status, Realisasi, Lead Time, Dateline, No / On Time
+    Fungsi: Menyajikan laporan harian rekapitulasi jadwal produksi, evaluasi capaian target, waktu pengerjaan (lead time vs dateline), serta indikator ketepatan waktu (On Time / Late).
+    Penjelasan UI: Tampilan awal berupa table analitik Read-Only menampilkan seluruh komponen jadwal harian dilengkapi badge indikator visual warna hijau/merah pada kolom On Time/Late Status. Dilengkapi filter tanggal, mesin, status realisasi, serta tombol Export Excel/PDF.
+
+- Kemasan
+  - SPK Kemasan
+    Komponen: Doc. ID, Date, SPK_Ref_No, Product_ID, Package_Type, Target_Qty_Pcs, Target_Tonase, Status, Notes, User_ID
+    Fungsi: Menerbitkan dan mengelola Surat Perintah Kerja khusus persiapan, pencetakan, dan penyediaan material kemasan (kaleng/galon/pail).
+    Penjelasan UI: Tampilan awal berupa table data grid menampilkan Doc. ID, Date, SPK_Ref_No, Product_ID, Package_Type, Target_Qty_Pcs, Status, dan Notes beserta filter tanggal dan jenis kemasan. Tombol Tambah memunculkan Pop-up Modal Form berstruktur Header (Date, SPK Ref, Package Type, Target Pcs) dan Table Detail Packaging Specs. Edit memunculkan modal form terisi, Hapus memunculkan alert konfirmasi.
+
+  - Jadwal Kemasan
+    Komponen: Schedule_ID, Date, SPK_Kemasan_Ref, Line_Packaging_ID, Product_Name, Target_Pcs, Shift, Operator_In_Charge, Status, Notes
+    Fungsi: Menjadwalkan plotting pengoperasian lini mesin pengemasan (packaging line) dan alokasi tim operator berdasarkan SPK Kemasan.
+    Penjelasan UI: Tampilan awal berupa kalender kerja/grid jadwal harian per packaging line dengan penanda warna shift. Dilengkapi filter tanggal, lini kemasan, dan shift. Tombol Tambah memunculkan modal form pemilihan SPK Kemasan Ref, Line ID, Shift, dan penetapan Operator In Charge.
+
+- Production
+  - Production List
+    Komponen: Production Id, Template Name, Formulasi, Basis, Qty Jadwal, FK, Jadwal, Produksi, Recanning, Batch No, No. SPKP, Date, No. Box Arsip, Tipe Product, Product Group, Reference, Machine, Status, User Id, Notes, Stock Release, Stock Receive, QC, Adjustment, Total Material, Total Realisasi, Selisih, Adj. Batch, Kesimpulan, Keputusan
+    Fungsi: Hub utama pusat pencatatan dan pengelolaan dokumen eksekusi produksi menyeluruh, mulai dari penimbangan formulasi bahan, penarikan stok (Stock Release), pengolahan, pengujian QC, hingga penyesuaian batch.
+    Penjelasan UI: Tampilan awal berupa data grid komprehensif berfitur pencarian cepat dan multi-filter status. Tombol Tambah memunculkan Form Modal berstruktur Tab Navigasi: Tab Header (Info Dokumen, SPKP, Mesin), Tab Formulasi & Material (Stock Release & Timbang), Tab Hasil Realisasi & Selisih, serta Tab Status QC & Keputusan Kelulusan. Edit memunculkan form terisi lengkap, Hapus memunculkan alert konfirmasi.
+
+  - Release Production
+    Komponen: Production Id, User, Tanggal, Status, QC_Notes, Batch_No, Warehouse_Target
+    Fungsi: Memproses otorisasi kelulusan produk jadi dari tim QC/Supervisor agar stok siap dirilis dan ditransfer dari lini produksi ke gudang penyimpanan.
+    Penjelasan UI: Tampilan awal berupa daftar antrean verifikasi kelulusan batch produksi. Pengguna dapat memilih baris dokumen untuk memunculkan modal detail hasil QC, catatan pengujian, serta tombol aksi utama [ Approve / Release Stock ] atau [ Hold / Reject ] dengan penentuan gudang tujuan penerimaan.
+
+  - Production Commission `production-commission`
+    Komponen Filter : Employee (Select Employee), Date_From, Date_To, 
+    Komponen Tab Commission : Date, Production, Paid, Payment_Date, Status, Machine, Commission, Qty, Amount, Total, Notes
+    Komponen Tab Payment : Id, Date, Account, Total, Notes
+    Komponen Tab Payment Detail : Production_Id, Commission, Qty, Amount, Total, Total_Detail
+    Fungsi : Memantau kalkulasi rincian komisi operator/karyawan produksi berdasarkan aktivitas mesin dan jumlah hasil produksi, serta mengelola proses pencairan/pembayaran komisi terintegrasi.
+    Penjelasan UI : Tampilan awal terdiri dari bagian Filter Atas dan 2 Tab Navigasi Utama:
+      1. Filter Atas : Dropdown/Lookup Employee (Select Employee), DatePicker (From - To), tombol Refresh, dan checkbox Show COMPLETE only.
+      2. Tab Navigasi :
+        * Tab Commission : Menampilkan tabel daftar komisi dengan kolom Date, Production, Paid, Payment Date, Status, Machine, Commission, Qty, Amount, Total, Notes, tombol Print, serta tombol [ Pay Selected ] di sudut bawah untuk mencairkan komisi karyawan yang dipilih.
+        * Tab Payment : Menampilkan tombol Print Payment Doc., tabel riwayat pembayaran komisi (Id, Date, Account, Total, Notes) pada atas, serta tabel Payment Detail (Production Id, Commission, Qty, Amount, Total, Total_Detail) pada bawah.
+
+- Production Report
+  - Daily Production Report
+    Komponen: Date, Production_Id, Product_Name, Batch_No, Qty_Planned_Kg, Qty_Actual_Kg, Efficiency_Percent, Machine_ID, Status, Notes
+    Fungsi: Menyajikan laporan harian rekapitulasi seluruh aktivitas produksi dan pencapaian efisiensi output produksi.
+    Penjelasan UI: Tampilan berupa table analitik Read-Only dilengkapi Summary Card (Total Batch Diproduksi, Total Tonase, Rata-rata Efisiensi) di bagian atas, serta filter tanggal produksi, mesin, dan tipe produk.
+
+  - Daily Production Base Report
+    Komponen: Date, Production_Id, Base_Name, Batch_No, Machine_ID, Target_Base_Kg, Actual_Base_Kg, Variance_Kg, Operator, Notes
+    Fungsi: Laporan harian khusus pemantauan hasil pencapaian pengolahan adonan dasar (base) dan selisih kuantitas target.
+    Penjelasan UI: Tampilan berupa table analitik Read-Only dengan indikator warna deviasi (Variance KG) serta filter tanggal produksi, mesin, dan jenis base.
+
+  - Daily Production Result Report
+    Komponen: Date, Production_Id, Product_Name, Batch_No, Total_Output_Pcs, Total_Output_Kg, Reject_Qty_Kg, Yield_Percent, Notes
+    Fungsi: Laporan rekapitulasi harian kuantitas produk jadi yang berhasil diproduksi beserta persentase perolehan (yield).
+    Penjelasan UI: Tampilan berupa table Read-Only dengan ringkasan total produk jadi (Pcs/Kg) dan persentase afval/reject, dilengkapi filter tanggal dan kelompok produk.
+
+  - Daily Production Result Batch Report (STBJ)
+    Komponen: Date, STBJ_No, Production_Id, Batch_No, Warehouse_Target, Total_Qty_Received_Pcs, Total_Weight_Kg, User_ID, Status
+    Fungsi: Laporan penyerahan dan penerimaan harian hasil produksi ke gudang berbasis dokumen STBJ.
+    Penjelasan UI: Tampilan berupa table verifikasi penerimaan barang fisik di gudang dengan filter tanggal STBJ, nomor batch, dan gudang tujuan.
+
+  - Daily Production Commission
+    Komponen: Date, Employee_ID, Employee_Name, Machine_ID, Total_Batch_Handled, Total_Qty_Produced, Total_Commission_Amount, Notes
+    Fungsi: Laporan harian rekapitulasi perolehan nilai komisi operator berdasarkan jumlah batch dan volume produksi.
+    Penjelasan UI: Tampilan berupa table Read-Only terurut berdasarkan nama operator/karyawan dilengkapi ringkasan akumulasi komisi harian dan filter rentang tanggal.
+
+  - Daily Production Material Cost Report
+    Komponen: Date, Production_Id, Material_ID, Material_Name, Qty_Used, UOM, Unit_Cost, Total_Material_Cost, Batch_No
+    Fungsi: Laporan harian pemakaian bahan baku/penolong beserta total nilai biaya bahan pada setiap batch produksi.
+    Penjelasan UI: Tampilan berupa table breakdown biaya bahan baku per nomor adonan/batch, dilengkapi filter tanggal, material ID, dan fitur ekspor data.
+
+  - Daily Production Result COGS Report
+    Komponen: Date, Production_Id, Product_Name, Batch_No, Total_Material_Cost, Overhead_Cost, Labor_Cost, Total_COGS, COGS_Per_Kg, COGS_Per_Pcs
+    Fungsi: Laporan analisis perhitungan Harga Pokok Produksi (HPP/COGS) harian produk jadi secara komprehensif.
+    Penjelasan UI: Tampilan berupa table analitik COGS yang mengurai komponen Biaya Material, Tenaga Kerja, dan Overhead per Kg/Pcs produk jadi dengan filter tanggal dan nama produk.
+
+  - Daily Production Packaging Report
+    Komponen: Date, Production_Id, Package_Type, Qty_Used_Pcs, Qty_Damaged_Pcs, Unit_Packaging_Cost, Total_Packaging_Cost, Notes
+    Fungsi: Laporan harian penggunaan dan efisiensi material kemasan beserta analisis tingkat kemasan rusak (damage rate).
+    Penjelasan UI: Tampilan berupa table laporan pemakaian kemasan (kaleng/galon/pail) dilengkapi persentase kemasan rusak dan filter jenis kemasan.
+
+  - Daily Production Material Cost Recap Report
+    Komponen: Period, Product_Group, Total_Production_Count, Total_Material_Cost_Accumulated, Average_Cost_Per_Kg, Variance_To_Standard
+    Fungsi: Laporan rekapitulasi akumulasi nilai biaya bahan baku dalam periode harian/mingguan/bulanan terhadap standar biaya.
+    Penjelasan UI: Tampilan berupa ringkasan eksekutif berbasis tabel dan grafik garis tren konsumsi biaya material dengan filter periode dan grup produk.
+
+- Realisasi Jadwal Base `#`
+  - Realisasi Jadwal Base List `realisasi-jadwal-base-list`
+    Komponen : Doc_ID, Date, User_ID, Prod_Date, Shift, Type, Total_Product_Count, Total_Realisasi_KG, Status, Notes
+    Fungsi : Menampilkan dan mengelola daftar seluruh dokumen realisasi pelaksanaan jadwal produksi bahan basis (base) beserta ringkasan total hasil produksi.
+    Penjelasan UI : Tampilan awal berupa table data grid modern menampilkan Doc_ID, Date, Prod_Date, Shift, Type, Total_Product_Count, Total_Realisasi_KG, User_ID, Status, dan Notes beserta filter pencarian cepat, filter rentang tanggal, shift, dan type. Tombol [ + Tambah Realisasi ] akan memunculkan Pop-up Modal Form / Drawer Modern dengan struktur:
+      1. Info Dokumen (Top Card) :
+         - Doc ID (Auto-generated, Read-only badge)
+         - Date (DatePicker)
+         - User ID (Read-only / User login aktif)
+      2. Parameter & Auto-Generate (Filter Bar) :
+         - Prod. Date (DatePicker)
+         - Shift (Dropdown: Shift 1, 2, 3)
+         - Type (Dropdown: Water Based, Solvent Based, dll.)
+         - Tombol [ Load / Tarik Jadwal ] untuk mengisi tabel detail secara otomatis dari Rencana Jadwal.
+      3. Data Grid Detail (Dynamic Editable Table) :
+         - Kolom: Nama Product (Autocomplete Lookup), Batch No., Mesin (Dropdown), Total Basis (KG), Realisasi (KG), Jam Mulai (TimePicker), Jam Selesai (TimePicker), Operator (Multi-select/Dropdown), dan Keterangan.
+         - Mendukung fitur tambah/hapus baris manual (Add/Remove Row).
+      4. Catatan & Aksion (Footer Form) :
+         - Field Textarea Notes (Catatan Tambahan).
+         - Tombol [ Batal ] dan [ Simpan Realisasi ].
+    Untuk Edit memunculkan Pop-up Modal Form modern dengan data yang telah terisi untuk diperbarui. Hapus memunculkan alert konfirmasi modal.
+
+  - Realisasi Jadwal Base Report `realisasi-jadwal-base-report`
+    Komponen : Doc_ID, Date, Prod_Date, Shift, Type, Nama_Product, Batch_No, Mesin, Total_Basis_KG, Realisasi_KG, Variance_KG, Efficiency_Percent, Mulai, Selesai, Operator, Notes
+    Fungsi : Menyajikan laporan analitik rekapitulasi realisasi jadwal produksi base, selisih pencapaian target (variance KG), serta persentase efisiensi produksi.
+    Penjelasan UI : Tampilan awal berupa table analitik interaktif (Read-Only) menampilkan Doc_ID, Prod_Date, Shift, Type, Nama_Product, Batch_No, Mesin, Total_Basis_KG, Realisasi_KG, Variance_KG (dengan warna indikator hijau/merah), Efficiency_Percent, Jam Operasional (Mulai - Selesai), Operator, dan Keterangan. Dilengkapi dengan filter interaktif (Prod Date, Shift, Type, Mesin, Operator), tombol Export Excel/PDF, serta summary card total produksi di bagian atas tabel.
+
+- Realisasi Jadwal CM `#`
+  - Realisasi Jadwal CM List `realisasi-jadwal-cm-list`
+    Komponen : Doc_ID, Date, User_ID, Prod_Date, Shift, Type, Schedule_Category, Total_Product_Count, Total_Realisasi_KG, Status, Notes
+    Fungsi : Menampilkan dan mengelola daftar seluruh dokumen realisasi pelaksanaan jadwal produksi pencampuran warna (Color Matching - CM) berdasarkan tanggal produksi, shift, tipe adonan, dan kategori jadwal lokasi (Pusat/Cabang).
+    Penjelasan UI : Tampilan awal berupa table data grid modern menampilkan Doc_ID, Date, Prod_Date, Shift, Type, Schedule_Category (Jadwal), Total_Product_Count, Total_Realisasi_KG, User_ID, Status, dan Notes beserta filter pencarian cepat, filter rentang tanggal, shift, type, dan lokasi jadwal. Tombol [ + Tambah Realisasi CM ] akan memunculkan Pop-up Modal Form / Drawer Modern berstruktur:
+      1. Info Dokumen (Top Card) :
+         - Doc ID (Auto-generated, Read-only badge)
+         - Date (DatePicker)
+         - User ID (Read-only / User login aktif)
+      2. Parameter & Auto-Generate (Filter Bar) :
+         - Prod. Date (DatePicker)
+         - Shift (Dropdown: Shift 1, 2, 3)
+         - Type (Dropdown: Water Based, Solvent Based, dll.)
+         - Jadwal (Dropdown: Pusat, Cabang, dll.)
+         - Tombol [ Load / Tarik Jadwal ] untuk mengisi tabel detail secara otomatis dari Rencana Jadwal CM.
+      3. Data Grid Detail (Dynamic Editable Table) :
+         - Kolom: Nama Product (Autocomplete Lookup), Kode Warna, Batch No., Mesin (Dropdown), Total Basis (KG), Realisasi (KG), Jam Mulai (TimePicker), Jam Selesai (TimePicker), Operator (Multi-select/Dropdown), Jadwal (Ref Location), dan Keterangan.
+         - Mendukung fitur tambah/hapus baris manual (Add/Remove Row).
+      4. Catatan & Aksion (Footer Form) :
+         - Field Textarea Notes (Catatan Tambahan).
+         - Tombol [ Batal ] dan [ Simpan Realisasi CM ].
+    Untuk Edit memunculkan Pop-up Modal Form modern dengan data yang telah terisi untuk diperbarui. Hapus memunculkan alert konfirmasi modal.
+
+  - Realisasi Jadwal CM Report `realisasi-jadwal-cm-report`
+    Komponen : Doc_ID, Date, Prod_Date, Shift, Type, Schedule_Category, Nama_Product, Kode_Warna, Batch_No, Mesin, Total_Basis_KG, Realisasi_KG, Variance_KG, Efficiency_Percent, Mulai, Selesai, Operator, Notes
+    Fungsi : Menyajikan laporan analitik rekapitulasi realisasi jadwal produksi Color Matching (CM), evaluasi pencapaian target per kode warna, selisih kuantitas basis (variance), serta efisiensi waktu operasional.
+    Penjelasan UI : Tampilan awal berupa table analitik interaktif (Read-Only) menampilkan Doc_ID, Prod_Date, Shift, Type, Schedule_Category, Nama_Product, Kode_Warna, Batch_No, Mesin, Total_Basis_KG, Realisasi_KG, Variance_KG (dengan warna indikator visual), Efficiency_Percent, Jam Operasional (Mulai - Selesai), Operator, dan Keterangan. Dilengkapi dengan filter interaktif (Prod Date, Shift, Type, Jadwal, Kode Warna, Mesin, Operator), tombol Export Excel/PDF, serta summary card total pencampuran warna di bagian atas tabel.
+
+- Realisasi Jadwal Canning dan Packing `#`
+  - Realisasi Jadwal Canning dan Packing List `realisasi-jadwal-canning-packing-list`
+    Komponen : Doc_ID, Date, User_ID, Prod_Date, Shift, Type, Schedule_Category, Total_Product_Count, Total_Realisasi_Canning_KG, Status, Notes
+    Fungsi : Menampilkan dan mengelola daftar seluruh dokumen realisasi pengalengan (canning) dan pengemasan (packing) produk berdasarkan varian kemasan, berat, dan operator pelaksana.
+    Penjelasan UI : Tampilan awal berupa table data grid modern menampilkan Doc_ID, Date, Prod_Date, Shift, Type, Schedule_Category (Jadwal), Total_Product_Count, Total_Realisasi_Canning_KG, User_ID, Status, dan Notes beserta filter pencarian cepat, filter rentang tanggal, shift, type, dan lokasi jadwal. Tombol [ + Tambah Realisasi Canning & Packing ] akan memunculkan Pop-up Modal Form / Drawer Modern berstruktur:
+      1. Info Dokumen (Top Card) :
+         - Doc ID (Auto-generated, Read-only badge)
+         - Date (DatePicker)
+         - User ID (Read-only / User login aktif)
+      2. Parameter & Auto-Generate (Filter Bar) :
+         - Prod. Date (DatePicker)
+         - Shift (Dropdown: Shift 1, 2, 3)
+         - Type (Dropdown: Water Based, Solvent Based, dll.)
+         - Jadwal (Dropdown: Pusat, Cabang, dll.)
+         - Tombol [ Load / Tarik Jadwal ] untuk mengisi tabel detail secara otomatis dari Rencana Jadwal Canning & Packing.
+      3. Data Grid Detail (Dynamic Editable Table) :
+         - Identitas & Komposisi: Kode Warna, Warna, Batch No., Basis (KG), Realisasi CM (KG).
+         - Detail Kemasan (PCS): Kaleng 0.1L, Kaleng 0.2L, Kaleng 0.4L, Kaleng 0.45L, Kaleng 0.9L, Kaleng (PCS), Galon (PCS), Pail (PCS), Liter (PCS), Kaleng 500ML (PCS), Kaleng 1L (PCS).
+         - Realisasi & Waktu Operasional: Realisasi Canning (KG), Tgl Kemas (DatePicker), Tgl Selesai (DatePicker), Sisa Hasil Kemas.
+         - Penimbangan & Operator: Berat Awal, Berat Akhir, Selisih, Operator Canning (Dropdown/Multi-select), Operator Packing (Dropdown/Multi-select), Jadwal (Ref Location), dan Keterangan.
+         - Mendukung fitur tambah/hapus baris manual (Add/Remove Row).
+      4. Catatan & Aksion (Footer Form) :
+         - Field Textarea Notes (Catatan Tambahan).
+         - Tombol [ Batal ] dan [ Simpan Realisasi Canning & Packing ].
+    Untuk Edit memunculkan Pop-up Modal Form modern dengan data yang telah terisi untuk diperbarui. Hapus memunculkan alert konfirmasi modal.
+
+  - Realisasi Jadwal Canning dan Packing Report `realisasi-jadwal-canning-packing-report`
+    Komponen : Doc_ID, Date, Prod_Date, Shift, Type, Schedule_Category, Kode_Warna, Warna, Batch_No, Basis_KG, Realisasi_CM_KG, Detail_Kemasan_Pcs_Summary, Realisasi_Canning_KG, Yield_Percent, Berat_Awal, Berat_Akhir, Selisih_KG, Operator_Canning, Operator_Packing, Notes
+    Fungsi : Menyajikan laporan analitik rekapitulasi hasil pengalengan dan pengemasan, evaluasi persentase perolehan (*yield*), selisih penimbangan bahan, dan performa operator.
+    Penjelasan UI : Tampilan awal berupa table analitik interaktif (Read-Only) menampilkan Doc_ID, Prod_Date, Shift, Type, Schedule_Category, Kode_Warna, Warna, Batch_No, Basis_KG, Realisasi_CM_KG, Rincian Kemasan (Kaleng/Galon/Pail), Realisasi_Canning_KG, Yield_Percent, Berat Awal, Berat Akhir, Selisih (dengan warna indikator visual), Operator Canning, Operator Packing, dan Keterangan. Dilengkapi dengan filter interaktif (Prod Date, Shift, Type, Jadwal, Kode Warna, Operator), tombol Export Excel/PDF, serta summary card total hasil pengemasan di bagian atas tabel.
+
+- Realisasi Jadwal Base per Mesin `#`
+  - Realisasi Jadwal Base per Mesin List `realisasi-jadwal-base-per-mesin-list`
+    Komponen : Doc_ID, Date, User_ID, Prod_Date, Shift, Machine, Type, Total_Product_Count, Total_Realisasi_KG, Status, Notes
+    Fungsi : Menampilkan dan mengelola pencatatan realisasi produksi bahan basis (base) secara spesifik per mesin, termasuk pelacakan jam/waktu pada setiap tahapan proses produksi (pengisian air, proses giling, cek kehalusan, cek akhir, hingga penurunan).
+    Penjelasan UI : Tampilan awal berupa table data grid modern menampilkan Doc_ID, Date, Prod_Date, Shift, Machine, Type, Total_Product_Count, Total_Realisasi_KG, User_ID, Status, dan Notes beserta filter pencarian cepat, filter rentang tanggal, shift, mesin, dan type. Tombol [ + Tambah Realisasi Base per Mesin ] akan memunculkan Pop-up Modal Form / Drawer Modern berstruktur:
+      1. Seksi Info Dokumen (Top Card) :
+         - Doc ID (Auto-generated, Read-only badge)
+         - Date (DatePicker)
+         - User ID (Read-only / User login aktif)
+      2. Seksi Parameter & Auto-Generate (Filter Bar) :
+         - Prod. Date (DatePicker)
+         - Shift (Dropdown: Shift 1, 2, 3)
+         - Machine (Dropdown pilihan mesin spesifik)
+         - Type (Dropdown: Water Based, Solvent Based, dll.)
+         - Tombol [ Load / Tarik Jadwal ] untuk mengisi tabel detail secara otomatis dari Rencana Jadwal Base per Mesin.
+      3. Seksi Data Grid Detail (Dynamic Editable Table) :
+         - Informasi Produk & Kuantitas: Nama Product (Autocomplete Lookup), Batch No., Total Basis (KG), Realisasi (KG).
+         - Detail Tahapan Waktu Proses: Pengisian Air - Start (TimePicker), Pengisian Air - Finish (TimePicker), Start Proses (TimePicker), Cek Kehalusan - Start (TimePicker), Cek Kehalusan - Finish (TimePicker), Cek Akhir - Start (TimePicker), Cek Akhir - Finish (TimePicker), Penurunan (TimePicker).
+         - Personel & Catatan: Operator (Dropdown/Multi-select) dan Keterangan.
+         - Mendukung fitur tambah/hapus baris manual (Add/Remove Row).
+      4. Seksi Catatan & Aksion (Footer Form) :
+         - Field Textarea Notes (Catatan Tambahan).
+         - Tombol [ Batal ] dan [ Simpan Realisasi per Mesin ].
+    Untuk Edit memunculkan Pop-up Modal Form modern dengan data yang telah terisi untuk diperbarui. Hapus memunculkan alert konfirmasi modal.
+
+  - Realisasi Jadwal Base per Mesin Report `realisasi-jadwal-base-per-mesin-report`
+    Komponen : Doc_ID, Date, Prod_Date, Shift, Machine, Type, Nama_Product, Batch_No, Total_Basis_KG, Realisasi_KG, Duration_Pengisian_Air, Duration_Proses_Giling, Duration_Cek_Kehalusan, Duration_Cek_Akhir, Duration_Total_Process, Operator, Notes
+    Fungsi : Menyajikan laporan analitik rekapitulasi realisasi produksi per mesin, durasi waktu per tahapan proses (cycle time analysis), efisiensi penggunaan mesin, serta evaluasi pencapaian kuantitas.
+    Penjelasan UI : Tampilan awal berupa table analitik interaktif (Read-Only) menampilkan Doc_ID, Prod_Date, Shift, Machine, Type, Nama_Product, Batch_No, Total_Basis_KG, Realisasi_KG, Rincian Jam Tahapan Proses (Start-Finish Air, Giling, Cek Kehalusan, Cek Akhir, Penurunan), Total Durasi Proses (Jam/Menit), Operator, dan Keterangan. Dilengkapi dengan filter interaktif (Prod Date, Shift, Mesin, Type, Operator), tombol Export Excel/PDF, serta summary card total jam kerja mesin dan total output produksi di bagian atas tabel.
+
+- Realisasi Jadwal Pasta `#`
+  - Realisasi Jadwal Pasta List `realisasi-jadwal-pasta-list`
+    Komponen : Doc_ID, Date, User_ID, Type, Total_Pasta_Count, Total_Realisasi_KG, Status, Notes
+    Fungsi : Menampilkan dan mengelola pencatatan realisasi produksi pewarna/pasta (pigment paste) berdasarkan alokasi jadwal, waktu tunggu, durasi pengerjaan (lead time), serta kepatuhan batas waktu (dateline).
+    Penjelasan UI : Tampilan awal berupa table data grid modern menampilkan Doc_ID, Date, Type, Total_Pasta_Count, Total_Realisasi_KG, User_ID, Status, dan Notes beserta filter pencarian cepat, filter rentang tanggal, dan type. Tombol [ + Tambah Realisasi Pasta ] akan memunculkan Pop-up Modal Form / Drawer Modern berstruktur:
+      1. Seksi Info Dokumen (Top Card) :
+         - Doc ID (Auto-generated, Read-only badge)
+         - Date (DatePicker)
+         - User ID (Read-only / User login aktif)
+         - Type (Dropdown: Water Based, Solvent Based, dll.)
+      2. Seksi Data Grid Detail (Dynamic Editable Table) :
+         - Identitas & Waktu Jadwal: Date (DatePicker), Shift (Dropdown), Kode Pasta (Lookup/Autocomplete), Name (Read-only Pasta Name), Batch No., Mesin (Dropdown), Tgl Jadwal (DatePicker), Lead Time, Dateline (DatePicker), Status.
+         - Kuantitas & Pencapaian: Total Basis (KG), Realisasi (KG), Selisih (KG - Auto Calculated), Percentage (% - Auto Calculated).
+         - Operasional & Waktu: Mulai (TimePicker), Selesai (TimePicker), Waktu Tunggu (Jam/Menit), Operator (Multi-select/Dropdown).
+         - Mendukung fitur tambah/hapus baris manual (Add/Remove Row).
+      3. Seksi Catatan & Aksion (Footer Form) :
+         - Field Textarea Notes (Catatan Tambahan).
+         - Tombol [ Batal ] dan [ Simpan Realisasi Pasta ].
+    Untuk Edit memunculkan Pop-up Modal Form modern dengan data yang telah terisi untuk diperbarui. Hapus memunculkan alert konfirmasi modal.
+
+  - Realisasi Jadwal Pasta Report `realisasi-jadwal-pasta-report`
+    Komponen : Doc_ID, Date, Shift, Type, Kode_Pasta, Name, Batch, Mesin, Total_Basis_KG, Realisasi_KG, Selisih_KG, Percentage, Mulai, Selesai, Waktu_Tunggu, Operator, Tgl_Jadwal, Lead_Time, Dateline, Status_Pencapaian, Notes
+    Fungsi : Menyajikan laporan analitik rekapitulasi produksi pasta, analisis selisih kuantitas & persentase capaian, evaluasi ketepatan waktu pengerjaan (Lead Time vs Dateline), serta waktu tunggu produksi.
+    Penjelasan UI : Tampilan awal berupa table analitik interaktif (Read-Only) menampilkan Doc_ID, Date, Shift, Type, Kode_Pasta, Name, Batch, Mesin, Total_Basis_KG, Realisasi_KG, Selisih_KG, Percentage (dengan warna indikator visual), Jam Operasional (Mulai - Selesai), Waktu Tunggu, Operator, Tgl Jadwal, Lead Time, Dateline, Status Pencapaian, dan Notes. Dilengkapi dengan filter interaktif (Rentang Tanggal, Shift, Type, Kode Pasta, Mesin, Operator, Status), tombol Export Excel/PDF, serta summary card total output pasta dan rata-rata lead time di bagian atas tabel.
+    
+- Monitoring Mesin Grinding `#`
+  - Monitoring Mesin Grinding List `monitoring-mesin-grinding-list`
+    Komponen : Doc_ID, Date, User_ID, Prod_Date, Shift, Machine, Type, Total_Product_Count, Total_Tonase, Status, Notes
+    Fungsi : Menampilkan dan mengelola pencatatan pemantauan operasional mesin giling (grinding) secara detail, termasuk parameter teknis mesin (kecepatan gear pump & blade), siklus proses, jam kerja, dan hasil uji kehalusan (micron/u).
+    Penjelasan UI : Tampilan awal berupa table data grid modern menampilkan Doc_ID, Date, Prod_Date, Shift, Machine, Type, Total_Product_Count, Total_Tonase, User_ID, Status, dan Notes beserta filter pencarian cepat, filter rentang tanggal, shift, mesin, dan type. Tombol [ + Tambah Monitoring Grinding ] akan memunculkan Pop-up Modal Form / Drawer Modern berstruktur:
+      1. Seksi Info Dokumen (Top Card) :
+         - Doc ID (Auto-generated, Read-only badge)
+         - Date (DatePicker)
+         - User ID (Read-only / User login aktif)
+      2. Seksi Parameter & Auto-Generate (Filter Bar) :
+         - Prod. Date (DatePicker)
+         - Shift (Dropdown: Shift 1, 2, 3)
+         - Machine (Dropdown pilihan mesin giling)
+         - Type (Dropdown: Water Based, Solvent Based, dll.)
+         - Tombol [ Load / Tarik Jadwal ] untuk mengisi tabel detail secara otomatis dari Rencana Jadwal/Produksi.
+      3. Seksi Data Grid Detail (Dynamic Editable Table) :
+         - Identitas Produk & Mesin: Date (DatePicker), Nama Product (Autocomplete Lookup), Batch No., Tonase (KG/Ton), No. Mesin (Dropdown/Read-only).
+         - Operasional & Parameter Teknis: Mulai (TimePicker), Finish (TimePicker), Ke- (Siklus/Pass ke-), Jam (Waktu Pengamatan), Speed Gear Pump (RPM/Setting), Speed Blade (RPM/Setting).
+         - Hasil Uji & Personel: Hasil (u) / Kehalusan Micron, Operator (Multi-select/Dropdown), dan Notes (Keterangan Baris).
+         - Mendukung fitur tambah/hapus baris manual (Add/Remove Row).
+      4. Seksi Catatan & Aksion (Footer Form) :
+         - Field Textarea Notes (Catatan Tambahan Dokumen).
+         - Tombol [ Batal ] dan [ Simpan Monitoring Grinding ].
+    Untuk Edit memunculkan Pop-up Modal Form modern dengan data yang telah terisi untuk diperbarui. Hapus memunculkan alert konfirmasi modal.
+
+  - Monitoring Mesin Grinding Report `monitoring-mesin-grinding-report`
+    Komponen : Doc_ID, Date, Prod_Date, Shift, Machine, Type, Nama_Product, Batch_No, Tonase, No_Mesin, Mulai, Finish, Siklus_Ke, Jam_Pengamatan, Speed_Gear_Pump, Speed_Blade, Hasil_Micron, Operator, Notes
+    Fungsi : Menyajikan laporan analitik rekapitulasi pencatatan monitoring mesin giling, evaluasi konsistensi kecepatan mesin (Speed Gear Pump & Blade), jumlah siklus giling (pass count), serta pencapaian tingkat kehalusan hasil gilingan (micron/u).
+    Penjelasan UI : Tampilan awal berupa table analitik interaktif (Read-Only) menampilkan Doc_ID, Prod_Date, Shift, Machine, Type, Nama_Product, Batch_No, Tonase, No_Mesin, Jam Operasional (Mulai - Finish), Siklus Ke-, Jam Pengamatan, Speed Gear Pump, Speed Blade, Hasil Kehalusan (u), Operator, dan Notes. Dilengkapi dengan filter interaktif (Prod Date, Shift, Mesin, Type, Nama Product, Operator), tombol Export Excel/PDF, serta summary card total tonase digiling dan rata-rata tingkat kehalusan (u) di bagian atas tabel.
+
+- Production Material Check Stock
+  Komponen: Schedule ID, Product ID, Product Name, Total Qty, Current Stock, UOM, Warehouse, Shortage Qty, Stock Status
+  Fungsi: Memeriksa dan menguji ketersediaan stok bahan baku di gudang terhadap kebutuhan rencana produksi sebelum jadwal dijalankan.
+  Penjelasan UI: Tampilan awal berupa dashboard tabel simulasi ketersediaan stok yang membandingkan Total Qty kebutuhan jadwal dengan Current Stock. Kolom Stock Status dilengkapi indikator warna visual otomatis: Hijau (Sufficient / Cukup) dan Merah (Shortage / Kurang) beserta kalkulasi selisih kekurangan (Shortage Qty). Filter interaktif berdasarkan Schedule ID, Warehouse, dan Stock Status.
+
+- Production Stock Level
+  Komponen: Product ID, Name, Warehouse, Current Stock, Reserved Stock, Available Stock, UOM
+  Fungsi: Memantau saldo tingkat stok bahan baku, barang setengah jadi (WIP), dan material penolong secara real-time di lokasi gudang produksi.
+  Penjelasan UI: Tampilan berupa data grid interaktif menampilkan saldo fisik (Current Stock), stok yang terkunci jadwal produksi (Reserved Stock), dan stok bebas yang siap pakai (Available Stock). Dilengkapi filter lokasi gudang, pencarian produk, serta tombol penyegaran data (Refresh).
+
+- STBJ
+  Komponen: STBJ No, Date, Production Id, Batch No, From Production Line, To Warehouse ID, Total Qty Pcs, Total Weight Kg, Received By, Notes, Status
+  Fungsi: Mengelola penerbitan dokumen Surat Tanda Barang Jadi (STBJ) sebagai bukti serah terima resmi produk hasil produksi dari bagian pabrik ke gudang.
+  Penjelasan UI: Tampilan awal berupa table data grid memuat daftar seluruh dokumen STBJ. Tombol Tambah memunculkan Modal Form berstruktur Header (STBJ No, Date, Production Ref, Batch No, From Line, To Warehouse) dan Detail Items Kuantitas & Berat. Dilengkapi tombol aksi cetak dokumen/barcode STBJ fisik dan konfirmasi verifikasi serah terima.
+
+- Product Report
+  - Product Stock
+    Komponen: Product ID, Name, Category, Warehouse, Current Stock, Reserved Stock, Available Stock, UOM
+    Fungsi: Menyajikan laporan saldo posisi fisik dan ketersediaan stok produk terkini per gudang.
+    Penjelasan UI: Tabel analitik Read-Only dengan filter gudang, kategori produk, dan pencarian nama barang.
+
+  - Product Stock Summary
+    Komponen: Product Group, Category, Total Item Count, Total Quantity, Total Stock Valuation (IDR), UOM
+    Fungsi: Menyajikan laporan ringkasan akumulasi volume kuantitas dan total nilai finansial (modal) stok produk.
+    Penjelasan UI: Tabel ringkasan berbasis grup produk dilengkapi summary card total akumulasi nilai aset stok di bagian atas tabel.
+
+  - Product Stock Daily Summary
+    Komponen: Date, Product ID, Name, Initial Stock, In Qty (Production/Receipt), Out Qty (Delivery/Sales), Final Stock, UOM
+    Fungsi: Laporan harian rekapitulasi pergerakan mutasi stok (Stok Awal + Masuk - Keluar = Stok Akhir).
+    Penjelasan UI: Tabel laporan pergerakan harian dilengkapi filter rentang tanggal dan nama barang.
+
+  - Product Stock Quick View
+    Komponen: Product ID, Name, Warehouse Name, Available Qty, UOM, Last Updated
+    Fungsi: Menyediakan fasilitas pencarian dan peninjauan cepat ketersediaan stok produk antar cabang/gudang.
+    Penjelasan UI: Layar pencarian cepat (Quick Lookup) dengan pencarian teks responsif yang langsung menampilkan ketersediaan stok di seluruh lokasi gudang.
+
+  - Product Price Info
+    Komponen: Product ID, Name, Category, Selling Price, Base Cost (COGS), Margin (%), Currency
+    Fungsi: Menyajikan informasi daftar harga jual standar dan patokan nilai modal/HPP produk.
+    Penjelasan UI: Tabel daftar harga Read-Only dengan filter kategori barang dan persentase margin.
+
+  - Product Stock Track Repot
+    Komponen: Trans Date, Product ID, Name, Reference Doc No, Transaction Type, In Qty, Out Qty, Balance Qty, User ID
+    Fungsi: Menyajikan laporan jejak rekam mutasi (audit trail) transaksi pergerakan stok per produk.
+    Penjelasan UI: Tabel kartu stok kronologis yang menampilkan riwayat setiap dokumen transaksi yang mengubah stok.
+
+  - Product Stock Track Date Report
+    Komponen: Period Date, Product ID, Name, Reference Doc No, Transaction Type, In Qty, Out Qty, Balance Qty, Warehouse
+    Fungsi: Menyajikan laporan kartu stok mutasi pergerakan barang dalam batasan periode tanggal tertentu.
+    Penjelasan UI: Tabel analitik mutasi stok berbasis rentang tanggal (From-To Date) dan filter lokasi gudang.
+
+  - Product Stock Track with Price Report
+    Komponen: Trans Date, Product ID, Name, Ref Doc No, Trans Type, In Qty, Out Qty, Balance Qty, Unit Cost, Total Valuation
+    Fungsi: Menyajikan laporan kartu stok mutasi pergerakan barang yang dilengkapi dengan kalkulasi nilai finansial rupiahnya.
+    Penjelasan UI: Tabel mutasi stok finansial yang mengalikan volume kuantitas mutasi dengan nilai modal/HPP barang.
+
+  - Product Stock Minus Report
+    Komponen: Product ID, Name, Warehouse, Current Stock, UOM, Last Trans Date, Status
+    Fungsi: Laporan audit khusus mendeteksi dan menampilkan daftar barang yang mengalami anomali stok bernilai negatif.
+    Penjelasan UI: Tabel peringatan Read-Only yang secara otomatis memfilter hanya barang berstatus stok minus (< 0) dengan warna penanda merah.
+
+  - Product Min Max Stock Check
+    Komponen: Product ID, Name, Warehouse, Current Stock, Min Stock, Max Stock, Safety Stock, Reorder Qty, Status Alert
+    Fungsi: Memantau kondisi stok terhadap batas Minimum-Maksimum untuk pencegahan kehabisan stok (stockout) atau kelebihan stok (overstock).
+    Penjelasan UI: Tabel kriteria batas stok dilengkapi badge indikator visual status: Warning Below Min (Merah), Normal (Hijau), Over Max (Kuning).
+
+  - Product COGS Monthly Report
+    Komponen: Month/Year Period, Product ID, Name, Average COGS Unit, Total Manufactured Qty, Total COGS Valuation
+    Fungsi: Menyajikan laporan rekapitulasi rata-rata nilai Harga Pokok Penjualan/Produksi (COGS) bulanan per produk.
+    Penjelasan UI: Tabel laporan bulanan terakumulasi dilengkapi filter periode bulan/tahun dan perbandingan tren COGS.
+
+  - Product COGS Daily Report
+    Komponen: Date, Production Ref, Product ID, Name, Daily COGS Unit, Batch Qty, Total Valuation
+    Fungsi: Menyajikan laporan rincian fluktuasi pergerakan nilai HPP/COGS harian hasil produksi.
+    Penjelasan UI: Tabel harian Read-Only yang menampilkan rincian HPP dari tiap dokumen batch produksi harian.
+    
 ## Sales & Distribution `#`
 
 - Customer Master `customer-master`
@@ -342,9 +707,11 @@ Create Doc. From CSV
 - Customer Balance Summary `customer-balance-summary`
   Komponen :Customer ID,Name,Currency,Beginning Balance,Total Invoice,Total Payment,Total Return,Ending Balance,Credit Limit,Available Credit
   Fungsi : Menyajikan ringkasan posisi saldo piutang pelanggan, sisa batas kredit, dan histori akumulasi mutasi secara real-time.
+  
 - AR Warehouse Report `ar-warehouse-report`
   Komponen :Warehouse ID,Warehouse Name,Customer ID,Customer Name,Invoice No,Invoice Date,Due Date,Outstanding Amount,Age (Days)
   Fungsi : Laporan rincian piutang usaha yang dikelompokkan berdasarkan gudang pemenuhan pesanan.
+
 - Customer Point `customer-point`
   - Point Setting
   Komponen :Point(num)
