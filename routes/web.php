@@ -77,6 +77,7 @@ use App\Http\Controllers\ProductionPlanning\RealisasiJadwalBasePerMesinReportCon
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalBaseReportController;
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalCMListController;
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalCMReportController;
+use App\Http\Controllers\ProductionPlanning\RealisasiJadwalCanningPackingListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -947,6 +948,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [RealisasiJadwalCMReportController::class, 'index'])->name('index');
             Route::get('/table', [RealisasiJadwalCMReportController::class, 'table'])->name('table');
             Route::get('/export', [RealisasiJadwalCMReportController::class, 'export'])->name('export');
+        });
+
+        Route::prefix('realisasi-jadwal-canning-packing-list')->name('realisasi-jadwal-canning-packing-list.')->group(function () {
+            Route::get('/', [RealisasiJadwalCanningPackingListController::class, 'index'])->name('index');
+            Route::get('/table', [RealisasiJadwalCanningPackingListController::class, 'table'])->name('table');
+            Route::post('/', [RealisasiJadwalCanningPackingListController::class, 'store'])->name('store');
+            Route::get('/{id}', [RealisasiJadwalCanningPackingListController::class, 'show'])->name('show');
+            Route::put('/{id}', [RealisasiJadwalCanningPackingListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [RealisasiJadwalCanningPackingListController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
