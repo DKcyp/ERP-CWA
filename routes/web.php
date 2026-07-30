@@ -58,6 +58,7 @@ use App\Http\Controllers\ProductionPlanning\DashboardProductionPlanningControlle
 use App\Http\Controllers\ProductionPlanning\SpkController;
 use App\Http\Controllers\ProductionPlanning\ProductionSchedulingController;
 use App\Http\Controllers\ProductionPlanning\DailyScheduleReportController;
+use App\Http\Controllers\ProductionPlanning\SpkKemasanController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -794,6 +795,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [DailyScheduleReportController::class, 'index'])->name('index');
             Route::get('/table', [DailyScheduleReportController::class, 'table'])->name('table');
             Route::get('/export', [DailyScheduleReportController::class, 'export'])->name('export');
+        });
+
+        Route::prefix('spk-kemasan')->name('spk-kemasan.')->group(function () {
+            Route::get('/', [SpkKemasanController::class, 'index'])->name('index');
+            Route::get('/table', [SpkKemasanController::class, 'table'])->name('table');
+            Route::post('/', [SpkKemasanController::class, 'store'])->name('store');
+            Route::get('/{id}', [SpkKemasanController::class, 'show'])->name('show');
+            Route::put('/{id}', [SpkKemasanController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SpkKemasanController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
