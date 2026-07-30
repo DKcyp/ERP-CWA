@@ -45,7 +45,7 @@
 @push('after-script')
 <script>
 const csrf=$('meta[name="csrf-token"]').attr('content');$.ajaxSetup({headers:{'X-CSRF-TOKEN':csrf}});
-$('#table-data').DataTable({processing:true,serverSide:true,scrollX:true,ajax:{url:"{{route('material-management.product-stock.table')}}",data:function(d){d.filter_search=$('#filter-search').val();d.filter_warehouse=$('#filter-warehouse').val();d.filter_category=$('#filter-category').val()}},columns:[
+$('#table-data').DataTable({processing:true,serverSide:true,scrollX:true,ajax:{url:"{{route('product-stock.table')}}",data:function(d){d.filter_search=$('#filter-search').val();d.filter_warehouse=$('#filter-warehouse').val();d.filter_category=$('#filter-category').val()}},columns:[
 {data:'DT_RowIndex',name:'DT_RowIndex',orderable:false,searchable:false,className:'text-center'},
 {data:'product_id',name:'product_id'},
 {data:'name',name:'name'},
