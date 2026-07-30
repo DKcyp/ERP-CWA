@@ -63,6 +63,7 @@ use App\Http\Controllers\ProductionPlanning\JadwalKemasanController;
 use App\Http\Controllers\ProductionPlanning\ProductionListController;
 use App\Http\Controllers\ProductionPlanning\ReleaseProductionController;
 use App\Http\Controllers\ProductionPlanning\ProductionCommissionController;
+use App\Http\Controllers\ProductionPlanning\DailyProductionReportController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -842,6 +843,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/payment/{id}', [ProductionCommissionController::class, 'paymentShow'])->name('payment-show');
             Route::post('/pay', [ProductionCommissionController::class, 'paySelected'])->name('pay');
             Route::get('/employees', [ProductionCommissionController::class, 'employees'])->name('employees');
+        });
+
+        Route::prefix('daily-production-report')->name('daily-production-report.')->group(function () {
+            Route::get('/', [DailyProductionReportController::class, 'index'])->name('index');
+            Route::get('/table', [DailyProductionReportController::class, 'table'])->name('table');
+            Route::get('/export', [DailyProductionReportController::class, 'export'])->name('export');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
