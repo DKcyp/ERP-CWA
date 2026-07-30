@@ -330,34 +330,39 @@ Create Doc. From CSV
   Penjelasan UI : Tampilan awal berupa table menampilkan Template_Id, Template_Code, Template_Name, Target_Material_Id, Target_Output_Qty, Description dan filter template_code, template_name, dan target_material. Tombol Tambah akan memunculkan pop-up modal form berstruktur Header (Template Code, Template Name, Target Material [Lookup Product], Target Output Qty, Description) dan Table Detail Raw Materials (Raw Material [Lookup Product], Qty Needed, UOM). Untuk Edit memunculkan pop-up form dengan field yang sama. Hapus memunculkan alert konfirmasi.
 
 ## Production Planing
+- Dashboard Production Planning `production-planning-dashboard`
+  Komponen : Total_SPK_Active, Total_Target_Tonase_Today, Total_Realisasi_Tonase_Today, Overall_Schedule_Compliance_Percent, Machine_Grinding_Utilization_Percent, Overall_Yield_Percent, Alert_Material_Shortage_Count, Schedule_Status_Pipeline (Draft -> Planned -> In Progress -> QC Pending -> Completed), Chart_Hourly_Production_Output, Chart_Base_Vs_CM_Vs_Packing, Table_Urgent_SPK_Pending
+  Fungsi : Menyajikan gambaran umum secara visual mengenai metrik kunci operasional perencanaan dan realisasi produksi pabrik cat, pemantauan status alur Perintah Kerja (SPK), utilisasi mesin giling, perolehan hasil produksi (yield), serta peringatan dini kekurangan stok bahan baku (pigmen/resin/solvent/kemasan).
+  Penjelasan UI : Tampilan awal berupa dashboard interaktif berisi ringkasan widget angka (card stat) indikator performa utama (KPI), modul visual pipeline status SPK, diagram grafik garis/batang trend realisasi output tonase harian & per jam, grafik perbandingan tahapan produksi (Base vs CM vs Packing), serta tabel ringkas notifikasi SPK mendesak dan material yang kurang (shortage). Halaman bersifat Read-Only dan hanya menyediakan filter periode tanggal, shift, tipe adonan (Water Based/Solvent Based), dan lokasi gudang/pabrik.
+
 - Pre Production
-  - Pre SPK List
+  - Pre SPK List `pre-spk-list`
     Komponen: Doc. ID, Date, Customer ID, Name, Total Qty, Total Tonase, Notes, User ID, Status
     Fungsi: Mengelola draf pengajuan Surat Perintah Kerja (SPK) awal berdasarkan pesanan pelanggan sebelum divalidasi menjadi dokumen SPK resmi.
     Penjelasan UI: Tampilan awal berupa table data grid menampilkan Doc. ID, Date, Customer ID, Name, Total Qty, Total Tonase, Status, dan Notes beserta filter rentang tanggal, customer, dan status. Tombol Tambah memunculkan Pop-up Modal Form berstruktur Header (Date, Customer ID, Name, Notes) dan Table Detail Items (Product ID, Target Qty, Target Tonase). Edit memunculkan modal form terisi, Hapus memunculkan alert konfirmasi.
 
-  - SPK List
+  - SPK List `spk-list`
     Komponen: Doc. ID, Date, Delivery Date, Total Qty, Total Tonase, Total Qty Needs, Total Tonase Needs, Warehouse, Notes, User ID, Status
     Fungsi: Menampilkan dan mengelola dokumen Perintah Kerja produksi resmi yang menjadi acuan jadwal pabrik serta kalkulasi pemenuhan stok material.
     Penjelasan UI: Tampilan awal berupa table data grid menampilkan Doc. ID, Date, Delivery Date, Warehouse, Total Qty, Total Tonase, Status, dan User ID beserta filter tanggal, warehouse, dan status. Tombol Tambah memunculkan Pop-up Modal Form dengan penarikan data dari Pre SPK, mengalkulasi otomatis sisa kebutuhan (Total Qty Needs / Tonase Needs), serta menentukan gudang alokasi. Edit memunculkan modal form terisi, Hapus memunculkan alert konfirmasi.
 
-  - Production Scheduling
+  - Production Scheduling `production-scheduling`
     Komponen: Doc. ID, Tipe, FK, Date, SPK, SPK From Date, SPK To Date, Notes, User ID, Line Machine ID
     Fungsi: Mengatur plotting waktu, durasi pengerjaan, dan pengalokasian mesin/lini produksi berdasarkan dokumen SPK yang terbit.
     Penjelasan UI: Tampilan awal berupa visualisasi Gantt Chart interaktif dan tabel grid jadwal produksi. Dilengkapi filter rentang tanggal SPK (From-To Date), tipe adonan, dan pilihan mesin. Pengguna dapat menggeser/mengatur alokasi waktu jadwal produksi secara drag-and-drop atau memunculkan modal form input plotting jadwal baru.
 
-  - Daily Schedule Report
+  - Daily Schedule Report `daily-schedule-report`
     Komponen: Tanggal, Product Id, Name, Base, Formulasi, Batch NR, Basis, Basis (Kg), Total Basis (Kg), Hasil CM, Kode Mesin, Status, Realisasi, Lead Time, Dateline, No / On Time
     Fungsi: Menyajikan laporan harian rekapitulasi jadwal produksi, evaluasi capaian target, waktu pengerjaan (lead time vs dateline), serta indikator ketepatan waktu (On Time / Late).
     Penjelasan UI: Tampilan awal berupa table analitik Read-Only menampilkan seluruh komponen jadwal harian dilengkapi badge indikator visual warna hijau/merah pada kolom On Time/Late Status. Dilengkapi filter tanggal, mesin, status realisasi, serta tombol Export Excel/PDF.
 
 - Kemasan
-  - SPK Kemasan
+  - SPK Kemasan `spk-kemasan`
     Komponen: Doc. ID, Date, SPK_Ref_No, Product_ID, Package_Type, Target_Qty_Pcs, Target_Tonase, Status, Notes, User_ID
     Fungsi: Menerbitkan dan mengelola Surat Perintah Kerja khusus persiapan, pencetakan, dan penyediaan material kemasan (kaleng/galon/pail).
     Penjelasan UI: Tampilan awal berupa table data grid menampilkan Doc. ID, Date, SPK_Ref_No, Product_ID, Package_Type, Target_Qty_Pcs, Status, dan Notes beserta filter tanggal dan jenis kemasan. Tombol Tambah memunculkan Pop-up Modal Form berstruktur Header (Date, SPK Ref, Package Type, Target Pcs) dan Table Detail Packaging Specs. Edit memunculkan modal form terisi, Hapus memunculkan alert konfirmasi.
 
-  - Jadwal Kemasan
+  - Jadwal Kemasan `jadwal-kemasan`
     Komponen: Schedule_ID, Date, SPK_Kemasan_Ref, Line_Packaging_ID, Product_Name, Target_Pcs, Shift, Operator_In_Charge, Status, Notes
     Fungsi: Menjadwalkan plotting pengoperasian lini mesin pengemasan (packaging line) dan alokasi tim operator berdasarkan SPK Kemasan.
     Penjelasan UI: Tampilan awal berupa kalender kerja/grid jadwal harian per packaging line dengan penanda warna shift. Dilengkapi filter tanggal, lini kemasan, dan shift. Tombol Tambah memunculkan modal form pemilihan SPK Kemasan Ref, Line ID, Shift, dan penetapan Operator In Charge.
@@ -677,7 +682,7 @@ Create Doc. From CSV
     Komponen: Date, Production Ref, Product ID, Name, Daily COGS Unit, Batch Qty, Total Valuation
     Fungsi: Menyajikan laporan rincian fluktuasi pergerakan nilai HPP/COGS harian hasil produksi.
     Penjelasan UI: Tabel harian Read-Only yang menampilkan rincian HPP dari tiap dokumen batch produksi harian.
-    
+
 ## Sales & Distribution `#`
 
 - Customer Master `customer-master`
