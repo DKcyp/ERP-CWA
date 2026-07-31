@@ -115,6 +115,17 @@ class ProductStockTrackWithPriceReportController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('date_fmt', fn($r) => \Carbon\Carbon::parse($r['trans_date'])->format('d/m/Y'))
+            ->addColumn('type_badge', function ($r) {
+                $t = $r['transaction_type'] ?? '';
+                return match(true) {
+                    str_starts_with($t, 'Purchase') => '<span class="badge bg-primary"><i class="bi bi-truck me-1"></i>'.$t.'</span>',
+                    str_starts_with($t, 'Production') => '<span class="badge bg-warning text-dark"><i class="bi bi-gear me-1"></i>'.$t.'</span>',
+                    str_starts_with($t, 'Sales') => '<span class="badge bg-danger"><i class="bi bi-cart-dash me-1"></i>'.$t.'</span>',
+                    str_starts_with($t, 'Transfer') => '<span class="badge bg-info"><i class="bi bi-arrow-left-right me-1"></i>'.$t.'</span>',
+                    str_starts_with($t, 'Stock') => '<span class="badge bg-secondary"><i class="bi bi-sliders me-1"></i>'.$t.'</span>',
+                    default => '<span class="badge bg-secondary">'.$t.'</span>',
+                };
+            })
             ->addColumn('in_fmt', fn($r) => $r['in_qty'] > 0 ? '<span class="text-success fw-semibold">+'.number_format($r['in_qty'], 0, ',', '.').'</span>' : '<span class="text-muted">-</span>')
             ->addColumn('out_fmt', fn($r) => $r['out_qty'] > 0 ? '<span class="text-danger fw-semibold">-'.number_format($r['out_qty'], 0, ',', '.').'</span>' : '<span class="text-muted">-</span>')
             ->addColumn('balance_fmt', fn($r) => number_format($r['balance_qty'], 0, ',', '.'))
@@ -131,7 +142,7 @@ class ProductStockTrackWithPriceReportController extends Controller
                 $color = ($r['in_qty'] ?? 0) > 0 ? 'text-success' : 'text-danger';
                 return '<span class="'.$color.' fw-semibold">Rp '.number_format($total, 0, ',', '.').'</span>';
             })
-            ->rawColumns(['date_fmt','in_fmt','out_fmt','balance_fmt','unit_cost_fmt','total_valuation_fmt'])
+            ->rawColumns(['date_fmt','type_badge','in_fmt','out_fmt','balance_fmt','unit_cost_fmt','total_valuation_fmt'])
             ->make(true);
     }
 }
