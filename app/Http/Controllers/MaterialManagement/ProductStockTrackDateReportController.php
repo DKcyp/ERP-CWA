@@ -15,18 +15,71 @@ class ProductStockTrackDateReportController extends Controller
     public function __construct()
     {
         $this->store = new DummyStore('product-stock-track');
-        $this->patchWarehouseField();
+        $this->initDummyData();
         View::share('activeMenu', 'material-management');
     }
 
-    protected function patchWarehouseField(): void
+    protected function initDummyData(): void
     {
-        $data = $this->store->all();
-        if (empty($data)) return;
+        if (!empty($this->store->all())) return;
+
+        $products = [
+            ['product_id' => 'PRD-BB-0001', 'name' => 'Resin Polyester White'],
+            ['product_id' => 'PRD-BB-0004', 'name' => 'Titanium Dioxide R-706'],
+            ['product_id' => 'PRD-BB-0007', 'name' => 'Pigment Oxide Red'],
+            ['product_id' => 'PRD-BN-0001', 'name' => 'Thinner A Special'],
+            ['product_id' => 'PRD-FG-0001', 'name' => 'Wall Paint White 20L'],
+            ['product_id' => 'PRD-FG-0002', 'name' => 'Wall Paint Cream 10L'],
+            ['product_id' => 'PRD-FG-0003', 'name' => 'Primer Grey 5L'],
+        ];
+
+        $types = [
+            ['type' => 'Purchase Receipt', 'code' => 'PR', 'in' => true],
+            ['type' => 'Production Output', 'code' => 'PO', 'in' => true],
+            ['type' => 'Stock Adjustment (+)', 'code' => 'SA', 'in' => true],
+            ['type' => 'Sales Delivery', 'code' => 'SD', 'in' => false],
+            ['type' => 'Production Usage', 'code' => 'PU', 'in' => false],
+            ['type' => 'Stock Adjustment (-)', 'code' => 'SN', 'in' => false],
+            ['type' => 'Transfer In', 'code' => 'TI', 'in' => true],
+            ['type' => 'Transfer Out', 'code' => 'TO', 'in' => false],
+        ];
+
         $warehouses = ['Gudang Bahan Bandung','Gudang Bahan Jakarta','Gudang WIP Bandung','Gudang Jadi Bandung','Gudang Jadi Jakarta'];
-        foreach ($data as $item) {
-            if (empty($item['warehouse'])) {
-                $this->store->update($item['id'], ['warehouse' => $warehouses[array_rand($warehouses)]]);
+        $users = ['Ahmad Operator','Dewi QC','Rudi Staff','Siti Admin','Bambang Gudang','Lina Produksi'];
+
+        $balance = [];
+        foreach ($products as $p) { $balance[$p['product_id']] = rand(200, 1500); }
+
+        for ($d = 0; $d < 21; $d++) {
+            $date = date('Y-m-d', strtotime("2026-07-10 +{$d} days"));
+            $txCount = rand(2, 5);
+            for ($t = 0; $t < $txCount; $t++) {
+                $p = $products[array_rand($products)];
+                $tp = $types[array_rand($types)];
+                $qty = rand(10, 200);
+                $pid = $p['product_id'];
+
+                if ($tp['in']) {
+                    $in = $qty; $out = 0;
+                } else {
+                    $in = 0; $out = min($qty, max(1, $balance[$pid] - 10));
+                }
+                $balance[$pid] = $balance[$pid] + $in - $out;
+
+                $refNo = $tp['code'].'-'.date('Ymd', strtotime($date)).'-'.str_pad($d * 5 + $t + 1, 3, '0', STR_PAD_LEFT);
+
+                $this->store->create([
+                    'trans_date' => $date,
+                    'product_id' => $pid,
+                    'name' => $p['name'],
+                    'ref_doc_no' => $refNo,
+                    'transaction_type' => $tp['type'],
+                    'in_qty' => $in,
+                    'out_qty' => $out,
+                    'balance_qty' => $balance[$pid],
+                    'warehouse' => $warehouses[array_rand($warehouses)],
+                    'user_id' => $users[array_rand($users)],
+                ]);
             }
         }
     }
