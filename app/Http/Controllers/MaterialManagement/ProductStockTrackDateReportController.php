@@ -15,7 +15,20 @@ class ProductStockTrackDateReportController extends Controller
     public function __construct()
     {
         $this->store = new DummyStore('product-stock-track');
+        $this->patchWarehouseField();
         View::share('activeMenu', 'material-management');
+    }
+
+    protected function patchWarehouseField(): void
+    {
+        $data = $this->store->all();
+        if (empty($data)) return;
+        $warehouses = ['Gudang Bahan Bandung','Gudang Bahan Jakarta','Gudang WIP Bandung','Gudang Jadi Bandung','Gudang Jadi Jakarta'];
+        foreach ($data as $item) {
+            if (empty($item['warehouse'])) {
+                $this->store->update($item['id'], ['warehouse' => $warehouses[array_rand($warehouses)]]);
+            }
+        }
     }
 
     public function index()
