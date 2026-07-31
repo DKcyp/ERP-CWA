@@ -76,6 +76,16 @@ class ProductStockController extends Controller
                 ]);
             }
         }
+
+        $all = $this->store->all();
+        $negCount = 0;
+        foreach ($all as $item) {
+            if ($negCount >= 5) break;
+            $cur = $item['current_stock'];
+            $res = $cur + rand(50, 200);
+            $this->store->update($item['id'], ['reserved_stock' => $res]);
+            $negCount++;
+        }
     }
 
     public function index()
