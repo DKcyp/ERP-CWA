@@ -121,6 +121,7 @@ use App\Http\Controllers\MaterialManagement\ProductStockTrackDateReportControlle
 use App\Http\Controllers\MaterialManagement\ProductStockTrackWithPriceReportController;
 use App\Http\Controllers\MaterialManagement\ProductStockMinusReportController;
 use App\Http\Controllers\MaterialManagement\ProductMinMaxStockCheckController;
+use App\Http\Controllers\MaterialManagement\ProductCOGSMonthlyReportController;
 use App\Http\Controllers\SalesDistribution\ArWarehouseReportController;
 use App\Http\Controllers\SalesDistribution\PointSettingController;
 use App\Http\Controllers\SalesDistribution\CustomerPointPromoRuleController;
@@ -845,6 +846,11 @@ Route::middleware('auth')->group(function () {
         Route::prefix('product-min-max-stock-check')->name('product-min-max-stock-check.')->group(function () {
             Route::get('/', [ProductMinMaxStockCheckController::class, 'index'])->name('index');
             Route::get('/table', [ProductMinMaxStockCheckController::class, 'table'])->name('table');
+        });
+
+        Route::prefix('product-cogs-monthly-report')->name('product-cogs-monthly-report.')->group(function () {
+            Route::get('/', [ProductCOGSMonthlyReportController::class, 'index'])->name('index');
+            Route::get('/table', [ProductCOGSMonthlyReportController::class, 'table'])->name('table');
         });
 
         Route::prefix('production-planning-dashboard')->name('production-planning-dashboard.')->group(function () {
