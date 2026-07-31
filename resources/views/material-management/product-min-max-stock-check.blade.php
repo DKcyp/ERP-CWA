@@ -2,18 +2,6 @@
 @section('title','Product Min Max Stock Check')
 @section('content')
 <div class="page-content">
-    @php
-        $data = $store->all();
-        $belowMin = 0; $overMax = 0; $normal = 0;
-        foreach ($data as $item) {
-            $cur = $item['current_stock'] ?? 0;
-            $min = $item['min_stock'] ?? 0;
-            $max = $item['max_stock'] ?? 0;
-            if ($cur < $min) $belowMin++;
-            elseif ($cur > $max) $overMax++;
-            else $normal++;
-        }
-    @endphp
     <div class="row g-3 mb-4">
         <div class="col-xl-4 col-md-6">
             <div class="card border-0 shadow-sm hz-card border-start border-danger border-4"><div class="card-body py-2">

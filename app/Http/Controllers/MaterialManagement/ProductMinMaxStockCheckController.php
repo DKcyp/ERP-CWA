@@ -43,7 +43,17 @@ class ProductMinMaxStockCheckController extends Controller
 
     public function index()
     {
-        return view('material-management.product-min-max-stock-check');
+        $data = $this->store->all();
+        $belowMin = 0; $overMax = 0; $normal = 0;
+        foreach ($data as $item) {
+            $cur = $item['current_stock'] ?? 0;
+            $min = $item['min_stock'] ?? 0;
+            $max = $item['max_stock'] ?? 0;
+            if ($cur < $min) $belowMin++;
+            elseif ($cur > $max) $overMax++;
+            else $normal++;
+        }
+        return view('material-management.product-min-max-stock-check', compact('belowMin', 'overMax', 'normal'));
     }
 
     public function table(Request $request)
