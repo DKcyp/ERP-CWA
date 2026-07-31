@@ -54,7 +54,14 @@ class ProductCOGSMonthlyReportController extends Controller
 
     public function index()
     {
-        return view('material-management.product-cogs-monthly-report');
+        $data = $this->store->all();
+        $totalVal = array_sum(array_column($data, 'total_cogs_valuation'));
+        $totalQty = array_sum(array_column($data, 'total_manufactured_qty'));
+        $avgCogs = $totalQty > 0 ? $totalVal / $totalQty : 0;
+        $periods = array_values(array_unique(array_column($data, 'period')));
+        rsort($periods);
+
+        return view('material-management.product-cogs-monthly-report', compact('data', 'totalVal', 'totalQty', 'avgCogs', 'periods'));
     }
 
     public function table(Request $request)

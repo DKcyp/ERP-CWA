@@ -2,14 +2,6 @@
 @section('title','Product COGS Monthly Report')
 @section('content')
 <div class="page-content">
-    @php
-        $data = $store->all();
-        $totalVal = array_sum(array_column($data, 'total_cogs_valuation'));
-        $totalQty = array_sum(array_column($data, 'total_manufactured_qty'));
-        $avgCogs = $totalQty > 0 ? $totalVal / $totalQty : 0;
-        $periods = array_unique(array_column($data, 'period'));
-        rsort($periods);
-    @endphp
     <div class="row g-3 mb-4">
         <div class="col-xl-3 col-md-6">
             <div class="card border-0 shadow-sm hz-card"><div class="card-body py-2">
