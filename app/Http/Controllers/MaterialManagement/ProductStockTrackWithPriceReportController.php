@@ -1,0 +1,137 @@
+<?php
+
+namespace App\Http\Controllers\MaterialManagement;
+
+use App\Http\Controllers\Controller;
+use App\Services\DummyStore;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use View;
+
+class ProductStockTrackWithPriceReportController extends Controller
+{
+    protected DummyStore $store;
+    protected DummyStore $priceStore;
+
+    public function __construct()
+    {
+        $this->store = new DummyStore('product-stock-track');
+        $this->priceStore = new DummyStore('product-price-info');
+        $this->initDummyData();
+        View::share('activeMenu', 'material-management');
+    }
+
+    protected function initDummyData(): void
+    {
+        if (!empty($this->store->all())) return;
+
+        $products = [
+            ['product_id' => 'PRD-BB-0001', 'name' => 'Resin Polyester White', 'base_cost' => 8500],
+            ['product_id' => 'PRD-BB-0004', 'name' => 'Titanium Dioxide R-706', 'base_cost' => 17500],
+            ['product_id' => 'PRD-BB-0007', 'name' => 'Pigment Oxide Red', 'base_cost' => 22000],
+            ['product_id' => 'PRD-BN-0001', 'name' => 'Thinner A Special', 'base_cost' => 12500],
+            ['product_id' => 'PRD-FG-0001', 'name' => 'Wall Paint White 20L', 'base_cost' => 185000],
+            ['product_id' => 'PRD-FG-0002', 'name' => 'Wall Paint Cream 10L', 'base_cost' => 110000],
+            ['product_id' => 'PRD-FG-0003', 'name' => 'Primer Grey 5L', 'base_cost' => 68000],
+        ];
+
+        $types = [
+            ['type' => 'Purchase Receipt', 'code' => 'PR', 'in' => true],
+            ['type' => 'Production Output', 'code' => 'PO', 'in' => true],
+            ['type' => 'Stock Adjustment (+)', 'code' => 'SA', 'in' => true],
+            ['type' => 'Sales Delivery', 'code' => 'SD', 'in' => false],
+            ['type' => 'Production Usage', 'code' => 'PU', 'in' => false],
+            ['type' => 'Stock Adjustment (-)', 'code' => 'SN', 'in' => false],
+            ['type' => 'Transfer In', 'code' => 'TI', 'in' => true],
+            ['type' => 'Transfer Out', 'code' => 'TO', 'in' => false],
+        ];
+
+        $warehouses = ['Gudang Bahan Bandung','Gudang Bahan Jakarta','Gudang WIP Bandung','Gudang Jadi Bandung','Gudang Jadi Jakarta'];
+        $users = ['Ahmad Operator','Dewi QC','Rudi Staff','Siti Admin','Bambang Gudang','Lina Produksi'];
+
+        $balance = [];
+        foreach ($products as $p) { $balance[$p['product_id']] = rand(200, 1500); }
+
+        for ($d = 0; $d < 21; $d++) {
+            $date = date('Y-m-d', strtotime("2026-07-10 +{$d} days"));
+            $txCount = rand(2, 5);
+            for ($t = 0; $t < $txCount; $t++) {
+                $p = $products[array_rand($products)];
+                $tp = $types[array_rand($types)];
+                $qty = rand(10, 200);
+                $pid = $p['product_id'];
+
+                if ($tp['in']) {
+                    $in = $qty; $out = 0;
+                } else {
+                    $in = 0; $out = min($qty, max(1, $balance[$pid] - 10));
+                }
+                $balance[$pid] = $balance[$pid] + $in - $out;
+
+                $refNo = $tp['code'].'-'.date('Ymd', strtotime($date)).'-'.str_pad($d * 5 + $t + 1, 3, '0', STR_PAD_LEFT);
+
+                $this->store->create([
+                    'trans_date' => $date,
+                    'product_id' => $pid,
+                    'name' => $p['name'],
+                    'ref_doc_no' => $refNo,
+                    'transaction_type' => $tp['type'],
+                    'in_qty' => $in,
+                    'out_qty' => $out,
+                    'balance_qty' => $balance[$pid],
+                    'unit_cost' => $p['base_cost'],
+                    'warehouse' => $warehouses[array_rand($warehouses)],
+                    'user_id' => $users[array_rand($users)],
+                ]);
+            }
+        }
+    }
+
+    public function index()
+    {
+        return view('material-management.product-stock-track-with-price-report');
+    }
+
+    public function table(Request $request)
+    {
+        $data = $this->store->all();
+
+        if ($request->filled('filter_date_from')) $data = array_filter($data, fn($i) => ($i['trans_date'] ?? '') >= $request->filter_date_from);
+        if ($request->filled('filter_date_to')) $data = array_filter($data, fn($i) => ($i['trans_date'] ?? '') <= $request->filter_date_to);
+        if ($request->filled('filter_search')) {
+            $q = $request->filter_search;
+            $data = array_filter($data, fn($i) =>
+                stripos($i['product_id'] ?? '', $q) !== false ||
+                stripos($i['name'] ?? '', $q) !== false ||
+                stripos($i['ref_doc_no'] ?? '', $q) !== false
+            );
+        }
+        if ($request->filled('filter_type') && $request->filter_type !== 'all') {
+            $data = array_filter($data, fn($i) => ($i['transaction_type'] ?? '') === $request->filter_type);
+        }
+
+        $data = array_values($data);
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('date_fmt', fn($r) => \Carbon\Carbon::parse($r['trans_date'])->format('d/m/Y'))
+            ->addColumn('in_fmt', fn($r) => $r['in_qty'] > 0 ? '<span class="text-success fw-semibold">+'.number_format($r['in_qty'], 0, ',', '.').'</span>' : '<span class="text-muted">-</span>')
+            ->addColumn('out_fmt', fn($r) => $r['out_qty'] > 0 ? '<span class="text-danger fw-semibold">-'.number_format($r['out_qty'], 0, ',', '.').'</span>' : '<span class="text-muted">-</span>')
+            ->addColumn('balance_fmt', fn($r) => number_format($r['balance_qty'], 0, ',', '.'))
+            ->addColumn('unit_cost_fmt', fn($r) => 'Rp '.number_format($r['unit_cost'] ?? 0, 0, ',', '.'))
+            ->addColumn('total_valuation', function ($r) {
+                $qty = max($r['in_qty'] ?? 0, $r['out_qty'] ?? 0);
+                $cost = $r['unit_cost'] ?? 0;
+                return $qty * $cost;
+            })
+            ->addColumn('total_valuation_fmt', function ($r) {
+                $qty = max($r['in_qty'] ?? 0, $r['out_qty'] ?? 0);
+                $cost = $r['unit_cost'] ?? 0;
+                $total = $qty * $cost;
+                $color = ($r['in_qty'] ?? 0) > 0 ? 'text-success' : 'text-danger';
+                return '<span class="'.$color.' fw-semibold">Rp '.number_format($total, 0, ',', '.').'</span>';
+            })
+            ->rawColumns(['date_fmt','in_fmt','out_fmt','balance_fmt','unit_cost_fmt','total_valuation_fmt'])
+            ->make(true);
+    }
+}

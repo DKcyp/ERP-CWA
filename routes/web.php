@@ -118,6 +118,7 @@ use App\Http\Controllers\MaterialManagement\ProductStockQuickViewController;
 use App\Http\Controllers\MaterialManagement\ProductPriceInfoController;
 use App\Http\Controllers\MaterialManagement\ProductStockTrackReportController;
 use App\Http\Controllers\MaterialManagement\ProductStockTrackDateReportController;
+use App\Http\Controllers\MaterialManagement\ProductStockTrackWithPriceReportController;
 use App\Http\Controllers\SalesDistribution\ArWarehouseReportController;
 use App\Http\Controllers\SalesDistribution\PointSettingController;
 use App\Http\Controllers\SalesDistribution\CustomerPointPromoRuleController;
@@ -827,6 +828,11 @@ Route::middleware('auth')->group(function () {
         Route::prefix('product-stock-track-date-report')->name('product-stock-track-date-report.')->group(function () {
             Route::get('/', [ProductStockTrackDateReportController::class, 'index'])->name('index');
             Route::get('/table', [ProductStockTrackDateReportController::class, 'table'])->name('table');
+        });
+
+        Route::prefix('product-stock-track-with-price-report')->name('product-stock-track-with-price-report.')->group(function () {
+            Route::get('/', [ProductStockTrackWithPriceReportController::class, 'index'])->name('index');
+            Route::get('/table', [ProductStockTrackWithPriceReportController::class, 'table'])->name('table');
         });
 
         Route::prefix('production-planning-dashboard')->name('production-planning-dashboard.')->group(function () {
