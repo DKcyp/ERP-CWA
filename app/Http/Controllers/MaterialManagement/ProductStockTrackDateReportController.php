@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers\MaterialManagement;
+
+use App\Http\Controllers\Controller;
+use App\Services\DummyStore;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use View;
+
+class ProductStockTrackDateReportController extends Controller
+{
+    protected DummyStore $store;
+
+    public function __construct()
+    {
+        $this->store = new DummyStore('product-stock-track');
+        View::share('activeMenu', 'material-management');
+    }
+
+    public function index()
+    {
+        $warehouses = ['Gudang Bahan Bandung','Gudang Bahan Jakarta','Gudang WIP Bandung','Gudang Jadi Bandung','Gudang Jadi Jakarta'];
+        return view('material-management.product-stock-track-date-report', compact('warehouses'));
+    }
+
+    public function table(Request $request)
+    {
+        $data = $this->store->all();
+
+        if ($request->filled('filter_date_from')) $data = array_filter($data, fn($i) => ($i['trans_date'] ?? '') >= $request->filter_date_from);
+        if ($request->filled('filter_date_to')) $data = array_filter($data, fn($i) => ($i['trans_date'] ?? '') <= $request->filter_date_to);
+        if ($request->filled('filter_search')) {
+            $q = $request->filter_search;
+            $data = array_filter($data, fn($i) =>
+                stripos($i['product_id'] ?? '', $q) !== false ||
+                stripos($i['name'] ?? '', $q) !== false ||
+                stripos($i['ref_doc_no'] ?? '', $q) !== false
+            );
+        }
+        if ($request->filled('filter_type') && $request->filter_type !== 'all') {
+            $data = array_filter($data, fn($i) => ($i['transaction_type'] ?? '') === $request->filter_type);
+        }
+        if ($request->filled('filter_warehouse') && $request->filter_warehouse !== 'all') {
+            $data = array_filter($data, fn($i) => ($i['warehouse'] ?? '') === $request->filter_warehouse);
+        }
+
+        $data = array_values($data);
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('date_fmt', fn($r) => \Carbon\Carbon::parse($r['trans_date'])->format('d/m/Y'))
+            ->addColumn('in_fmt', fn($r) => $r['in_qty'] > 0 ? '<span class="text-success fw-semibold">+'.number_format($r['in_qty'], 0, ',', '.').'</span>' : '<span class="text-muted">-</span>')
+            ->addColumn('out_fmt', fn($r) => $r['out_qty'] > 0 ? '<span class="text-danger fw-semibold">-'.number_format($r['out_qty'], 0, ',', '.').'</span>' : '<span class="text-muted">-</span>')
+            ->addColumn('balance_fmt', fn($r) => number_format($r['balance_qty'], 0, ',', '.'))
+            ->addColumn('type_badge', function ($r) {
+                $t = $r['transaction_type'] ?? '';
+                return match(true) {
+                    str_starts_with($t, 'Purchase') => '<span class="badge bg-primary"><i class="bi bi-truck me-1"></i>'.$t.'</span>',
+                    str_starts_with($t, 'Production') => '<span class="badge bg-warning text-dark"><i class="bi bi-gear me-1"></i>'.$t.'</span>',
+                    str_starts_with($t, 'Sales') => '<span class="badge bg-danger"><i class="bi bi-cart-dash me-1"></i>'.$t.'</span>',
+                    str_starts_with($t, 'Transfer') => '<span class="badge bg-info"><i class="bi bi-arrow-left-right me-1"></i>'.$t.'</span>',
+                    str_starts_with($t, 'Stock') => '<span class="badge bg-secondary"><i class="bi bi-sliders me-1"></i>'.$t.'</span>',
+                    default => '<span class="badge bg-secondary">'.$t.'</span>',
+                };
+            })
+            ->rawColumns(['date_fmt','in_fmt','out_fmt','balance_fmt','type_badge'])
+            ->make(true);
+    }
+}

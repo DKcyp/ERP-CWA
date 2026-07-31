@@ -45,6 +45,7 @@ class ProductStockTrackReportController extends Controller
         ];
 
         $users = ['Ahmad Operator','Dewi QC','Rudi Staff','Siti Admin','Bambang Gudang','Lina Produksi'];
+        $warehouses = ['Gudang Bahan Bandung','Gudang Bahan Jakarta','Gudang WIP Bandung','Gudang Jadi Bandung','Gudang Jadi Jakarta'];
 
         $balance = [];
         foreach ($products as $p) { $balance[$p['product_id']] = rand(200, 1500); }
@@ -76,6 +77,7 @@ class ProductStockTrackReportController extends Controller
                     'in_qty' => $in,
                     'out_qty' => $out,
                     'balance_qty' => $balance[$pid],
+                    'warehouse' => $warehouses[array_rand($warehouses)],
                     'user_id' => $users[array_rand($users)],
                 ]);
             }
