@@ -89,6 +89,7 @@ use App\Http\Controllers\ProductionPlanning\ProductionStockLevelController;
 use App\Http\Controllers\ProductionPlanning\ProductionSTBJController;
 use App\Http\Controllers\ProductionPlanning\ProductionProcessDashboardController;
 use App\Http\Controllers\ProductionPlanning\SPKPController;
+use App\Http\Controllers\ProductionPlanning\SPPBJController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -1124,6 +1125,17 @@ Route::middleware('auth')->group(function () {
             Route::post('/{id}/approve', [SPKPController::class, 'approve'])->name('approve');
             Route::post('/{id}/reject', [SPKPController::class, 'reject'])->name('reject');
             Route::delete('/{id}', [SPKPController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('production-process-sppbj')->name('production-process-sppbj.')->group(function () {
+            Route::get('/', [SPPBJController::class, 'index'])->name('index');
+            Route::get('/table', [SPPBJController::class, 'table'])->name('table');
+            Route::post('/', [SPPBJController::class, 'store'])->name('store');
+            Route::get('/{id}', [SPPBJController::class, 'show'])->name('show');
+            Route::put('/{id}', [SPPBJController::class, 'update'])->name('update');
+            Route::post('/{id}/approve', [SPPBJController::class, 'approve'])->name('approve');
+            Route::post('/{id}/reject', [SPPBJController::class, 'reject'])->name('reject');
+            Route::delete('/{id}', [SPPBJController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
