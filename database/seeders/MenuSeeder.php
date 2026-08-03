@@ -167,6 +167,18 @@ class MenuSeeder extends Seeder
                     'PMB (Penetapan & Monitoring Bonus)' => '#',
                 ]
             ],
+            'Production Process' => [
+                'icon' => 'bi bi-box-seam',
+                'items' => [
+                    'Dashboard Production Process' => 'production-process-dashboard',
+                    'SPKP (Surat Perintah Kerja Produksi Base)' => 'production-process-spkp',
+                    'SPPBJ (Surat Perintah Pembuatan Barang Jadi / CM)' => 'production-process-sppbj',
+                    'SPKP ADU (Surat Perintah Kerja Produksi Adu / Adjustment Base)' => 'production-process-spkpadu',
+                    'SPPBJ ADU (Surat Perintah Pembuatan Barang Jadi Adu / Adjustment CM)' => 'production-process-sppbjadu',
+                    'SPPI (Surat Perintah Penggunaan Insektisida / Bahan Penolong Khusus)' => 'production-process-sppi',
+                    'SPPPK (Surat Perintah Persiapan & Penggunaan Kemasan)' => 'production-process-spppk',
+                ]
+            ],
             'Master Data' => [
                 'icon' => 'bi bi-database-fill',
                 'items' => [
