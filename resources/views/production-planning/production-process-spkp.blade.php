@@ -63,6 +63,42 @@
     <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-lg me-1"></i>Batal</button><button type="button" class="btn btn-primary" id="btn-save"><i class="bi bi-check-lg me-1"></i>Simpan</button></div>
 </div></div></div>
 
+<div class="modal fade" id="detailModal" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title fw-bold"><i class="bi bi-eye me-1"></i>Detail SPKP</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+        <div class="row g-3 mb-3">
+            <div class="col-md-3"><small class="text-muted">Production ID</small><p class="fw-semibold mb-0" id="dt-prod-id">-</p></div>
+            <div class="col-md-3"><small class="text-muted">No. SPKP</small><p class="fw-semibold mb-0" id="dt-no-spkp">-</p></div>
+            <div class="col-md-3"><small class="text-muted">Date</small><p class="fw-semibold mb-0" id="dt-date">-</p></div>
+            <div class="col-md-3"><small class="text-muted">Created By</small><p class="fw-semibold mb-0" id="dt-created-by">-</p></div>
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-md-3"><small class="text-muted">Jadwal Ref</small><p class="fw-semibold mb-0" id="dt-jadwal">-</p></div>
+            <div class="col-md-3"><small class="text-muted">Batch No</small><p class="fw-semibold mb-0" id="dt-batch">-</p></div>
+            <div class="col-md-3"><small class="text-muted">Product Name</small><p class="fw-semibold mb-0" id="dt-product">-</p></div>
+            <div class="col-md-3"><small class="text-muted">Machine</small><p class="fw-semibold mb-0" id="dt-machine">-</p></div>
+        </div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-2"><small class="text-muted">Tipe Produk</small><p class="fw-semibold mb-0" id="dt-tipe">-</p></div>
+            <div class="col-md-2"><small class="text-muted">Formulasi</small><p class="fw-semibold mb-0" id="dt-formulasi">-</p></div>
+            <div class="col-md-2"><small class="text-muted">FK</small><p class="fw-semibold mb-0" id="dt-fk">-</p></div>
+            <div class="col-md-2"><small class="text-muted">Basis</small><p class="fw-semibold mb-0" id="dt-basis">-</p></div>
+            <div class="col-md-2"><small class="text-muted">Proses BASE</small><p class="fw-semibold mb-0" id="dt-process">-</p></div>
+            <div class="col-md-2"><small class="text-muted">Selesai BASE</small><p class="fw-semibold mb-0" id="dt-selesai">-</p></div>
+        </div>
+
+        <h6 class="fw-bold text-primary mb-2"><i class="bi bi-list-check me-1"></i>Komposisi Bahan</h6>
+        <div class="table-responsive mb-3"><table class="table table-bordered table-sm"><thead class="table-light"><tr><th>Material</th><th class="text-end">Required</th><th class="text-end">Recanning</th><th class="text-end">Production</th><th class="text-end">STBJ</th><th class="text-center">QC</th><th class="text-end">Adj</th></tr></thead><tbody id="dt-items-body"></tbody></table></div>
+
+        <div class="row g-3">
+            <div class="col-md-6"><small class="text-muted">Notes</small><p class="fw-semibold mb-0" id="dt-notes">-</p></div>
+            <div class="col-md-3"><small class="text-muted">Status QC</small><p class="mb-0" id="dt-status">-</p></div>
+            <div class="col-md-3"><small class="text-muted">Keputusan</small><p class="mb-0" id="dt-keputusan">-</p></div>
+        </div>
+    </div>
+    <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button></div>
+</div></div></div>
+
 <div class="modal fade" id="deleteModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
     <div class="modal-header bg-danger text-white"><h5 class="modal-title"><i class="bi bi-exclamation-triangle me-1"></i>Konfirmasi Hapus</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
     <div class="modal-body"><p class="mb-0">Yakin ingin menghapus SPKP <strong id="delete-name"></strong>?</p></div>
@@ -142,6 +178,30 @@ $('#btn-save').on('click',function(){
     const url=id?'/production-process-spkp/'+id:'{{route("production-process-spkp.store")}}';
     $.ajax({url:url,type:'POST',data:{...payload,_method:id?'PUT':'POST'},success:function(r){bootstrap.Modal.getInstance('#formModal').hide();tbl.ajax.reload(null,false);alert(r.message)},error:function(e){alert(e.responseJSON?.error||'Terjadi kesalahan.')}});
 });
+
+function detailRecord(id){$.get('/production-process-spkp/'+id,function(d){
+    $('#dt-prod-id').text(d.production_id||'-');$('#dt-no-spkp').text(d.no_spkp||'-');
+    $('#dt-date').text(d.date||'-');$('#dt-created-by').text(d.created_by||'-');
+    $('#dt-jadwal').text(d.jadwal_ref||'-');$('#dt-batch').text(d.batch_no||'-');
+    $('#dt-product').text(d.product_name||'-');$('#dt-machine').text(d.machine||'-');
+    $('#dt-tipe').text(d.tipe_produk||'-');$('#dt-formulasi').text(d.formulasi||'-');
+    $('#dt-fk').text(d.fk||'-');$('#dt-basis').text(d.basis||'-');
+    $('#dt-process').text(d.process_base||'-');$('#dt-selesai').text(d.selesai_base||'-');
+    $('#dt-notes').text(d.notes||'-');
+    const kpt=d.keputusan||'';
+    const kptCls=kpt==='Approve'?'bg-success':(kpt==='Reject'?'bg-danger':(kpt==='Rework'?'bg-warning text-dark':'bg-secondary'));
+    $('#dt-keputusan').html('<span class="badge '+kptCls+'">'+kpt+'</span>');
+    const stCls=d.status_qc==='Completed'?'bg-success':(d.status_qc==='Rejected'?'bg-danger':'bg-warning text-dark');
+    $('#dt-status').html('<span class="badge '+stCls+'">'+(d.status_qc||'-')+'</span>');
+    const $b=$('#dt-items-body');$b.empty();
+    (d.items||[]).forEach(function(m){
+        $b.append('<tr><td>'+m.material_name+'</td><td class="text-end">'+m.required_qty+'</td><td class="text-end">'+m.recanning+'</td><td class="text-end">'+m.production_qty+'</td><td class="text-end">'+m.stbj_realization+'</td><td class="text-center">'+m.qc_check+'</td><td class="text-end">'+m.adjustment+'</td></tr>');
+    });
+    new bootstrap.Modal('#detailModal').show();
+});}
+
+function approveRecord(id){if(!confirm('Approve SPKP ini?'))return;$.ajax({url:'/production-process-spkp/'+id+'/approve',type:'POST',data:{_token:csrf},success:function(r){tbl.ajax.reload(null,false);alert(r.message)}});}
+function rejectRecord(id){if(!confirm('Reject SPKP ini?'))return;$.ajax({url:'/production-process-spkp/'+id+'/reject',type:'POST',data:{_token:csrf},success:function(r){tbl.ajax.reload(null,false);alert(r.message)}});}
 
 function deleteRecord(id){deleteId=id;$('#delete-name').text('');new bootstrap.Modal('#deleteModal').show();}
 $('#btn-confirm-delete').on('click',function(){$.ajax({url:'/production-process-spkp/'+deleteId,type:'POST',data:{_method:'DELETE'},success:function(r){bootstrap.Modal.getInstance('#deleteModal').hide();tbl.ajax.reload(null,false);alert(r.message)}});});

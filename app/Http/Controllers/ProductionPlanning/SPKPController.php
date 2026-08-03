@@ -130,8 +130,14 @@ class SPKPController extends Controller
             })
             ->addColumn('action', function ($r) {
                 $id = $r['id'];
+                $kpt = $r['keputusan'] ?? '';
                 $btns = '<div class="btn-group btn-group-sm">';
+                $btns .= '<button class="btn btn-outline-info" onclick="detailRecord(\''.$id.'\')" title="Detail"><i class="bi bi-eye"></i></button>';
                 $btns .= '<button class="btn btn-outline-primary" onclick="editRecord(\''.$id.'\')" title="Edit"><i class="bi bi-pencil"></i></button>';
+                if ($kpt === 'Rework' || $kpt === '' || $kpt === 'Draft') {
+                    $btns .= '<button class="btn btn-outline-success" onclick="approveRecord(\''.$id.'\')" title="Approve"><i class="bi bi-check-lg"></i></button>';
+                    $btns .= '<button class="btn btn-outline-danger" onclick="rejectRecord(\''.$id.'\')" title="Reject"><i class="bi bi-x-lg"></i></button>';
+                }
                 $btns .= '<button class="btn btn-outline-danger" onclick="deleteRecord(\''.$id.'\')" title="Hapus"><i class="bi bi-trash"></i></button>';
                 $btns .= '</div>';
                 return $btns;
@@ -186,5 +192,21 @@ class SPKPController extends Controller
         if (!$item) return response()->json(['error' => 'Data tidak ditemukan'], 404);
         $this->store->delete($id);
         return response()->json(['success' => true, 'message' => 'SPKP berhasil dihapus.']);
+    }
+
+    public function approve($id)
+    {
+        $item = $this->store->find($id);
+        if (!$item) return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        $this->store->update($id, ['keputusan' => 'Approve', 'status_qc' => 'Completed']);
+        return response()->json(['success' => true, 'message' => 'SPKP berhasil di-Approve.']);
+    }
+
+    public function reject($id)
+    {
+        $item = $this->store->find($id);
+        if (!$item) return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        $this->store->update($id, ['keputusan' => 'Reject', 'status_qc' => 'Rejected']);
+        return response()->json(['success' => true, 'message' => 'SPKP berhasil di-Reject.']);
     }
 }
