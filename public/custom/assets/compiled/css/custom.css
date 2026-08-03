@@ -46,22 +46,88 @@ body {
     transition: margin-left 0.3s ease !important;
 }
 
+/* ── DESKTOP (xl ≥ 1200px) ── */
 @media (min-width: 1200px) {
     #main {
         margin-left: 280px !important;
         padding-left: 2rem !important;
         padding-right: 2rem !important;
     }
+    body.sidebar-collapsed #main {
+        margin-left: 0 !important;
+    }
+    body.sidebar-collapsed #sidebar .sidebar-wrapper {
+        transform: translateX(-100%) !important;
+    }
+    /* Edge toggle button hanya desktop */
+    .hz-sidebar-edge-btn {
+        display: inline-flex !important;
+    }
 }
 
-body.sidebar-collapsed #main {
-    margin-left: 0 !important;
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
+/* ── MOBILE & TABLET (< 1200px) ── */
+@media (max-width: 1199.98px) {
+    /* Sidebar tersembunyi di luar layar secara default */
+    #sidebar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1050 !important;
+        width: 280px !important;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease !important;
+    }
+    /* Saat aktif (burger diklik), geser masuk */
+    #sidebar.active {
+        transform: translateX(0) !important;
+    }
+    /* #main tidak perlu margin di mobile */
+    #main {
+        margin-left: 0 !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    /* Sidebar wrapper ikut parent, tidak override transform */
+    #sidebar .sidebar-wrapper {
+        transform: none !important;
+        width: 280px !important;
+    }
+    /* Sembunyikan edge toggle button di mobile */
+    .hz-sidebar-edge-btn {
+        display: none !important;
+    }
+    /* Topbar pill wrap di mobile */
+    .hz-topbar-pill {
+        gap: 0.5rem !important;
+        padding: 0.4rem 0.75rem !important;
+    }
+    .hz-search-wrapper {
+        display: none !important;
+    }
+    /* Page title responsif */
+    .hz-page-title {
+        font-size: 1.4rem !important;
+    }
 }
 
-body.sidebar-collapsed #sidebar .sidebar-wrapper {
-    transform: translateX(-100%) !important;
+/* ── BACKDROP overlay saat sidebar mobile terbuka ── */
+.sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.5);
+    z-index: 1049;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    animation: fadeInBackdrop 0.2s ease;
+}
+
+@keyframes fadeInBackdrop {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 #sidebar .sidebar-wrapper {
@@ -188,7 +254,6 @@ body.sidebar-collapsed #sidebar .sidebar-wrapper {
     z-index: 10;
     visibility: visible !important;
     opacity: 1 !important;
-    transform: none !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch;
@@ -397,6 +462,15 @@ body.sidebar-collapsed #sidebar .sidebar-wrapper {
     top: 0;
     z-index: 99;
     background-color: var(--hz-bg-main);
+}
+
+@media (max-width: 1199.98px) {
+    .hz-header {
+        z-index: 900;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        margin-bottom: 1rem;
+    }
 }
 
 /* Sidebar Edge Arrow Toggle Button */

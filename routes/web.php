@@ -87,6 +87,7 @@ use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingReportControl
 use App\Http\Controllers\ProductionPlanning\ProductionMaterialCheckStockController;
 use App\Http\Controllers\ProductionPlanning\ProductionStockLevelController;
 use App\Http\Controllers\ProductionPlanning\ProductionSTBJController;
+use App\Http\Controllers\ProductionPlanning\ProductionProcessDashboardController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -1106,6 +1107,11 @@ Route::middleware('auth')->group(function () {
             Route::post('/{id}/issue', [ProductionSTBJController::class, 'issue'])->name('issue');
             Route::post('/{id}/verify', [ProductionSTBJController::class, 'verify'])->name('verify');
             Route::delete('/{id}', [ProductionSTBJController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('production-process-dashboard')->name('production-process-dashboard.')->group(function () {
+            Route::get('/', [ProductionProcessDashboardController::class, 'index'])->name('index');
+            Route::get('/data', [ProductionProcessDashboardController::class, 'data'])->name('data');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {

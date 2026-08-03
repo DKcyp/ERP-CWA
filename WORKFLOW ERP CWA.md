@@ -180,3 +180,72 @@ Shipping Invoice Expedition / Invoice Expedition
          │
          ▼
   PMB (Penetapan & Monitoring Bonus Salesman / Depo)
+
+========================================================================================================
+                             DIAGRAM ALUR OPERASIONAL SYSTEM ERP
+========================================================================================================
+
+[ 1. MASTER DATA SETUP ]
+   ├── Master Material (Bahan Baku, Aditif, Solvent, Kemasan)
+   ├── Master Formula / BOM (Resep Base, Target Viskositas, Target Micron)
+   ├── Master Color Matching (Resep Takaran Pasta Warna)
+   ├── Master Kemasan (Kaleng, Galon, Pail, Berat & Tare)
+   ├── Master Mesin (Grinding, Mixer, Filling Line)
+   └── Master Komisi (Tarif Komisi Operator)
+            │
+            ▼
+[ 2. PERENCANAAN PRODUKSI (PRODUCTION PLANNING) ]
+   ├── Monitor KPI & Antrean ─────────────► Dashboard Production Planning
+   ├── Input Pesanan Pelanggan ───────────► Pre SPK List
+   ├── Terbit SPK Resmi ──────────────────► SPK List
+   ├── Cek Ketersediaan Stok Material ───► Production Material Check Stock ─── (Stok Kurang? -> PR/PO)
+   ├── Plotting Waktu & Mesin ───────────► Production Scheduling
+   ├── Terbit Panduan Kerja Harian ──────► Daily Schedule Report
+   └── Persiapan Kemasan Fisik ──────────► SPK Kemasan & Jadwal Kemasan
+            │
+            ▼
+[ 3. EKSEKUSI PRODUKSI BASE & GILING (PRODUCTION EXECUTION) ]
+   ├── Buka Dokumen Kerja Utama ─────────► Production List
+   ├── Potong Stok Bahan Baku ───────────► Stock Release (Gudang Bahan Baku)
+   ├── Olah Adonan Dasar ────────────────► Realisasi Jadwal Base / Base per Mesin
+   └── Cek Speed & Kehalusan Micron (u) ─► Monitoring Mesin Grinding
+            │
+            ▼
+[ 4. PEWARNAAN & TINTING (COLOR MATCHING) ]
+   ├── Pencampuran Pasta Warna ──────────► Realisasi Jadwal Pasta
+   ├── Proses Tinting Adonan ────────────► Realisasi Jadwal CM
+   └── Penanda Selesai Pewarnaan ────────► Draf STBJ Production
+            │
+            ▼
+[ 5. QUALITY CONTROL GATE (GERBANG QC) ]
+   └── Inspeksi Sample (Warna, Viskositas, Daya Tutup)
+            │
+            ├──────► [ STATUS: REJECT / REWORK ]
+            │              │
+            │              └──► Kembali ke "Realisasi Jadwal CM" (Tambah Pigmen/Pasta Perbaikan)
+            │
+            └──────► [ STATUS: QC APPROVED ]
+                           │
+                           ▼
+[ 6. PENGEMASAN (CANNING & PACKING) ]
+   ├── Pengisian Cat (Filling) ──────────► Realisasi Jadwal Canning & Packing
+   ├── Variasi Wadah Kemasan ────────────► Kaleng (0.1L-1L), Galon, Pail
+   └── Timbang Berat Awal & Akhir ────────► Catat Sisa & Yield Hasil Kemas
+            │
+            ▼
+[ 7. SERAH TERIMA, RILIS STOK & KOMISI ]
+   ├── Terbit Bukti Selesai Packing ─────► Final STBJ Production
+   ├── Otorisasi Pelepasan Barang ───────► Release Production
+   ├── Verifikasi Fisik & Inbound ────────► STBJ Material Management (Gudang Produk Jadi)
+   │                                           │
+   │                                           └──► Stok Bertambah di "Available Stock"
+   │
+   └── Hitung Komisi Operator ───────────► Production Commission
+            │
+            ▼
+[ 8. ANALISIS, AUDIT & PELAPORAN (REPORTS) ]
+   ├── Laporan Operasional Harian ───────► Production Report (Daily Base, Result, STBJ)
+   ├── Laporan Audit Stok & Jejak ────────► Product Report (Stock Track, Min-Max, Summary)
+   └── Laporan Biaya & HPP Real-time ────► Material Cost Report & Result COGS Report
+
+========================================================================================================

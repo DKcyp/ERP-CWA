@@ -623,65 +623,125 @@ Create Doc. From CSV
   Penjelasan UI: Tampilan awal berupa table data grid memuat daftar seluruh dokumen STBJ. Tombol Tambah memunculkan Modal Form berstruktur Header (STBJ No, Date, Production Ref, Batch No, From Line, To Warehouse) dan Detail Items Kuantitas & Berat. Dilengkapi tombol aksi cetak dokumen/barcode STBJ fisik dan konfirmasi verifikasi serah terima.
 
 - Product Report
-  - Product Stock
+  - Product Stock `product-stock`
     Komponen: Product ID, Name, Category, Warehouse, Current Stock, Reserved Stock, Available Stock, UOM
     Fungsi: Menyajikan laporan saldo posisi fisik dan ketersediaan stok produk terkini per gudang.
     Penjelasan UI: Tabel analitik Read-Only dengan filter gudang, kategori produk, dan pencarian nama barang.
 
-  - Product Stock Summary
+  - Product Stock Summary `product-stock-summary`
     Komponen: Product Group, Category, Total Item Count, Total Quantity, Total Stock Valuation (IDR), UOM
     Fungsi: Menyajikan laporan ringkasan akumulasi volume kuantitas dan total nilai finansial (modal) stok produk.
     Penjelasan UI: Tabel ringkasan berbasis grup produk dilengkapi summary card total akumulasi nilai aset stok di bagian atas tabel.
 
-  - Product Stock Daily Summary
+  - Product Stock Daily Summary `product-stock-daily-summary`
     Komponen: Date, Product ID, Name, Initial Stock, In Qty (Production/Receipt), Out Qty (Delivery/Sales), Final Stock, UOM
     Fungsi: Laporan harian rekapitulasi pergerakan mutasi stok (Stok Awal + Masuk - Keluar = Stok Akhir).
     Penjelasan UI: Tabel laporan pergerakan harian dilengkapi filter rentang tanggal dan nama barang.
 
-  - Product Stock Quick View
+  - Product Stock Quick View `product-stock-quick-view`
     Komponen: Product ID, Name, Warehouse Name, Available Qty, UOM, Last Updated
     Fungsi: Menyediakan fasilitas pencarian dan peninjauan cepat ketersediaan stok produk antar cabang/gudang.
     Penjelasan UI: Layar pencarian cepat (Quick Lookup) dengan pencarian teks responsif yang langsung menampilkan ketersediaan stok di seluruh lokasi gudang.
 
-  - Product Price Info
+  - Product Price Info `product-price-info`
     Komponen: Product ID, Name, Category, Selling Price, Base Cost (COGS), Margin (%), Currency
     Fungsi: Menyajikan informasi daftar harga jual standar dan patokan nilai modal/HPP produk.
     Penjelasan UI: Tabel daftar harga Read-Only dengan filter kategori barang dan persentase margin.
 
-  - Product Stock Track Repot
+  - Product Stock Track Repot `product-stock-track-report`
     Komponen: Trans Date, Product ID, Name, Reference Doc No, Transaction Type, In Qty, Out Qty, Balance Qty, User ID
     Fungsi: Menyajikan laporan jejak rekam mutasi (audit trail) transaksi pergerakan stok per produk.
     Penjelasan UI: Tabel kartu stok kronologis yang menampilkan riwayat setiap dokumen transaksi yang mengubah stok.
 
-  - Product Stock Track Date Report
+  - Product Stock Track Date Report `product-stock-track-date-report`
     Komponen: Period Date, Product ID, Name, Reference Doc No, Transaction Type, In Qty, Out Qty, Balance Qty, Warehouse
     Fungsi: Menyajikan laporan kartu stok mutasi pergerakan barang dalam batasan periode tanggal tertentu.
     Penjelasan UI: Tabel analitik mutasi stok berbasis rentang tanggal (From-To Date) dan filter lokasi gudang.
 
-  - Product Stock Track with Price Report
+  - Product Stock Track with Price Report `product-stock-track-with-price-report`
     Komponen: Trans Date, Product ID, Name, Ref Doc No, Trans Type, In Qty, Out Qty, Balance Qty, Unit Cost, Total Valuation
     Fungsi: Menyajikan laporan kartu stok mutasi pergerakan barang yang dilengkapi dengan kalkulasi nilai finansial rupiahnya.
     Penjelasan UI: Tabel mutasi stok finansial yang mengalikan volume kuantitas mutasi dengan nilai modal/HPP barang.
-
-  - Product Stock Minus Report
-    Komponen: Product ID, Name, Warehouse, Current Stock, UOM, Last Trans Date, Status
+ 
+  - Product Stock Minus Report  `product-stock-minus-report`
+    Komponen: Product ID, Name, Warehous  e, Current Stock, UOM, Last Trans Date, Status
     Fungsi: Laporan audit khusus mendeteksi dan menampilkan daftar barang yang mengalami anomali stok bernilai negatif.
     Penjelasan UI: Tabel peringatan Read-Only yang secara otomatis memfilter hanya barang berstatus stok minus (< 0) dengan warna penanda merah.
 
-  - Product Min Max Stock Check
+  - Product Min Max Stock Check `product-min-max-stock-check`
     Komponen: Product ID, Name, Warehouse, Current Stock, Min Stock, Max Stock, Safety Stock, Reorder Qty, Status Alert
     Fungsi: Memantau kondisi stok terhadap batas Minimum-Maksimum untuk pencegahan kehabisan stok (stockout) atau kelebihan stok (overstock).
     Penjelasan UI: Tabel kriteria batas stok dilengkapi badge indikator visual status: Warning Below Min (Merah), Normal (Hijau), Over Max (Kuning).
 
-  - Product COGS Monthly Report
+  - Product COGS Monthly Report `product-cogs-monthly-report`
     Komponen: Month/Year Period, Product ID, Name, Average COGS Unit, Total Manufactured Qty, Total COGS Valuation
     Fungsi: Menyajikan laporan rekapitulasi rata-rata nilai Harga Pokok Penjualan/Produksi (COGS) bulanan per produk.
     Penjelasan UI: Tabel laporan bulanan terakumulasi dilengkapi filter periode bulan/tahun dan perbandingan tren COGS.
 
-  - Product COGS Daily Report
+  - Product COGS Daily Report `product-cogs-daily-report`
     Komponen: Date, Production Ref, Product ID, Name, Daily COGS Unit, Batch Qty, Total Valuation
     Fungsi: Menyajikan laporan rincian fluktuasi pergerakan nilai HPP/COGS harian hasil produksi.
     Penjelasan UI: Tabel harian Read-Only yang menampilkan rincian HPP dari tiap dokumen batch produksi harian.
+
+## Production Process
+- Dashboard Production Process `production-process-dashboard`
+  Komponen : Active_Batch_In_Progress_Count, Total_Base_Completed_Today, Total_CM_Completed_Today, QC_Pass_Rate_Percent, Rework_Adu_Count (SPKP/SPPBJ ADU), Active_Packaging_Lines_Count, Chart_Batch_Status_Distribution (Base -> CM -> QC -> Packing), Chart_Hourly_Process_Yield, Table_Active_Rework_Batches_Notification
+  Fungsi : Menyajikan gambaran umum secara visual dan real-time mengenai status pengerjaan batch di lantai pabrik, rasio kelulusan QC, jumlah batch yang sedang mengalami perbaikan (Rework/Adu Base & CM), performa per jam tiap tahapan proses, serta indikator antrean proses pengemasan (filling/packing).
+  Penjelasan UI : Tampilan awal berupa dashboard interaktif berisi ringkasan widget angka (card stat) untuk metrik utama proses, grafik donat/batang distribusi status batch yang sedang berjalan (In-Progress Base, CM, QC Pending, Packing), grafik garis tren throughput output per jam, serta tabel peringatan cepat untuk batch yang berstatus Rework/ADU. Halaman bersifat Read-Only dan dilengkapi filter periode tanggal, shift, mesin/lini produksi, dan tipe adonan.
+
+- SPKP (Surat Perintah Kerja Produksi Base) `production-process-spkp`
+  Komponen : Production ID, Jadwal, No. SPKP, No. Batch, Date, Created by, Product Name, Proses BASE, Selesai BASE, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, Bahan, Production, Realisasi (STBJ), QC, Adjustment, Notes, Keputusan
+  Fungsi : Mengelola dokumen eksekusi perintah kerja pembuatan adonan dasar (base) di lini produksi, mencatat penimbangan bahan dasar, durasi pengerjaan, hingga verifikasi kelulusan QC adonan base.
+  Penjelasan UI : Tampilan awal berupa table data grid menampilkan No. SPKP, Date, No. Batch, Product Name, Machine, Tipe Produk, Status QC, dan Keputusan. Tombol Tambah memunculkan Pop-up Modal Form / Drawer berstruktur:
+    1. Header Info : Production ID, No. SPKP (Auto), Date, Created by, Jadwal Ref, Machine, Tipe Produk, Formulasi, FK, Basis.
+    2. Data Grid Komposisi Bahan Base : Detail Bahan (Material Name), Required Qty, Recanning, Actual Production Qty, Realisasi (STBJ), QC Check, Adjustment.
+    3. Waktu & Keputusan : Timestamp 'Proses BASE' & 'Selesai BASE', Textarea Notes, serta Radio Button/Dropdown 'Keputusan' (Approve/Reject/Rework).
+  Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi modal.
+
+- SPPBJ (Surat Perintah Pembuatan Barang Jadi / CM) `production-process-sppbj`
+  Komponen : Production ID, Jadwal, No. SPKP, No. Batch, Date, Created by, Product Name, Proses CM, Selesai CM, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, Bahan Baku, Production, Realisasi (STBJ), QC, Adjustment, Notes, Keputusan
+  Fungsi : Mengelola dokumen perintah kerja proses pewarnaan / pencampuran warna (Color Matching - CM) dari adonan dasar yang sudah siap, mencatat takaran pasta warna, durasi pengerjaan CM, hingga kelulusan sampel warna oleh QC.
+  Penjelasan UI : Tampilan awal berupa table data grid menampilkan No. SPKP (Ref), No. Batch, Product Name, Proses CM, Selesai CM, Machine, Status QC, dan Keputusan. Tombol Tambah memunculkan Pop-up Modal Form / Drawer berstruktur:
+    1. Header Info : Production ID, No. SPKP (Lookup SPKP Base Approved), No. Batch, Date, Created by, Product Name, Machine, Formulasi CM, Basis.
+    2. Data Grid Pigmen & Pasta Warna : Detail Bahan Baku (Pasta/Pigmen), Required Qty, Actual Production Qty, Realisasi (STBJ), Hasil QC Warna, Adjustment.
+    3. Waktu & Keputusan : Timestamp 'Proses CM' & 'Selesai CM', Textarea Notes, serta Dropdown 'Keputusan' (Approve/Reject/Rework).
+  Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi modal.
+
+- SPKP ADU (Surat Perintah Kerja Produksi Adu / Adjustment Base) `production-process-spkpadu`
+  Komponen : Production ID, Jadwal, No. SPKP, No. Batch, Date, Created by, Product Name, Proses BASE, Selesai BASE, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, Bahan Baku, Production, Realisasi (STBJ), QC, Adjustment, Notes, Keputusan
+  Fungsi : Mengelola dokumen perintah kerja perbaikan / penyesuaian (adustment/adu) pada adonan dasar (base) yang tidak memenuhi kriteria standar QC (misal: penyesuaian viskositas atau kehalusan gilingan).
+  Penjelasan UI : Tampilan awal berupa table data grid menampilkan No. SPKP, No. Batch, Product Name, Machine, Jenis Adjustment, Status QC, dan Keputusan dengan penanda badge warna oranye/kuning (Adu/Adjustment). Tombol Tambah memunculkan Pop-up Modal Form berstruktur:
+    1. Header Info : Ref SPKP Asal (Lookup SPKP Reject), No. Batch, Date, Created by, Machine, Basis.
+    2. Data Grid Penambahan Bahan Perbaikan : Detail Bahan Baku Tambahan (Bahan/Aditif/Solvent), Required Qty, Actual Production Qty, Adjustment Qty, Realisasi (STBJ).
+    3. Waktu & Keputusan : Timestamp 'Proses BASE' & 'Selesai BASE' (Adu), Catatan Perbaikan (Notes), dan Dropdown 'Keputusan' QC Re-check.
+  Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi modal.
+
+- SPPBJ ADU (Surat Perintah Pembuatan Barang Jadi Adu / Adjustment CM) `production-process-sppbjadu`
+  Komponen : Production ID, Jadwal, No. SPKP, No. Batch, Date, Created by, Product Name, Proses CM, Selesai CM, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, Bahan Baku, Production, Realisasi (STBJ), QC, Adjustment, Notes, Keputusan
+  Fungsi : Mengelola dokumen perintah kerja perbaikan / penyesuaian warna (rework color matching) pada batch yang di-reject oleh QC karena ketidaksesuaian standar warna (tinting adjustment).
+  Penjelasan UI : Tampilan awal berupa table data grid menampilkan No. SPKP, No. Batch, Product Name, Machine, Catatan Reject QC Asal, Status QC, dan Keputusan. Tombol Tambah memunculkan Pop-up Modal Form berstruktur:
+    1. Header Info : Ref SPPBJ Asal (Lookup SPPBJ Rework/Reject), No. Batch, Date, Created by, Machine, Target Kode Warna.
+    2. Data Grid Koreksi Takaran Warna : Detail Bahan Baku (Pasta/Pigmen Tambahan), Required Qty, Actual Production Qty, Adjustment Qty, Realisasi (STBJ).
+    3. Waktu & Keputusan : Timestamp 'Proses CM' & 'Selesai CM' (Adu), Textarea Notes Koreksi, dan Dropdown 'Keputusan' QC Re-check.
+  Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi modal.
+
+- SPPI (Surat Perintah Penggunaan Insektisida / Bahan Penolong Khusus) `production-process-sppi`
+  Komponen : Production ID, SPPI_No, Date, Created_By, No_Batch, Product_Name, Machine, Material_ID, Material_Name, Target_Dose_Qty, Actual_Dose_Qty, UOM, Mixing_Time, Operator, Notes, Status
+  Fungsi : Mengelola instruksi dan pencatatan khusus penambahan bahan aditif/penolong berbahaya atau berpresisi tinggi (seperti anti-jamur, insektisida, biosida, atau aditif khusus) ke dalam adonan produksi.
+  Penjelasan UI : Tampilan awal berupa table data grid menampilkan SPPI_No, Date, No_Batch, Product_Name, Material_Name, Target_Dose_Qty, Actual_Dose_Qty, Operator, dan Status. Tombol Tambah memunculkan Pop-up Modal Form berstruktur:
+    1. Header Info : SPPI No (Auto), Date, Created By, Ref Batch No, Product Name, Machine.
+    2. Detail Dosis & Bahan : Material ID/Name (Aditif/Biosida/Insektisida), Target Dose Qty, Actual Dose Qty (Penimbangan Presisi), UOM, Mixing Time (Durasi Pengadukan), Operator Pelaksana.
+    3. Footer : Field Textarea Notes dan Tombol [ Simpan SPPI ].
+  Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi modal.
+
+- SPPPK (Surat Perintah Persiapan & Penggunaan Kemasan) `production-process-spppk`
+  Komponen : Production ID, SPPPK_No, Date, Created_By, No_Batch, Product_Name, Packaging_Line_ID, Package_Type (Kaleng/Galon/Pail), Target_Packing_Qty_Pcs, Target_Weight_Kg, Tare_Weight_Check, Actual_Packed_Pcs, Actual_Packed_Kg, Reject_Packaging_Pcs, Operator_Packing, Notes, Status
+  Fungsi : Mengelola instruksi penarikan, pemeriksaan tare/kondisi wadah fisik, serta eksekusi pengisian (filling) produk cat yang sudah lulus QC ke dalam wadah kemasan akhir.
+  Penjelasan UI : Tampilan awal berupa table data grid menampilkan SPPPK_No, Date, No_Batch, Product_Name, Packaging_Line_ID, Package_Type, Target_Packing_Qty_Pcs, Actual_Packed_Pcs, Status, dan Notes. Tombol Tambah memunculkan Pop-up Modal Form berstruktur:
+    1. Header Info : SPPPK No (Auto), Date, Created By, Ref Production ID / Batch No (QC Approved), Product Name, Packaging Line ID.
+    2. Detail Spesifikasi Kemasan : Package Type (Dropdown: Kaleng 0.1L, 0.9L, Galon, Pail, dll.), Target Packing Qty (Pcs & Kg), Cek Berat Kosong (Tare Weight Check).
+    3. Realisasi Filling & Penimbangan : Actual Packed Pcs, Actual Packed Kg, Reject/Damaged Packaging Pcs, Operator Packing (Multi-select), Textarea Notes, serta Tombol [ Simpan SPPPK ].
+  Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi modal.
 
 ## Sales & Distribution `#`
 

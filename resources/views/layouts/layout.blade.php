@@ -7,6 +7,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title') | {{ env('APP_NAME', 'ERP CWA') }} </title>
 
+    <!-- PWA Meta Tags & Manifest -->
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#2563EB">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ERP CWA">
+    <link rel="apple-touch-icon" href="{{ asset('pwa/icons/icon-192x192.png') }}">
+
     <link rel="shortcut icon" href="{{ asset('custom/assets/compiled/svg/favicon2.svg') }}" type="image/x-icon">
     <style>
       @media (min-width: 1200px) {
@@ -405,6 +414,21 @@
                 arrow.className = isCollapsed ? 'bi bi-chevron-right' : 'bi bi-chevron-left';
             }
         })();
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register("{{ asset('sw.js') }}")
+                    .then(function(registration) {
+                        console.log('PWA ServiceWorker registered with scope: ', registration.scope);
+                    })
+                    .catch(function(err) {
+                        console.log('PWA ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
     </script>
 
     @stack('after-script')
