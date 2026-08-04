@@ -275,17 +275,48 @@ function editRecord(id){
 
 function detailRecord(id){
     $.get(`{{ url('/production-process-spppk') }}/${id}`, function(d){
-        const html = `<table class="table table-sm table-bordered" style="font-size:0.85rem;">
-            <tr><th width="180">SPPPK No</th><td>${d.spppk_no||'-'}</td><th width="180">Date</th><td>${d.date||'-'}</td></tr>
-            <tr><th>Created By</th><td>${d.created_by||'-'}</td><th>Production ID</th><td>${d.production_id||'-'}</td></tr>
-            <tr><th>Batch No</th><td>${d.batch_no||'-'}</td><th>Product Name</th><td>${d.product_name||'-'}</td></tr>
-            <tr><th>Packaging Line</th><td>${d.packaging_line_id||'-'}</td><th>Package Type</th><td>${d.package_type||'-'}</td></tr>
-            <tr><th>Target Pcs</th><td>${d.target_packing_qty_pcs||0}</td><th>Target Kg</th><td>${d.target_weight_kg||0}</td></tr>
-            <tr><th>Tare Weight</th><td>${d.tare_weight_check||0} Kg</td><th>Status</th><td>${d.status||'-'}</td></tr>
-            <tr><th>Actual Pcs</th><td>${d.actual_packed_pcs||0}</td><th>Actual Kg</th><td>${d.actual_packed_kg||0}</td></tr>
-            <tr><th>Reject Pcs</th><td>${d.reject_packaging_pcs||0}</td><th>Operator</th><td>${d.operator_packing||'-'}</td></tr>
-            <tr><th>Notes</th><td colspan="3">${d.notes||'-'}</td></tr>
-        </table>`;
+        const statusBadge = d.status === 'Completed' ? '<span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Completed</span>'
+            : d.status === 'In Progress' ? '<span class="badge bg-info"><i class="bi bi-hourglass-split me-1"></i>In Progress</span>'
+            : '<span class="badge bg-secondary"><i class="bi bi-pencil me-1"></i>Draft</span>';
+        const html = `
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-primary bg-opacity-10 py-2"><h6 class="mb-0 text-primary"><i class="bi bi-info-circle me-1"></i>Header Info</h6></div>
+            <div class="card-body py-2">
+                <div class="row g-2" style="font-size:0.85rem;">
+                    <div class="col-md-3"><small class="text-muted d-block">SPPPK No</small><strong>${d.spppk_no||'-'}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Date</small><strong>${d.date||'-'}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Created By</small><strong>${d.created_by||'-'}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Production ID</small><strong>${d.production_id||'-'}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Batch No</small><strong>${d.batch_no||'-'}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Product Name</small><strong>${d.product_name||'-'}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Packaging Line</small><strong>${d.packaging_line_id||'-'}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Status</small>${statusBadge}</div>
+                </div>
+            </div>
+        </div>
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-info bg-opacity-10 py-2"><h6 class="mb-0 text-info"><i class="bi bi-box me-1"></i>Detail Spesifikasi Kemasan</h6></div>
+            <div class="card-body py-2">
+                <div class="row g-2" style="font-size:0.85rem;">
+                    <div class="col-md-3"><small class="text-muted d-block">Package Type</small><strong>${d.package_type||'-'}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Target Qty (Pcs)</small><strong>${(d.target_packing_qty_pcs||0).toLocaleString()}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Target Weight (Kg)</small><strong>${(d.target_weight_kg||0).toLocaleString('id',{minimumFractionDigits:2})}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Tare Weight Check</small><strong>${(d.tare_weight_check||0).toLocaleString('id',{minimumFractionDigits:2})} Kg</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-success bg-opacity-10 py-2"><h6 class="mb-0 text-success"><i class="bi bi-box-arrow-in-down me-1"></i>Realisasi Filling & Penimbangan</h6></div>
+            <div class="card-body py-2">
+                <div class="row g-2" style="font-size:0.85rem;">
+                    <div class="col-md-3"><small class="text-muted d-block">Actual Packed (Pcs)</small><strong>${(d.actual_packed_pcs||0).toLocaleString()}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Actual Packed (Kg)</small><strong>${(d.actual_packed_kg||0).toLocaleString('id',{minimumFractionDigits:2})}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Reject Pcs</small><strong class="${(d.reject_packaging_pcs||0) > 0 ? 'text-danger' : 'text-success'}">${d.reject_packaging_pcs||0}</strong></div>
+                    <div class="col-md-3"><small class="text-muted d-block">Operator Packing</small><strong>${d.operator_packing||'-'}</strong></div>
+                    <div class="col-12"><small class="text-muted d-block">Notes</small><span>${d.notes||'-'}</span></div>
+                </div>
+            </div>
+        </div>`;
         $('#detailContent').html(html);
         new bootstrap.Modal('#detailModal').show();
     });
