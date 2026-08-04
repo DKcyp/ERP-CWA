@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 @section('title', 'SPPPK - Surat Perintah Persiapan & Penggunaan Kemasan')
 
 @section('content')
