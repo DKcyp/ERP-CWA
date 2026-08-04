@@ -91,6 +91,7 @@ use App\Http\Controllers\ProductionPlanning\ProductionProcessDashboardController
 use App\Http\Controllers\ProductionPlanning\SPKPController;
 use App\Http\Controllers\ProductionPlanning\SPPBJController;
 use App\Http\Controllers\ProductionPlanning\SPKPAdouController;
+use App\Http\Controllers\ProductionPlanning\SPPBJAdouController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -1148,6 +1149,17 @@ Route::middleware('auth')->group(function () {
             Route::post('/{id}/approve', [SPKPAdouController::class, 'approve'])->name('approve');
             Route::post('/{id}/reject', [SPKPAdouController::class, 'reject'])->name('reject');
             Route::delete('/{id}', [SPKPAdouController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('production-process-sppbjadu')->name('production-process-sppbjadu.')->group(function () {
+            Route::get('/', [SPPBJAdouController::class, 'index'])->name('index');
+            Route::get('/table', [SPPBJAdouController::class, 'table'])->name('table');
+            Route::post('/', [SPPBJAdouController::class, 'store'])->name('store');
+            Route::get('/{id}', [SPPBJAdouController::class, 'show'])->name('show');
+            Route::put('/{id}', [SPPBJAdouController::class, 'update'])->name('update');
+            Route::post('/{id}/approve', [SPPBJAdouController::class, 'approve'])->name('approve');
+            Route::post('/{id}/reject', [SPPBJAdouController::class, 'reject'])->name('reject');
+            Route::delete('/{id}', [SPPBJAdouController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
