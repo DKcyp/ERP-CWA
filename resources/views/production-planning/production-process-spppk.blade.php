@@ -205,7 +205,7 @@
 </div>
 @endsection
 
-@push('scripts')
+@push('after-script')
 <script>
 let table;
 $(function(){
