@@ -88,7 +88,7 @@ $(function(){
 
     table = $('#balanceTable').DataTable({
         processing:true, serverSide:true,
-        ajax:{ url:'{{ route("customer-balance-summary.table") }}', data:function(d){
+        ajax:{ url:'{{ route("customer-balance.table") }}', data:function(d){
             d.filter_search = $('#filterSearch').val();
             d.filter_currency = $('#filterCurrency').val();
         }},
