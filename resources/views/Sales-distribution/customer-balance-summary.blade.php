@@ -95,7 +95,7 @@ $(function(){
         columns:[
             {data:'DT_RowIndex',name:'DT_RowIndex',orderable:false,searchable:false},
             {data:'customer_id',name:'customer_id'},
-            {data:'customer_name',name:'customer_name'},
+            {data:'name',name:'name'},
             {data:'currency',name:'currency',render:function(d){return '<span class="badge bg-secondary">'+d+'</span>'}},
             {data:'beginning_balance_fmt',name:'beginning_balance_fmt',className:'text-end'},
             {data:'total_invoice_fmt',name:'total_invoice_fmt',className:'text-end'},
