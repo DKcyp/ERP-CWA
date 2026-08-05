@@ -2,16 +2,6 @@
 @section('title', 'Dashboard Sales & Distribution')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <div>
-        <h4 class="mb-0"><i class="bi bi-speedometer2 me-2"></i>Dashboard Sales & Distribution</h4>
-        <small class="text-muted">Ringkasan performa penjualan, omset, piutang, dan pengiriman</small>
-    </div>
-    <div>
-        <button class="btn btn-sm btn-outline-secondary" id="btnRefresh"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</button>
-    </div>
-</div>
-
 <div class="card border-0 shadow-sm mb-3">
     <div class="card-body py-2">
         <div class="row g-2 align-items-end">
@@ -38,7 +28,8 @@
                 </select>
             </div>
             <div class="col-md-4 text-end">
-                <button class="btn btn-sm btn-primary" onclick="loadData()"><i class="bi bi-search me-1"></i>Tampilkan</button>
+                <button class="btn btn-sm btn-primary me-1" onclick="loadData()"><i class="bi bi-search me-1"></i>Tampilkan</button>
+                <button class="btn btn-sm btn-outline-secondary" id="btnRefresh"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</button>
             </div>
         </div>
     </div>
