@@ -80,6 +80,7 @@ class MenuSeeder extends Seeder
                 'icon' => 'bi bi-cart-check-fill',
                 'items' => [
                     'Dashboard Sales & Distribution' => 'sales-dashboard',
+                    'Sales Report' => 'sales-report',
                     'Customer Balance Summary' => '#',
                     'AR Warehouse Report' => '#',
                     'Customer Point' => [
@@ -108,13 +109,6 @@ class MenuSeeder extends Seeder
                         'Sales Commision Report' => '#',
                         'Invoice Payment Report' => '#',
                         'Profit Loss report' => '#',
-                        'Sales Reports' => [
-                            'Sales by Customer' => '#',
-                            'Sales by Product' => '#',
-                            'Sales by Supplier' => '#',
-                            'Sales by Salesman' => '#',
-                            'Sales by Category' => '#',
-                        ],
                     ],
                     'Tanda Terima Penagihan' => '#',
                     'Customer Payment' => [

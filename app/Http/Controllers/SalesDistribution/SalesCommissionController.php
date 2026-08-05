@@ -15,7 +15,41 @@ class SalesCommissionController extends Controller
     public function __construct()
     {
         $this->store = new DummyStore('sales-commission');
+        $this->initDummyData();
         View::share('activeMenu', 'sales-commission');
+    }
+
+    protected function initDummyData(): void
+    {
+        if (!empty($this->store->all())) return;
+
+        $salesmen = ['SLS-001','SLS-002','SLS-003','SLS-004','SLS-005','SLS-006','SLS-007','SLS-008'];
+        $bases = ['Omset','Pelunasan'];
+        $statuses = ['DRAFT','CALCULATED','APPROVED','PAID'];
+
+        for ($m = 0; $m < 6; $m++) {
+            $period = date('Y-m', strtotime("2026-01 +{$m} months"));
+            $count = rand(5, 8);
+            for ($i = 0; $i < $count; $i++) {
+                $sid = $salesmen[array_rand($salesmen)];
+                $target = rand(10000000, 50000000);
+                $achieved = (int)($target * (rand(60, 120) / 100));
+                $rate = [3, 5, 6, 7, 8][array_rand([3, 5, 6, 7, 8])];
+                $comm = (int)($achieved * ($rate / 100));
+                $this->store->create([
+                    'comm_no' => 'COMM-'.date('ym', strtotime($period)).'-'.str_pad($m * 10 + $i + 1, 3, '0', STR_PAD_LEFT),
+                    'date' => date('Y-m-d', strtotime($period.'-05')),
+                    'period' => $period,
+                    'salesman_id' => $sid,
+                    'calculation_base' => $bases[array_rand($bases)],
+                    'target_amount' => $target,
+                    'achieved_amount' => $achieved,
+                    'commission_rate' => $rate,
+                    'total_commission_paid' => $comm,
+                    'status' => $statuses[array_rand($statuses)],
+                ]);
+            }
+        }
     }
 
     public function index()
