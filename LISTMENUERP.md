@@ -181,6 +181,38 @@
       Komponen : Center_Id, Code, Name
       Fungsi : Mengelola pembagian wilayah/pusat area pemasok untuk kebutuhan pengelompokan geografis.
       Penjelasan UI : Tampilan awal berupa table menampilkan Center_Id, Code, Name dan filter nama center dan code. Tombol tambah akan muncul pop up dengan form Code, Name. Untuk edit muncul pop up form Code, Name. Hapus muncul alert konfirmasi.
+      
+- Customer
+  - Customer Master `customer-master`
+    Komponen : Id, Name, NIK, Nama (NIK), NPWP, SIM, Marketing, Credit Limit, Due Date Warning, Warehouse, Active, Contact, Position, Address1, Address2, Kecamatan, Kabupaten, City, ZIP, Channel Outlet, Rayon Sales, Province, Country, Phone, Mobile_Phone, Email, Note, Price List Id, Term
+    Fungsi : Mengelola data induk (master data) pelanggan secara komprehensif mulai dari identitas, alamat, kontak, hingga kebijakan kredit dan daftar harga.
+    Penjelasan UI : Tampilan awal berupa data grid berfitur pencarian cepat dan multi-filter (kategori, area, status aktif). Tombol [ + Tambah Customer ] memunculkan Modal Form / Drawer berstruktur Tab Navigasi: Tab Profil & Alamat, Tab Kontak PIC, Tab Finansial & Kredit (Credit Limit, Term, Price List), dan Tab Pengaturan Wilayah. Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi.
+
+  - Customer Group `customer-group`
+    Komponen : Id, Name, Description, AR Account
+    Fungsi : Mengelompokkan pelanggan berdasarkan segmen atau tipe tertentu serta memetakan akun Piutang (AR Account) yang sesuai pada buku besar.
+    Penjelasan UI : Tampilan awal berupa table data grid menampilkan ID, Nama Kelompok, Deskripsi, dan Akun Piutang. Tombol Tambah memunculkan Modal Form input Nama, Deskripsi, serta Lookup Dropdown AR Account. Edit memunculkan form terisi, Hapus memunculkan alert konfirmasi.
+
+  - Customer Area `customer-area`
+    Komponen : Id, Area
+    Fungsi : Menentukan pembagian wilayah atau zonasi operasional penjualan dan distribusi pelanggan.
+    Penjelasan UI : Tampilan awal berupa table sederhana berfitur pencarian area. Tombol Tambah memunculkan Modal Form ringkas untuk input nama area/zonasi wilayah. Edit dan Hapus dilengkapi tombol aksi pada tiap baris.
+
+  - WA Name `wa-name`
+    Komponen : Id, Customer ID, Name, Phone Number, Role/Position, Is Primary
+    Fungsi : Mengelola daftar kontak WhatsApp terverifikasi milik pelanggan untuk kebutuhan pengiriman notifikasi, dokumen, dan komunikasi operasional.
+    Penjelasan UI : Tampilan awal berupa data grid kontak terhubung ID Pelanggan. Tombol Tambah memunculkan Modal Form dengan Autocomplete Customer ID, Nomor WhatsApp, Jabatan, serta Checkbox Is Primary.
+
+  - Customer Tools `customer-tools`
+    Komponen : Id, Customer ID, Tool Name, Serial Number, Qty, Condition, Loan Date, Status, Note
+    Fungsi : Mencatat dan memantau peminjaman atau alokasi aset/peralatan pendukung penjualan yang dipinjamkan ke pelanggan (misal: mesin dispenser, pendingin, atau display banner).
+    Penjelasan UI : Tampilan awal berupa table data grid berpenanda status pinjam (Dipinjam / Dikembalikan / Rusak). Tombol Tambah memunculkan Modal Form input Customer, Nama Alat, No. Seri, Qty, Kondisi, Tanggal Pinjam, dan Catatan.
+
+  - Customer Centre `customer-centre`
+    Komponen : Id, Customer ID, Centre Code, Centre Name, Address, PIC Name, Phone, Email, Warehouse ID
+    Fungsi : Mengelola data cabang, titik serah, atau unit lokasi penyerahan barang milik pelanggan utama/korporat.
+    Penjelasan UI : Tampilan awal berupa table data grid lokasi titik serah per pelanggan. Tombol Tambah memunculkan Modal Form berstruktur Kode/Nama Cabang, Alamat Lengkap, Kontak PIC, dan Pemetaan Gudang Alokasi.
+
 ##
 
 Create Doc. From CSV
@@ -745,171 +777,205 @@ Create Doc. From CSV
 
 ## Sales & Distribution `#`
 
-- Customer Master `customer-master`
-  Komponen :Id,Name,NIK,Nama (NIK),NPWP,SIM,Marketing,Credit Limit,Due Date Warning,Warehouse,Active,Contact,Position,Address1,Address2,Kecamatan,Kabupaten,City,ZIP,Channel Outlet,Rayon Sales,Province,Country,Phone,Mobile_Phone,Email,Note,Price List Id,Term
-  Fungsi : Mengelola data induk (master data) pelanggan secara komprehensif mulai dari identitas, alamat, kontak, hingga kebijakan kredit dan daftar harga.
-
-- Customer Group `customer-group`
-  Komponen :Id,name,description,AR Account 
-  Fungsi : Mengelompokkan pelanggan berdasarkan segmen atau tipe tertentu serta memetakan akun Piutang (AR Account) yang sesuai pada buku besar.
-
-- Customer Area `customer-area`
-  Komponen :Id,Area
-  Fungsi : Menentukan pembagian wilayah atau zonasi operasional penjualan dan distribusi pelanggan.
-
-- WA Name `wa-name`
-  Komponen :Id,Customer ID,Name,Phone Number,Role/Position,Is Primary
-  Fungsi : Mengelola daftar kontak WhatsApp terverifikasi milik pelanggan untuk kebutuhan pengiriman notifikasi, dokumen, dan komunikasi operasional.
-
-- Customer Tools `customer-tools`
-  Komponen :Id,Customer ID,Tool Name,Serial Number,Qty,Condition,Loan Date,Status,Note
-  Fungsi : Mencatat dan memantau peminjaman atau alokasi aset/peralatan pendukung penjualan yang dipinjamkan ke pelanggan (misal: mesin dispenser, pendingin, atau display banner).
-
-- Customer Centre `customer-centre`
-  Komponen :Id,Customer ID,Centre Code,Centre Name,Address,PIC Name,Phone,Email,Warehouse ID
-  Fungsi : Mengelola data cabang, titik serah, atau unit lokasi penyerahan barang milik pelanggan utama/korporat.
+- Dashboard Sales & Distribution `sales-dashboard`
+  Komponen : Total_Sales_Omset_Today, Total_Active_SO, Total_Pending_Shipment, Total_AR_Outstanding, Total_Overdue_AR_Count, Chart_Daily_Sales_Trend, Chart_Top_Salesman_Performance, Chart_Sales_By_Category, Table_Recent_Sales_Orders, Table_Credit_Limit_Exceeded_Alert
+  Fungsi : Menyajikan gambaran umum secara visual dan real-time mengenai performa penjualan, omset harian, piutang usaha (AR), status pengiriman, serta peringatan batas kredit pelanggan.
+  Penjelasan UI : Tampilan awal berupa dashboard interaktif berisi ringkasan widget angka (card stat), grafik tren omset penjualan, diagram lingkaran kontribusi kategori produk, modul pemantauan kinerja wiraniaga, serta tabel notifikasi cepat pesanan terbaru dan pelanggan yang melebihi batas kredit. Halaman bersifat Read-Only dan dilengkapi filter periode tanggal, wilayah/area, dan gudang.
 
 - Customer Balance Summary `customer-balance-summary`
-  Komponen :Customer ID,Name,Currency,Beginning Balance,Total Invoice,Total Payment,Total Return,Ending Balance,Credit Limit,Available Credit
+  Komponen : Customer ID, Name, Currency, Beginning Balance, Total Invoice, Total Payment, Total Return, Ending Balance, Credit Limit, Available Credit
   Fungsi : Menyajikan ringkasan posisi saldo piutang pelanggan, sisa batas kredit, dan histori akumulasi mutasi secara real-time.
-  
+  Penjelasan UI : Tampilan awal berupa table analitik Read-Only dengan penanda visual warna merah untuk sisa kredit yang menipis atau melampaui batas (Available Credit < 0). Dilengkapi filter pelanggan, mata uang, dan tombol Export Excel/PDF.
+
 - AR Warehouse Report `ar-warehouse-report`
-  Komponen :Warehouse ID,Warehouse Name,Customer ID,Customer Name,Invoice No,Invoice Date,Due Date,Outstanding Amount,Age (Days)
+  Komponen : Warehouse ID, Warehouse Name, Customer ID, Customer Name, Invoice No, Invoice Date, Due Date, Outstanding Amount, Age (Days)
   Fungsi : Laporan rincian piutang usaha yang dikelompokkan berdasarkan gudang pemenuhan pesanan.
+  Penjelasan UI : Tampilan awal berupa table analitik Read-Only berstruktur hirarki/grouping per Gudang Pemenuhan. Dilengkapi filter gudang, tanggal jatuh tempo, dan rentang umur piutang.
 
 - Customer Point `customer-point`
   - Point Setting
-  Komponen :Point(num)
-  Fungsi : Mengatur rasio dasar konversi transaksi menjadi poin loyalitas pelanggan.
+    Komponen : Point (num)
+    Fungsi : Mengatur rasio dasar konversi transaksi menjadi poin loyalitas pelanggan.
+    Penjelasan UI : Tampilan halaman pengaturan sederhana (Setting Form) berisi input nilai nominal konversi per 1 poin beserta tombol [ Simpan Pengaturan ].
+
   - Customer Point Promo Rule
-  Komponen : Category ID,Name,1 Point = ? Qty,UOM Id
-  Fungsi : Mengatur aturan khusus perolehan poin berdasarkan kuantitas pembelian kategori produk tertentu.
+    Komponen : Category ID, Name, 1 Point = ? Qty, UOM Id
+    Fungsi : Mengatur aturan khusus perolehan poin berdasarkan kuantitas pembelian kategori produk tertentu.
+    Penjelasan UI : Tampilan berupa table aturan promo poin. Tombol Tambah memunculkan Modal Form pemilihan Kategori Produk, Rasio Kuantitas per 1 Poin, dan Satuan (UOM).
+
   - Category Exception
-  Komponen : Id,Category
-  Fungsi : Menentukan pengecualian kategori produk yang tidak berhak mendapatkan poin loyalitas.
+    Komponen : Id, Category
+    Fungsi : Menentukan pengecualian kategori produk yang tidak berhak mendapatkan poin loyalitas.
+    Penjelasan UI : Tampilan berupa daftar kategori terpilih yang dikecualikan dari program poin. Tombol Tambah memunculkan Modal Form Lookup Kategori Produk.
+
   - Product Point Claim Setup
-  Komponen : Id,Product,Point
-  Fungsi : Mengatur katalog item produk beserta jumlah poin yang dibutuhkan untuk melakukan klaim/penukaran.
+    Komponen : Id, Product, Point
+    Fungsi : Mengatur katalog item produk beserta jumlah poin yang dibutuhkan untuk melakukan klaim/penukaran.
+    Penjelasan UI : Tampilan berupa data grid katalog hadiah. Tombol Tambah memunculkan Modal Form pemilihan Produk Hadiah dan input Jumlah Poin Syarat Klaim.
+
   - Claim Product
-  Komponen : Customer ID,Member ID,Name,Point Reguler,Point Promo,Point Type,Doc. ID,Date,Warehouse ID,User, Type Name/Id, Note, Total Point Claim
-  Note : baris bisa dropdown berisi (Product ID,Name,Description,Qty,UOM Id,Point,Total Point Claim)
-  Fungsi : Transaksi penukaran poin milik pelanggan dengan produk atau reward tertentu.
+    Komponen : Customer ID, Member ID, Name, Point Reguler, Point Promo, Point Type, Doc. ID, Date, Warehouse ID, User, Type Name/Id, Note, Total Point Claim, Detail Items Table (Product ID, Name, Description, Qty, UOM Id, Point, Total Point Claim)
+    Fungsi : Transaksi penukaran poin milik pelanggan dengan produk atau reward tertentu.
+    Penjelasan UI : Tampilan awal berupa table daftar transaksi klaim poin. Tombol Tambah memunculkan Modal Form berstruktur Header (Customer, Member ID, Sisa Poin) dan Data Grid Detail Items Hadiah (Dropdown Produk, Qty, Poin per Unit, Total Poin Klaim).
+
   - Claim Product Daily Report
-  Komponen : Date, Claim Doc No, Customer ID, Customer Name, Product ID, Qty Claimed, Total Points Deducted, User
-  Fungsi : Laporan harian transaksi klaim reward dan pengeluaran poin pelanggan.
+    Komponen : Date, Claim Doc No, Customer ID, Customer Name, Product ID, Qty Claimed, Total Points Deducted, User
+    Fungsi : Laporan harian transaksi klaim reward dan pengeluaran poin pelanggan.
+    Penjelasan UI : Tampilan berupa table laporan harian Read-Only dilengkapi filter rentang tanggal, pelanggan, dan tombol Ekspor Data.
 
 - Sales Order `sales-order`
-  - Sales Order List
+  - Sales Order List `sales-order-list`
     Komponen : No., Date, Warehouse, Customer Id, Name, Area, WA, Note, Disc. %, Disc. Amt., Total, Currency, Status, Term, Sales, Contract No, Doc. Type
     Fungsi : Mengelola dokumen pemesanan barang dari pelanggan sebelum diproses ke tahap pengiriman.
-  - Sales Order Fulfilment 
+    Penjelasan UI : Tampilan awal berupa table data grid utama seluruh pesanan penjualan dengan indikator status (Draft/Approved/In Progress/Closed/Cancelled). Tombol Tambah memunculkan Modal Form berstruktur Header (Customer, Date, Warehouse, Salesman, Term) dan Data Grid Items (Product, Qty, Price, Disc %, Total). Edit memunculkan modal terisi, Hapus memunculkan alert konfirmasi.
+
+  - Sales Order Fulfilment `sales-order-fulfilment`
     Komponen : Cust. ID, Name, Area, Sales Order, SO Date, Warehouse, Note, Status, Product ID, Name, Description, SO Qty, SO UOM ID, SI Date, SI Qty, SI UOM ID, Qty Diff, Tonase
     Fungsi : Memantau tingkat pemenuhan kuantitas barang dari Sales Order menjadi Sales Invoice/pengiriman.
-- Daily Sales Order Report
+    Penjelasan UI : Tampilan awal berupa table analitik Read-Only membandingkan kuantitas pemesanan (SO Qty) vs kuantitas pengiriman/faktur (SI Qty) beserta indikator selisih (Qty Diff). Dilengkapi filter status pemenuhan (Unfulfilled / Partial / Fulfilled).
+
+  - Daily Sales Order Report `daily-sales-order-report`
     Komponen : Date, SO No, Customer Name, Salesman, Total Amount, Status, Warehouse
     Fungsi : Laporan rekapitulasi harian pembuatan dan status dokumen Sales Order.
-- Daily Sales Order Invoice Report
+    Penjelasan UI : Tampilan awal berupa table analitik Read-Only dengan filter tanggal harian, wiraniaga, status, dan gudang.
+
+  - Daily Sales Order Invoice Report `daily-sales-order-invoice-report`
     Komponen : Date, SO No, SI No, Customer Name, SO Amount, Invoiced Amount, Fulfilment Rate (%)
     Fungsi : Laporan perbandingan harian antara nilai pesanan (SO) dengan nilai yang telah berhasil ditagihkan (Invoice).
+    Penjelasan UI : Tampilan awal berupa table analitik Read-Only dilengkapi kolom rasio pemenuhan (%) dan indikator warna pencapaian.
+
 - Packing `packing`
-  Komponen :Packing No, Date, SO No, Customer ID, Warehouse ID, Packing Staff, Total Box/Package, Weight, Status, Note
+  Komponen : Packing No, Date, SO No, Customer ID, Warehouse ID, Packing Staff, Total Box/Package, Weight, Status, Note
   Fungsi : Mengelola proses pengemasan barang di gudang berdasarkan pesanan penjualan sebelum diserahkan ke tim kurir/pengiriman.
+  Penjelasan UI : Tampilan awal berupa table data grid status pengemasan. Tombol Tambah memunculkan Modal Form berstruktur Header (SO Ref, Packing Staff, Total Box/Karton, Berat Total) dan daftar verifikasi item barang yang dikemas.
 
 - Sales Invoice `sales-invoice`
-  - Sales Invoice List, 
-    Komponen : No.,Date,Due Date,Doc. Type,Printed Status,Purchase Note,Warehouse,Sales Order,No. Faktur,Customer Id,Name,Area,WA,Note,Curr.,Total,Disc. %,Disc. Amt.,Status,Term,User,Outstanding,Delivery Status
+  - Sales Invoice List `sales-invoice-list`
+    Komponen : No., Date, Due Date, Doc. Type, Printed Status, Purchase Note, Warehouse, Sales Order, No. Faktur, Customer Id, Name, Area, WA, Note, Curr., Total, Disc. %, Disc. Amt., Status, Term, User, Outstanding, Delivery Status
     Fungsi : Mengelola tagihan penjualan resmi kepada pelanggan atas barang yang telah dikirimkan.
-  - Shipment Priority 
+    Penjelasan UI : Tampilan awal berupa table data grid komprehensif seluruh faktur penjualan. Tombol Tambah memunculkan Modal Form penarikan data SO/DO, kalkulasi otomatis pajak & diskon, serta pembuatan No. Faktur Pajak.
+
+  - Shipment Priority `shipment-priority`
     Komponen : Priority No, Invoice No, SO No, Customer ID, Area, Total Weight/Volume, Promised Date, Status
     Fungsi : Mengatur urutan prioritas pengiriman barang berdasarkan kriteria pelanggan atau tanggal janji serah.
-  - Sales Promo Report 
+    Penjelasan UI : Tampilan awal berupa interface list interaktif yang dapat diatur urutannya secara drag-and-drop atau pengisian angka Priority No untuk menentukan urutan antrean muat barang.
+
+  - Sales Promo Report `sales-promo-report`
     Komponen : Promo ID, Promo Name, Invoice No, Customer Name, Product ID, Discount Amount, Free Goods Qty
     Fungsi : Laporan efektivitas dan rekap penggunaan program promosi pada transaksi penjualan.
-  - Sales Profit Report
+    Penjelasan UI : Tampilan awal berupa table analitik Read-Only penggunaan diskon promo dan barang gratis (free goods) dengan filter promo ID dan periode.
+
+  - Sales Profit Report `sales-profit-report`
     Komponen : Invoice No, Date, Customer Name, Product ID, Qty, Selling Price, HPP/Cost, Gross Profit, Profit Margin (%)
     Fungsi : Laporan analisis keuntungan kotor penjualan berdasarkan selisih harga jual dan harga pokok penjualan (HPP).
-  - Sales Omset Report
+    Penjelasan UI : Tampilan awal berupa table analitik finansial Read-Only yang menghitung selisih harga jual vs HPP per item faktur.
+
+  - Sales Omset Report `sales-omset-report`
     Komponen : Period, Salesman, Area, Customer Group, Total Gross Sales, Total Discount, Total Net Omset
     Fungsi : Laporan rekapitulasi total pencapaian omset penjualan bersih per periode.
-  - Sales Void Report
+    Penjelasan UI : Tampilan berupa ringkasan eksekutif berbasis tabel dan grafik tren omset bersih dengan multi-filter pencapaian.
+
+  - Sales Void Report `sales-void-report`
     Komponen : Void Date, Doc No (SO/SI), Customer Name, Original Amount, Void Reason, Authorized User
     Fungsi : Laporan riwayat pembatalan (void) dokumen transaksi penjualan beserta alasannya.
-  - Sales Commision Report 
+    Penjelasan UI : Tampilan berupa table audit trail Read-Only yang mencatat seluruh dokumen SO/SI yang dibatalkan beserta otorisatornya.
+
+  - Sales Commision Report `sales-commision-report`
     Komponen : Salesman ID, Salesman Name, Period, Total Omset, Target, Commission Rate (%), Total Commission
     Fungsi : Laporan perhitungan komisi penjualan untuk wiraniaga berdasarkan pencapaian target.
-  - Invoice Payment Report 
+    Penjelasan UI : Tampilan berupa table kalkulasi komisi wiraniaga dilengkapi indikator persentase pencapaian target.
+
+  - Invoice Payment Report `invoice-payment-report`
     Komponen : Invoice No, Invoice Date, Customer Name, Total Invoice, Total Paid, Balance Due, Last Payment Date, Status
     Fungsi : Laporan riwayat dan status pelunasan faktur penjualan.
-  - Profit Loss report 
+    Penjelasan UI : Tampilan berupa table status pembayaran faktur dengan indikator Lunas / Parsial / Belum Bayar.
+
+  - Profit Loss Report `profit-loss-report`
     Komponen : Period, Total Sales Revenue, Sales Return, Cost of Goods Sold (HPP), Gross Margin, Operating Expenses, Net Sales Profit
     Fungsi : Laporan ringkasan laba rugi operasional yang dihasilkan dari aktivitas penjualan.
-  - Sales Reports
-    filter Rentang Tanggal
-    filter series & brand
-    filter VAT or non VAT 
-    filter sales{
-    Sales by Customer
-    Sales by Product
-    Sales by Supplier
-    Sales by Salesman
-    Sales by Category
-    }
+    Penjelasan UI : Tampilan ringkasan laporan keuangan Read-Only berstruktur pendapatan, HPP, margin kotor, hingga laba bersih operasional.
+
+  - Sales Reports `sales-reports`
+    Komponen Filter : Rentang Tanggal, Series & Brand, VAT / Non VAT, Sub-Report Type (Sales by Customer, Sales by Product, Sales by Supplier, Sales by Salesman, Sales by Category)
     Fungsi : Modul pelaporan penjualan multi-dimensi dengan berbagai kombinasi filter analisis.
+    Penjelasan UI : Tampilan laporan dinamis dengan tab/dropdown pilihan jenis laporan (Customer, Product, Salesman, dll.) serta panel filter kombinasi di bagian atas.
+
 - Tanda Terima Penagihan `tanda-terima-penagihan`
-  Komponen :TTP No, TTP Date, Collector Name, Customer ID, Total Invoice Count, Total Amount, Due Date, Status, Note
+  Komponen : TTP No, TTP Date, Collector Name, Customer ID, Total Invoice Count, Total Amount, Due Date, Status, Note
   Fungsi : Mengelola dokumen penyerahan lembar faktur tagihan kepada penagih/kolektor untuk melakukan penagihan ke lokasi pelanggan.
+  Penjelasan UI : Tampilan awal berupa table data grid TTP. Tombol Tambah memunculkan Modal Form pemilihan Kolektor dan tabel centang faktur-faktur yang diserahkan untuk ditagih.
 
 - Customer Payment `customer-payment`
-  - Customer Payment List 
-    komponen : Payment No., Date, Date Complete, Warehouse, No. TTP, Customer Id, Name, Account, Total, Status, Currency, Rate, Note, Def. Sales, type payment (Reguler/Down)
+  - Customer Payment List `customer-payment-list`
+    Komponen : Payment No., Date, Date Complete, Warehouse, No. TTP, Customer Id, Name, Account, Total, Status, Currency, Rate, Note, Def. Sales, Type Payment (Reguler/Down)
     Fungsi : Mengelola daftar seluruh transaksi penerimaan kas/bank dari pelanggan baik untuk pelunasan maupun uang muka.
-  - Cust. Outstanding List 
+    Penjelasan UI : Tampilan awal berupa table data grid transaksi penerimaan pembayaran. Tombol Tambah memunculkan Modal Form berstruktur Header (Customer, Payment Method, Account Bank, Amount) dan Table Alokasi Faktur yang dilunasi.
+
+  - Cust. Outstanding List `cust-outstanding-list`
     Komponen : Invoice No, Customer Id, Customer Name, City, Date, Due Date, Age (Days), Curr, Total, Outstanding, Term, Invoiced, Warehouse, Sales, Note
     Fungsi : Memantau daftar faktur penjualan yang belum dilunasi beserta umur piutangnya.
-  - Daily Customer Payment Report 
+    Penjelasan UI : Tampilan berupa table analitik pemantauan piutang dilengkapi pengelompokan umur piutang (AR Aging Bracket).
+
+  - Daily Customer Payment Report `daily-customer-payment-report`
     Komponen : Date, Payment No, Customer Name, Payment Method, Total Paid, Account Name, User
     Fungsi : Laporan harian penerimaan pembayaran dari pelanggan.
-  - Outstanding per Customer Report 
+    Penjelasan UI : Tampilan berupa table laporan harian kas/bank masuk dari penjualan.
+
+  - Outstanding per Customer Report `outstanding-per-customer-report`
     Komponen : Customer ID, Customer Name, Total Invoices, Total Outstanding Amount, Credit Limit, Exceeded Amount
     Fungsi : Laporan total sisa piutang yang dikelompokkan per pelanggan.
-  - Customer Payment Check 
+    Penjelasan UI : Tampilan berupa table ringkasan piutang per pelanggan dilengkapi indikator sisa batas kredit.
+
+  - Customer Payment Check `customer-payment-check`
     Komponen : Check/Giro No, Bank Name, Maturity Date, Customer ID, Amount, Status (Clearing/Bounced/Passed)
     Fungsi : Memantau dan memverifikasi status pembayaran menggunakan instrumen Cek atau Giro.
-  - Customer Outstanding per Date Report 
+    Penjelasan UI : Tampilan berupa data grid pemantauan status warkat (Cek/Giro) dengan tombol aksi perubahan status (Cair / Tolak / Kliring).
+
+  - Customer Outstanding per Date Report `customer-outstanding-per-date-report`
     Komponen : As of Date, Customer ID, Customer Name, Current, 1-30 Days, 31-60 Days, 61-90 Days, >90 Days, Total Outstanding
     Fungsi : Laporan analisis umur piutang (Aging AR Report) pada tanggal posisi tertentu.
+    Penjelasan UI : Tampilan berupa table matriks umur piutang (Current hingga >90 Hari) pada posisi tanggal yang ditentukan.
 
 - Sales Return `sales-return`
-  - Sales Return List 
-    Komponen : No.,Date,Warehouse,Customer Id,Name,Area,WA,Disc. %,Disc. Amt.,Total,Currency,Status,Note,Term,Sales,SI Returned
+  - Sales Return List `sales-return-list`
+    Komponen : No., Date, Warehouse, Customer Id, Name, Area, WA, Disc. %, Disc. Amt., Total, Currency, Status, Note, Term, Sales, SI Returned
     Fungsi : Mengelola penerimaan kembali barang yang dijual akibat kerusakan, retur komersial, atau kesalahan pengiriman.
-  - Daily Sales Return Report 
+    Penjelasan UI : Tampilan awal berupa table data grid retur penjualan. Tombol Tambah memunculkan Modal Form penarikan Faktur Asal (SI Returned Ref), alasan retur, dan rincian item barang yang dikembalikan.
+
+  - Daily Sales Return Report `daily-sales-return-report`
     Komponen : Date, Return No, Customer Name, Product ID, Qty Returned, Total Amount, Reason, Warehouse ID
     Fungsi : Laporan harian pengembalian barang dan pemotongan tagihan piutang.
+    Penjelasan UI : Tampilan berupa table analitik Read-Only rekapitulasi retur harian.
 
 - Tanda Terima Invoice `tanda-terima-invoice`
-  Komponen :TTI No, Date, Customer ID, Customer Name, Invoice List (No, Date, Amount), Received By (Customer PIC), Received Date, Return Status
+  Komponen : TTI No, Date, Customer ID, Customer Name, Invoice List (No, Date, Amount), Received By (Customer PIC), Received Date, Return Status
   Fungsi : Mengelola dokumen bukti bahwa fisik faktur/tagihan telah diterima dengan baik oleh pelanggan untuk memicu perhitungan tanggal jatuh tempo.
+  Penjelasan UI : Tampilan awal berupa table data grid TTI. Tombol Tambah memunculkan Modal Form input Tanggal Terima PIC Pelanggan dan lampiran bukti tanda terima fisik.
 
 - Delivery Order `delivery-order`
-  Komponen :DO No, Date, SO No, SI No, Warehouse ID, Customer ID, Driver Name, Vehicle No, Delivery Address, Status, Expeditor
+  Komponen : DO No, Date, SO No, SI No, Warehouse ID, Customer ID, Driver Name, Vehicle No, Delivery Address, Status, Expeditor
   Fungsi : Mengelola dokumen surat jalan pengeluaran barang dari gudang untuk dikirimkan ke alamat pelanggan.
+  Penjelasan UI : Tampilan awal berupa table data grid Surat Jalan (DO). Tombol Tambah memunculkan Modal Form penarikan SO/SI, nama pengemudi, nomor armada, dan ekspedisi.
 
 - Shipment Preparation `shipment-preparation`
-  Komponen :Prep No, Date, Warehouse ID, DO List, Total Weight, Total Volume, Fleet/Vehicle Type, Route Area, Status
+  Komponen : Prep No, Date, Warehouse ID, DO List, Total Weight, Total Volume, Fleet/Vehicle Type, Route Area, Status
   Fungsi : Mengonsolidasi beberapa dokumen surat jalan/DO ke dalam rencana pemuatan armada dan rute pengiriman.
+  Penjelasan UI : Tampilan awal berupa table konsolidasi pengiriman. Tombol Tambah memunculkan Modal Form pemilihan rute area dan centang multi-DO untuk dialokasikan ke satu armada.
 
 - Purchase Note `purchase-note`
-  Komponen :Note No, Date, Customer ID, PO Customer No, Attachment, Description, Validation Status
+  Komponen : Note No, Date, Customer ID, PO Customer No, Attachment, Description, Validation Status
   Fungsi : Mencatat dan memverifikasi nomor serta lampiran Surat Pesanan (PO) fisik resmi yang diterbitkan oleh pihak pelanggan.
+  Penjelasan UI : Tampilan awal berupa table verifikasi PO Pelanggan. Tombol Tambah memunculkan Modal Form input No. PO Pelanggan, deskripsi, dan upload file scan PO fisik.
 
 - Sales Commission `sales-commission`
-  Komponen :Comm No, Date, Period, Salesman ID, Calculation Base (Omset/Pelunasan), Target Amount, Achieved Amount, Commission Rate, Total Commission Paid, Status
+  Komponen : Comm No, Date, Period, Salesman ID, Calculation Base (Omset/Pelunasan), Target Amount, Achieved Amount, Commission Rate, Total Commission Paid, Status
   Fungsi : Memproses perhitungan dan persetujuan pencairan komisi penjualan untuk staf penjualan.
+  Penjelasan UI : Tampilan awal berupa table dokumen komisi. Tombol Tambah memunculkan Modal Form penarikan total omset/pelunasan wiraniaga periode tertentu, kalkulasi komisi otomatis, dan tombol persetujuan pencairan.
 
 - Tax `tax`
-  Komponen :Tax Doc No, Invoice No, Tax Code (PPN/PPh), Customer NPWP, DPP Amount, Tax Amount, Tax Invoice No (Faktur Pajak), Status Export/EFaktur
+  Komponen : Tax Doc No, Invoice No, Tax Code (PPN/PPh), Customer NPWP, DPP Amount, Tax Amount, Tax Invoice No (Faktur Pajak), Status Export/EFaktur
   Fungsi : Mengelola pencatatan kewajiban pajak penjualan (seperti PPN) dan integrasi pembuatan Seri Faktur Pajak.
+  Penjelasan UI : Tampilan awal berupa data grid rekapitulasi Pajak Penjualan dilengkapi fitur filter status E-Faktur dan tombol ekspor data XML/CSV Faktur Pajak.
 
 ## Transit Area `#`
 

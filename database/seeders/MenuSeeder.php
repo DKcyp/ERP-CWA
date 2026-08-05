@@ -79,12 +79,7 @@ class MenuSeeder extends Seeder
             'Sales & Distribution' => [
                 'icon' => 'bi bi-cart-check-fill',
                 'items' => [
-                    'Customer Master' => '#',
-                    'Customer Group' => '#',
-                    'Customer Area' => '#',
-                    'WA Name' => '#',
-                    'Customer Tools' => '#',
-                    'Customer Centre' => '#',
+                    'Dashboard Sales & Distribution' => 'sales-dashboard',
                     'Customer Balance Summary' => '#',
                     'AR Warehouse Report' => '#',
                     'Customer Point' => [
@@ -182,6 +177,12 @@ class MenuSeeder extends Seeder
             'Master Data' => [
                 'icon' => 'bi bi-database-fill',
                 'items' => [
+                    'Customer Master' => 'customer-master',
+                    'Customer Group' => 'customer-group',
+                    'Customer Area' => 'customer-area',
+                    'WA Name' => 'wa-name',
+                    'Customer Tools' => 'customer-tools',
+                    'Customer Centre' => 'customer-centre',
                     'Product' => [
                         'Product' => '#',
                         'Brand' => '#',

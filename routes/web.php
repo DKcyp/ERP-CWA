@@ -130,6 +130,7 @@ use App\Http\Controllers\MaterialManagement\ProductStockMinusReportController;
 use App\Http\Controllers\MaterialManagement\ProductMinMaxStockCheckController;
 use App\Http\Controllers\MaterialManagement\ProductCOGSMonthlyReportController;
 use App\Http\Controllers\MaterialManagement\ProductCOGSDailyReportController;
+use App\Http\Controllers\SalesDistribution\SalesDashboardController;
 use App\Http\Controllers\SalesDistribution\ArWarehouseReportController;
 use App\Http\Controllers\SalesDistribution\PointSettingController;
 use App\Http\Controllers\SalesDistribution\CustomerPointPromoRuleController;
@@ -1252,6 +1253,11 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [SalesOrderFulfilmentController::class, 'index'])->name('index');
             Route::get('/table', [SalesOrderFulfilmentController::class, 'table'])->name('table');
             Route::get('/{id}', [SalesOrderFulfilmentController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('sales-dashboard')->name('sales-dashboard.')->group(function () {
+            Route::get('/', [SalesDashboardController::class, 'index'])->name('index');
+            Route::get('/data', [SalesDashboardController::class, 'data'])->name('data');
         });
 
         Route::prefix('daily-sales-order-report')->name('daily-sales-order-report.')->group(function () {
