@@ -113,7 +113,7 @@ $(function(){
     $('#filterSearch').on('keyup', debounce(function(){ table.ajax.reload(); }, 300));
     $('#filterCurrency').on('change', function(){ table.ajax.reload(); });
 
-    $.get('{{ route("customer-balance-summary.table") }}', {
+    $.get('{{ route("customer-balance.table") }}', {
         draw:1, start:0, length:100, 'columns[0][data]':'DT_RowIndex', 'order[0][column]':1, 'order[0][dir]':'asc'
     }, function(r){
         const data = r.data || [];
