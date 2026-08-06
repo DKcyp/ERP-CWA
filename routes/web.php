@@ -187,6 +187,7 @@ use App\Http\Controllers\TransitArea\UbmNewProductSalesReportController;
 use App\Http\Controllers\TransitArea\UbmCollectionProgressReportController;
 use App\Http\Controllers\TransitArea\DailySalesAchievementReportController;
 use App\Http\Controllers\TransitArea\PmbController;
+use App\Http\Controllers\TransitArea\TransitAreaDashboardController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -1609,6 +1610,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/generator', [ScaffoldController::class, 'store'])->name('generator.store');
     
     Route::get('/menu-search', [MenuSearchController::class, 'search'])->name('menu.search');
+    Route::get('/transit-area-dashboard', [TransitAreaDashboardController::class, 'index'])->name('transit-area-dashboard');
+    Route::get('/transit-area-dashboard/data', [TransitAreaDashboardController::class, 'data'])->name('transit-area-dashboard-data');
 
 });
 

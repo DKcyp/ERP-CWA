@@ -134,6 +134,7 @@ class MenuSeeder extends Seeder
             'Transit Area' => [
                 'icon' => 'bi bi-signpost-2-fill',
                 'items' => [
+                    'Dashboard Transit Area' => 'transit-area-dashboard',
                     'Daily Sales Invoice Report' => '#',
                     'Daily Sales PO Closing Report' => '#',
                     'Daily Sales Return Report' => '#',
@@ -347,7 +348,7 @@ class MenuSeeder extends Seeder
                                     'code' => Str::slug($grandChildName),
                                 ], [
                                     'name' => $grandChildName,
-                                    'url' => Str::slug($grandChildName),
+                                    'url' => is_string($grandChildUrl) ? $grandChildUrl : '#',
                                     'icon' => 'bi bi-file-earmark-text',
                                     'main_menu' => $menuL3->id,
                                     'menu_hassub' => 0,
@@ -361,7 +362,7 @@ class MenuSeeder extends Seeder
                                 'code' => Str::slug($childName),
                             ], [
                                 'name' => $childName,
-                                'url' => Str::slug($childName),
+                                'url' => is_string($childUrl) ? $childUrl : '#',
                                 'icon' => 'bi bi-file-earmark-text',
                                 'main_menu' => $menuL2->id,
                                 'menu_hassub' => 0,
@@ -377,7 +378,7 @@ class MenuSeeder extends Seeder
                         'code' => Str::slug($name),
                     ], [
                         'name' => $name,
-                        'url' => Str::slug($name),
+                        'url' => is_string($val) ? $val : '#',
                         'icon' => 'bi bi-file-earmark',
                         'main_menu' => $topMenu->id,
                         'menu_hassub' => 0,

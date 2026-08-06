@@ -976,89 +976,113 @@ Create Doc. From CSV
   Komponen : Tax Doc No, Invoice No, Tax Code (PPN/PPh), Customer NPWP, DPP Amount, Tax Amount, Tax Invoice No (Faktur Pajak), Status Export/EFaktur
   Fungsi : Mengelola pencatatan kewajiban pajak penjualan (seperti PPN) dan integrasi pembuatan Seri Faktur Pajak.
   Penjelasan UI : Tampilan awal berupa data grid rekapitulasi Pajak Penjualan dilengkapi fitur filter status E-Faktur dan tombol ekspor data XML/CSV Faktur Pajak.
-
 ## Transit Area `#`
+
+- Dashboard Transit Area `/transit-area-dashboard`
+  Komponen : Total_Transit_Sales_Today, Total_Active_Depo_Count, Total_AR_Depo_Outstanding, Target_Achievement_Rate_Percent, Top_Depo_Performance_Ranking, Chart_Daily_Depo_Sales_Trend, Chart_Depo_Collection_Vs_Target, Table_Overdue_Depo_AR_Alert
+  Fungsi : Menyajikan gambaran umum secara visual dan real-time mengenai performa penjualan harian, pencapaian target depo, posisi piutang (AR) transit, progres penagihan, serta pemeringkatan kinerja antar-depo.
+  Penjelasan UI : Tampilan awal berupa dashboard interaktif berisi ringkasan widget angka (card stat), grafik tren penjualan harian per depo, diagram perbandingan target vs realisasi penagihan, serta tabel peringatan piutang berumur kritis (>90 hari). Halaman bersifat Read-Only dan dilengkapi filter periode tanggal, wilayah/area, serta pilihan Transit Area/Depo.
 
 - Daily Sales Invoice Report `/daily-sales-invoice-report`
   Komponen : Date, Warehouse, Cust. ID, Name, Area, Sales Invoice, Delivery Order, Prod. ID, Name, UOM, Qty, Price, Disc. %, Disc. Amount, Total Potongan, Total, DPP, PPN, Due Date, Tonase, Sales, Brand, Note
   Fungsi : Menyajikan laporan harian rincian Faktur Penjualan per item barang lengkap dengan nilai DPP, PPN, tonase, dan salesman terkait pada Transit Area/Depo.
+  Penjelasan UI : Tampilan berupa table analitik Read-Only berfitur pencarian multi-kolom dan pengelompokan per Faktur/Pelanggan. Dilengkapi filter tanggal harian, gudang/depo, brand, salesman, dan tombol Ekspor Excel/PDF.
 
 - Daily Sales PO Closing Report `/daily-sales-po-closing-report`
   Komponen : Date, Warehouse, Cust. ID, Name, Area, Sales Invoice, Delivery Order, Prod. ID, Name, UOM, Qty, Price, Disc. %, Disc. Amount, Total Potongan, Total, DPP, PPN, Grand Total, Due Date, Tonase, Note
   Fungsi : Memantau harian transaksi penutupan pesanan (PO Closing) yang telah dipenuhi hingga penerbitan faktur penjualan dan pengiriman barang.
+  Penjelasan UI : Tampilan berupa table laporan harian Read-Only dilengkapi penanda status penutupan transaksi (Closed PO). Dilengkapi filter tanggal, gudang/depo, area, serta tombol cetak rekapitulasi.
 
 - Daily Sales Return Report `/daily-sales-return-report`
   Komponen : Date, Kode Area, Area, Cust. ID, Name, Sales Invoice, Prod. ID, Prod. Name, UOM, Qty, Price, Disc. %, Total Potongan, Grand Total, Total Invoice
   Fungsi : Menyajikan laporan harian pengembalian barang (retur) dari pelanggan beserta pemotongan nilai faktur tagihannya.
+  Penjelasan UI : Tampilan berupa table analitik Read-Only rincian barang retur. Dilengkapi filter tanggal harian, area, pelanggan, dan subtotal pemotongan nilai faktur.
 
 - Daily Sales by Brand Report `/daily-sales-by-brand-report`
   Komponen : Date, Warehouse, Area, Brand ID, Brand Name, Total Qty Sold, Gross Amount, Discount Amount, Net Sales Amount, Percentage Contribution (%)
   Fungsi : Menampilkan rekapitulasi pencapaian omset dan volume penjualan harian yang dikelompokkan berdasarkan merek/brand produk.
+  Penjelasan UI : Tampilan berupa table rekapitulasi berbasis data grid dengan kolom persentase kontribusi (%) yang dilengkapi indikator grafik batang mini (progress bar). Dilengkapi filter tanggal, depo, dan brand.
 
 - Daily Payment Recap Report `/daily-payment-recap-report`
   Komponen : No TTP, Date, Kode Area, Area, Cust. ID, Name, Sales Invoice, Bank, Cash, Discount, Lain-Lain, Retur, Total Bank In, Outstanding, Note, Tgl. TTP, Payment ID, Due Date, Invoice Total, Term, Diskon Promo (%)
   Fungsi : Menyajikan rekapitulasi harian pelunasan piutang pelanggan dari berbagai instrumen pembayaran (Bank, Kas, Diskon, Retur) terhadap faktur tagihan.
+  Penjelasan UI : Tampilan berupa table matriks pembayaran Read-Only yang memisahkan kolom Kas, Bank, Diskon, dan Retur secara transparan. Dilengkapi filter rentang tanggal, TTP, area, dan pilihan instrumen pembayaran.
 
 - Cheque Management `/cheque-management`
   Komponen : Date, Cust. ID, Name, No. BG, Bank, Valid Date, Amount, Valid, Note, Payment
   Fungsi : Mengelola dan memverifikasi status kelayakan instrumen Bilyet Giro (BG) dan Cek yang diterima dari pelanggan sebelum dikliringkan.
+  Penjelasan UI : Tampilan awal berupa data grid berpenanda badge status warkat (Draft / Valid / Kliring / Bounced-Cair Tolak). Tombol Tambah memunculkan Modal Form input No. BG, Bank Penerbit, Tanggal Efektif, Nominal, dan ID Pelanggan. Tombol Aksi per baris menyediakan konfirmasi kelayakan warkat (Valid/Reject).
 
 - RLHP (Rincian Laporan Hasil Penagihan) `/rlhp`
   Komponen : Doc. ID, Doc. Date, Payment From Date, Payment To Date, Depo, Tipe, Total Cash, Total Giro, Notes, User ID
   Fungsi : Mengonsolidasi pencatatan hasil penagihan harian oleh kolektor/kasir depo berdasarkan rincian penerimaan tunai dan giro.
+  Penjelasan UI : Tampilan awal berupa table data grid dokumen RLHP. Tombol Tambah memunculkan Modal Form berstruktur Header (Depo, Tipe Penagihan, Periode Tagih, User/Kolektor) dan Data Grid Rincian Hasil Tagihan (Tunai & Bilyet Giro). Edit memunculkan modal terisi, Hapus memunculkan alert konfirmasi.
 
 - AR per Customer Report `/ar-per-customer-report`
   Komponen : Warehouse, Area, Cust. ID, Name, Saldo Awal, Penjualan, PO Closing, Bank, Cash, Discount, Lain-Lain, Retur, Saldo Akhir, Sisa Piutang, Selisih, Salesman, < 45, > 45, > 90, > 120
   Fungsi : Laporan mutasi piutang lengkap per pelanggan beserta analisis umur piutang (Aging AR) dalam segmen rentang hari tertentu.
+  Penjelasan UI : Tampilan berupa table mutasi saldo Read-Only (Saldo Awal + Penjualan - Pelunasan = Saldo Akhir) yang tersambung dengan kolom matriks Aging AR (<45 hari hingga >120 hari). Dilengkapi filter depo, area, salesman, dan opsi penyembunyian saldo nol.
 
 - Customer AR Position Report `/customer-ar-position-report`
   Komponen : Warehouse, Area, Cust. ID, Name, Sales, Saldo Piutang, Januari, Februari, Maret, April, Mei, Juni, Juli, Agustus, September, Oktober, November, Desember, Saldo Piutang, Total Piutang
   Fungsi : Memantau posisi dan tren perkembangan saldo piutang pelanggan secara bulanan selama satu tahun berjalan.
+  Penjelasan UI : Tampilan berupa table matriks tren bulanan (12 Bulan) Read-Only untuk evaluasi konsistensi pembayaran pelanggan. Dilengkapi filter tahun berjalan, depo, area, dan salesman.
 
 - Invoice Customer AR List Report `/invoice-customer-ar-list-report`
   Komponen : Warehouse, Area, Cust. ID, Name, Sales, Saldo Piutang, Januari, Februari, Maret, April, Mei, Juni, Juli, Agustus, September, Oktober, November, Desember, Saldo Piutang, Total Piutang
   Fungsi : Menyajikan rincian daftar faktur outstanding milik pelanggan yang terdistribusi berdasarkan bulan penerbitan.
+  Penjelasan UI : Tampilan berupa table rincian faktur terkelompok per pelanggan dan per bulan penerbitan. Dilengkapi filter depo, salesman, serta fitur expandable row untuk melihat nomor faktur spesifik.
 
 - Salesman AR List PMB `/salesman-ar-list-pmb`
   Komponen : Salesman, Collection 53-90, Collection > 90, Total Collection, Ach. Coll. 0-52, Ach. Coll. 53-90, Ach. Coll. >90, Total Ach., Percentage
-  Fungsi : Laporan evaluasi kinerjasa pencapaian penagihan piutang (Collection) oleh masing-masing salesman berdasarkan kategori umur piutang.
+  Fungsi : Laporan evaluasi kinerja pencapaian penagihan piutang (Collection) oleh masing-masing salesman berdasarkan kategori umur piutang.
+  Penjelasan UI : Tampilan berupa table kualifikasi kinerja penagihan salesman Read-Only dilengkapi persentase pencapaian (% Achievement) dan indikator warna sesuai batas target PMB.
 
 - Invoice Expedition `/invoice-expedition`
   Komponen : Doc. ID, Date, Warehouse, Salesman, Notes, User ID
   Fungsi : Mengelola pengiriman dan serah terima dokumen fisik faktur penjualan dari depo pusat ke salesman/kolektor lapangan.
+  Penjelasan UI : Tampilan awal berupa table data grid resi ekspedisi faktur internal. Tombol Tambah memunculkan Modal Form berstruktur Header (Salesman, Depo, Tanggal Kirim) dan Data Grid pemilihan daftar faktur fisik yang diserahterimakan.
 
 - Shipping Invoice Expedition `/shipping-invoice-expedition`
   Komponen : Doc. ID, Date, Warehouse, Salesman, Notes, User ID
   Fungsi : Mengelola pengiriman berkas faktur dan surat jalan yang dilampirkan bersama armada pengiriman barang ke lokasi pelanggan.
+  Penjelasan UI : Tampilan awal berupa table data grid pengiriman berkas pengiriman. Tombol Tambah memunculkan Modal Form pemilihan armada/pengemudi, daftar Surat Jalan (DO), dan faktur fisik terkait.
 
 - Transit Area Target `/transit-area-target`
   Komponen : Warehouse, Target
   Fungsi : Menetapkan kuota target penjualan dan penagihan bulanan untuk masing-masing lokasi Transit Area/Depo.
+  Penjelasan UI : Tampilan berupa data grid pengisian target tahunan/bulanan per Depo. Tombol Tambah / Edit memunculkan Modal Form berstruktur Lookup Depo/Warehouse, Periode Bulan/Tahun, serta Nilai Target Penjualan & Penagihan (RP/Qty).
 
 - UBM Daily Control Progress Sales Report `/ubm-daily-control-progress-sales-report`
   Komponen : Transit Area, Target Bulanan, Toleransi, Belum Tercapai, Tahun Lalu, Bulan Lalu, Pencapaian TA, Target Hari Ini, Akumulasi, % Target, % Target TLR
   Fungsi : Laporan kontrol harian untuk memantau laju pencapaian target penjualan depo dibandingkan dengan periode lalu dan batas toleransi.
+  Penjelasan UI : Tampilan berupa dashboard laporan kontrol harian Read-Only yang membandingkan run-rate harian, akumulasi omset, serta gap terhadap target bulanan dan batas toleransi (TLR).
 
 - Transit Area New Brand `/transit-area-new-brand`
   Komponen : id, Brand
   Fungsi : Mengatur pendaftaran dan penetapan penanganan produk merek baru (New Brand) di Transit Area/Depo.
+  Penjelasan UI : Tampilan berupa table pendaftaran merek baru. Tombol Tambah memunculkan Modal Form Lookup Brand dan penentuan depo penanggung jawab penanganan penetrasi produk.
 
 - UBM New Product Sales Report `/ubm-new-product-sales-report`
   Komponen : Transit Area, Noo
   Fungsi : Memantau kinerja penetrasi produk baru dan penambahan Outlet Baru (NOO - New Open Outlet) pada Transit Area.
+  Penjelasan UI : Tampilan berupa table analitik Read-Only pencapaian sebaran produk baru dan statistik akumulasi pembukaan toko/outlet baru (NOO) per depo.
 
 - UBM Collection Progress Report `/ubm-collection-progress-report`
   Komponen : Transit Area, Collection 53-90, Collection > 90, Total Collection, Uncollected, Days Before, Target, Accumulation, Collection Tertagih (%), Rangking
   Fungsi : Memantau dan meranking progres pencapaian penagihan piutang overdue per Transit Area secara komparatif.
+  Penjelasan UI : Tampilan berupa table klasemen pemeringkatan (Ranking) penagihan depo Read-Only yang dilengkapi indikator visual warna peringkat (Top 3 Green, Bottom Red).
 
 - Daily Sales Achievement Report `/daily-sales-achievement-report`
   Komponen : Transit Area, Salesman, Target
   Fungsi : Menyajikan laporan harian persentase pencapaian target penjualan oleh tim sales di Transit Area.
+  Penjelasan UI : Tampilan berupa table laporan harian pencapaian individu salesman terhadap target depo dilengkapi kolom rasio pencapaian (% Achievement).
 
 - PMB (Penetapan & Monitoring Bonus) `/pmb`
   Komponen : Period, Transit Area, Salesman ID, Target Collection, Achieved Collection, Incentive Rate, Penalty Amount, Total PMB Bonus, Status
   Fungsi : Mengelola skema insentif, pemantauan target pencapaian penagihan, dan kalkulasi bonus bulanan salesman/depo (PMB).
-
+  Penjelasan UI : Tampilan awal berupa table data grid pencairan insentif/bonus PMB. Tombol Tambah memunculkan Modal Form berstruktur Periode, Lookup Salesman/Depo, Kalkulasi Otomatis (Penagihan vs Target, Rate Insentif, Denda Overdue), Total Bonus Bersih, serta Tombol Persetujuan (Approve PMB).
+  
 ## System Menu
 
 - Dashboard `/`
