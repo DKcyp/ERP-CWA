@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NonCustomerController;
 use App\Http\Controllers\MarketingDashboardController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuSearchController;
@@ -1627,6 +1628,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/marketing-dashboard', [MarketingDashboardController::class, 'index'])->name('marketing-dashboard');
     Route::get('/marketing-dashboard/data', [MarketingDashboardController::class, 'data'])->name('marketing-dashboard.data');
+
+    Route::prefix('non-customer')->name('non-customer.')->group(function () {
+        Route::get('/', [NonCustomerController::class, 'index'])->name('index');
+        Route::get('/table', [NonCustomerController::class, 'table'])->name('table');
+        Route::post('/', [NonCustomerController::class, 'store'])->name('store');
+        Route::get('/{id}', [NonCustomerController::class, 'show'])->name('show');
+        Route::put('/{id}', [NonCustomerController::class, 'update'])->name('update');
+        Route::delete('/{id}', [NonCustomerController::class, 'destroy'])->name('destroy');
+    });
 
 });
 
