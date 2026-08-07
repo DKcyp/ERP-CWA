@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MarketingDashboardController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuSearchController;
 use App\Http\Controllers\ScaffoldController;
@@ -1623,6 +1624,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/menu-search', [MenuSearchController::class, 'search'])->name('menu.search');
     Route::get('/transit-area-dashboard', [TransitAreaDashboardController::class, 'index'])->name('transit-area-dashboard');
     Route::get('/transit-area-dashboard/data', [TransitAreaDashboardController::class, 'data'])->name('transit-area-dashboard-data');
+
+    Route::get('/marketing-dashboard', [MarketingDashboardController::class, 'index'])->name('marketing-dashboard');
+    Route::get('/marketing-dashboard/data', [MarketingDashboardController::class, 'data'])->name('marketing-dashboard.data');
 
 });
 

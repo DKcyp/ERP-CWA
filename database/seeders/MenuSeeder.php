@@ -182,6 +182,17 @@ class MenuSeeder extends Seeder
                     'SPPPK (Surat Perintah Persiapan & Penggunaan Kemasan)' => 'production-process-spppk',
                 ]
             ],
+            'Marketing' => [
+                'icon' => 'bi bi-megaphone-fill',
+                'items' => [
+                    'Dashboard Marketing' => 'marketing-dashboard',
+                    'Non Customer' => 'non-customer',
+                    'Marketing Visit' => 'marketing-visit',
+                    'New Customer Incentive' => 'new-customer-incentive',
+                    'Index Komisi Collection' => 'index-komisi-collection',
+                    'Marketing Komisi Collection' => 'marketing-komisi-collection',
+                ]
+            ],
             'Master Data' => [
                 'icon' => 'bi bi-database-fill',
                 'items' => [
