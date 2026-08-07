@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NewCustomerIncentiveController;
 use App\Http\Controllers\NonCustomerController;
 use App\Http\Controllers\IndexKomisiCollectionController;
+use App\Http\Controllers\MarketingKomisiCollectionController;
 use App\Http\Controllers\MarketingVisitController;
 use App\Http\Controllers\MarketingDashboardController;
 use App\Http\Controllers\MenuController;
@@ -1666,6 +1667,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', [IndexKomisiCollectionController::class, 'show'])->name('show');
         Route::put('/{id}', [IndexKomisiCollectionController::class, 'update'])->name('update');
         Route::delete('/{id}', [IndexKomisiCollectionController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('marketing-komisi-collection')->name('marketing-komisi-collection.')->group(function () {
+        Route::get('/', [MarketingKomisiCollectionController::class, 'index'])->name('index');
+        Route::get('/table', [MarketingKomisiCollectionController::class, 'table'])->name('table');
+        Route::post('/', [MarketingKomisiCollectionController::class, 'store'])->name('store');
+        Route::get('/{id}', [MarketingKomisiCollectionController::class, 'show'])->name('show');
+        Route::put('/{id}', [MarketingKomisiCollectionController::class, 'update'])->name('update');
+        Route::delete('/{id}', [MarketingKomisiCollectionController::class, 'destroy'])->name('destroy');
     });
 
 });
