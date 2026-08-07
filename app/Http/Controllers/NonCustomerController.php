@@ -29,16 +29,24 @@ class NonCustomerController extends Controller
         $kecamatans = ['Bandung Wetan','Menteng','Gedung Sari','Tegalrejo','Gubeng','Kemanggisan','Depok Timur','Cimahi Utara','Batu Ampar'];
         $positions = ['Owner','Manager','Staff Purchasing','Staff Marketing','Director','Supervisor','Kepala Toko'];
 
+        $names = ['PT Maju Jaya','CV Berkah','Toko Sinar','UD Makmur','PT Sentosa','CV Pelangi','Toko Abadi','UD Sejahtera','PT Bintang','CV Cahaya'];
+        $contacts = ['Budi Santoso','Rina Wati','Ahmad Fauzi','Dewi Sari','Hendra Wijaya','Siti Aminah','Rudi Hartono','Lina Marlena','Fajar Pratama','Maya Anggraeni'];
+        $streets = ['Sudirman','Thamrin','Dago','Asia Afrika','Brimob','Soekarno-Hatta','Diponegoro','Ahmad Yani'];
+        $sources = ['Referral','Sales Visit','Online','Event','Exhibition'];
+
         for ($i = 0; $i < 50; $i++) {
             $city = $cities[array_rand($cities)];
             $phone = '022-'.rand(1000000,9999999);
             $mobile = '08'.rand(10000000000,99999999999);
+            $name = $names[array_rand($names)];
+            $contact = $contacts[array_rand($contacts)];
+            $street = $streets[array_rand($streets)];
             $this->store->create([
                 'non_customer_id' => 'NC-'.str_pad($i + 1, 5, '0', STR_PAD_LEFT),
-                'name' => ['PT Maju Jaya','CV Berkah','Toko Sinar','UD Makmur','PT Sentosa','CV Pelangi','Toko Abadi','UD Sejahtera','PT Bintang','CV Cahaya'][array_rand([0,1,2,3,4,5,6,7,8,9])].' '.($i + 1),
-                'contact_person' => ['Budi Santoso','Rina Wati','Ahmad Fauzi','Dewi Sari','Hendra Wijaya','Siti Aminah','Rudi Hartono','Lina Marlena','Fajar Pratama','Maya Anggraeni'][array_rand([0,1,2,3,4,5,6,7,8,9])],
+                'name' => $name.' '.($i + 1),
+                'contact_person' => $contact,
                 'position' => $positions[array_rand($positions)],
-                'address1' => 'Jl. '.['Sudirman','Thamrin','Dago','Asia Afrika','Brimob','Soekarno-Hatta','Diponegoro','Ahmad Yani'][array_rand([0,1,2,3,4,5,6,7])].' No. '.rand(1,200),
+                'address1' => 'Jl. '.$street.' No. '.rand(1,200),
                 'address2' => 'RT '.rand(1,20).'/RW '.rand(1,10),
                 'kecamatan' => $kecamatans[array_rand($kecamatans)],
                 'kabupaten' => $city,
@@ -50,10 +58,10 @@ class NonCustomerController extends Controller
                 'kode_area' => '0'.rand(21,39),
                 'phone' => $phone,
                 'mobile_phone' => $mobile,
-                'email' => strtolower(str_replace([' ','.'],['_',''],['Budi','Rina','Ahmad','Dewi','Hendra','Siti','Rudi','Lina','Fajar','Maya'][array_rand([0,1,2,3,4,5,6,7,8,9])).'@gmail.com')),
+                'email' => strtolower(str_replace(' ','_',str_replace('.','_',$contact)).'@gmail.com'),
                 'employee_id' => 'EMP-'.str_pad(rand(1,20), 3, '0', STR_PAD_LEFT),
                 'created_date' => date('Y-m-d', strtotime('-'.rand(1,180).' days')),
-                'note' => 'Prospek dari '.['Referral','Sales Visit','Online','Event','Exhibition'][rand(0,4)],
+                'note' => 'Prospek dari '.$sources[array_rand($sources)],
                 'npwp' => rand(10,99).'.'.rand(100,999).'.'.rand(100,999).'.'.'0-'.rand(10,99).'.'.rand(100,999),
                 'status' => $statuses[array_rand($statuses)],
             ]);
