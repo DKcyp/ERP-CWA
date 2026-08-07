@@ -3,6 +3,7 @@
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NonCustomerController;
+use App\Http\Controllers\MarketingVisitController;
 use App\Http\Controllers\MarketingDashboardController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuSearchController;
@@ -1636,6 +1637,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', [NonCustomerController::class, 'show'])->name('show');
         Route::put('/{id}', [NonCustomerController::class, 'update'])->name('update');
         Route::delete('/{id}', [NonCustomerController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('marketing-visit')->name('marketing-visit.')->group(function () {
+        Route::get('/', [MarketingVisitController::class, 'index'])->name('index');
+        Route::get('/table', [MarketingVisitController::class, 'table'])->name('table');
+        Route::post('/', [MarketingVisitController::class, 'store'])->name('store');
+        Route::get('/{id}', [MarketingVisitController::class, 'show'])->name('show');
+        Route::put('/{id}', [MarketingVisitController::class, 'update'])->name('update');
+        Route::delete('/{id}', [MarketingVisitController::class, 'destroy'])->name('destroy');
     });
 
 });
