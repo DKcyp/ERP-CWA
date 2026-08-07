@@ -212,6 +212,8 @@
     Komponen : Id, Customer ID, Centre Code, Centre Name, Address, PIC Name, Phone, Email, Warehouse ID
     Fungsi : Mengelola data cabang, titik serah, atau unit lokasi penyerahan barang milik pelanggan utama/korporat.
     Penjelasan UI : Tampilan awal berupa table data grid lokasi titik serah per pelanggan. Tombol Tambah memunculkan Modal Form berstruktur Kode/Nama Cabang, Alamat Lengkap, Kontak PIC, dan Pemetaan Gudang Alokasi.
+- marketing Area
+  - master Area
 
 ##
 
@@ -1083,12 +1085,44 @@ Create Doc. From CSV
   Fungsi : Mengelola skema insentif, pemantauan target pencapaian penagihan, dan kalkulasi bonus bulanan salesman/depo (PMB).
   Penjelasan UI : Tampilan awal berupa table data grid pencairan insentif/bonus PMB. Tombol Tambah memunculkan Modal Form berstruktur Periode, Lookup Salesman/Depo, Kalkulasi Otomatis (Penagihan vs Target, Rate Insentif, Denda Overdue), Total Bonus Bersih, serta Tombol Persetujuan (Approve PMB).
   
-## System Menu
+## Marketing `#`
 
+- Dashboard Marketing `marketing-dashboard`
+  Komponen : Total_Prospect_Non_Customer, Total_Marketing_Visits_Today, Total_NOO_This_Month, Total_Incentive_Paid, Chart_Visit_Trend, Chart_NOO_Growth_By_Area, Chart_Commission_Distribution_By_Sales, Table_Top_Performers_Sales
+  Fungsi : Menyajikan gambaran umum secara visual dan real-time mengenai aktivitas prospeksi lapangan, jumlah kunjungan marketing, pertumbuhan Outlet Baru (NOO), serta proyeksi dan realisasi komisi/insentif tim sales/BDH.
+  Penjelasan UI : Tampilan awal berupa dashboard interaktif berisi ringkasan widget angka (card stat), grafik tren kunjungan lapangan, diagram pertumbuhan pelanggan baru per wilayah, serta tabel peringkat pencapaian tim marketing. Halaman bersifat Read-Only dan dilengkapi filter periode tanggal, area/rayon, serta nama sales/marketing.
+
+- Non Customer `non-customer`
+  Komponen : Non Customer ID, Name, Contact, Position, Address1, Address2, Kecamatan, Kabupaten, City, ZIP, Province, Country, Channel_Outlet, Kode_area, Phone, Mobile_Phone, Email, Employee_Id, Created_Date, Note, NPWP, Status
+  Fungsi : Mengelola data calon pelanggan (prospek/lead) yang belum terdaftar secara resmi sebagai pelanggan aktif, mencakup profil lokasi, kontak PIC, serta status konversi prospek.
+  Penjelasan UI : Tampilan awal berupa table data grid berfitur pencarian cepat dan filter status prospek (Prospect/In Follow-up/Converted/Rejected). Tombol [ + Tambah Non Customer ] memunculkan Pop-up Modal Form berstruktur Header Info, Alamat Lengkap, Kontak PIC, serta Sales Penanggung Jawab. Edit memunculkan modal terisi, Hapus memunculkan alert konfirmasi.
+
+- Marketing Visit `marketing-visit`
+  Komponen : Date, Hari, ID, Name, Tipe, NOO
+  Fungsi : Mencatat dan memantau aktivitas kunjungan harian tim marketing/sales ke lokasi prospek atau pelanggan, serta mengidentifikasi hasil kunjungan berupa pembukaan toko/outlet baru (NOO).
+  Penjelasan UI : Tampilan awal berupa table log kunjungan harian berpenanda indikator status NOO (Ya/Tidak). Tombol Tambah memunculkan Modal Form input Tanggal, Hari, Lookup Non Customer/Customer ID, Tipe Kunjungan (Canvas/Routine/Prospeksi), dan Checkbox NOO. Edit memunculkan modal terisi, Hapus memunculkan alert konfirmasi.
+
+- New Customer Incentive `new-customer-incentive`
+  Komponen : TA, Sales, Customer, Pemilik, Alamat, City, Insentif Sales, Insentif BDH, Bonus DOS, Total
+  Fungsi : Menghitung dan mengelola alokasi insentif atas keberhasilan akuisisi pelanggan baru (NOO) bagi Sales, BDH (Business Development Head), dan DOS (Director of Sales).
+  Penjelasan UI : Tampilan awal berupa table data grid rekapitulasi insentif NOO per area/depo. Tombol Tambah memunculkan Modal Form pemilihan Transit Area (TA), Sales, dan Customer terkonversi, yang secara otomatis menghitung proporsi Insentif Sales, BDH, dan DOS.
+
+- Index Komisi Collection `index-komisi-collection`
+  Komponen : Type, Min, Max, Index Commission
+  Fungsi : Menetapkan matriks acuan nilai indeks komisi berdasarkan rentang pencapaian target penagihan piutang (Collection).
+  Penjelasan UI : Tampilan berupa table aturan skema indeks komisi. Tombol Tambah / Edit memunculkan Modal Form input Tipe Kategori, Nilai Persentase Minimal (Min), Nilai Persentase Maksimal (Max), serta Bobot Index Commission. Hapus memunculkan alert konfirmasi.
+
+- Marketing Komisi Collection `marketing-komisi-collection`
+  Komponen : TA, Marketing, Target Usia Piutang > 90, Pencapaian, Persentase, Index Target >= 30, Komisi, Target Usia Piutang <= 90, Pencapaian, Persentase, Index Target >= 80, Komisi, Total Komisi
+  Fungsi : Mengkalkulasi dan memproses pencairan komisi penagihan bagi tim marketing/sales berdasarkan performa penagihan piutang lancar (<=90 hari) dan piutang lama (>90 hari).
+  Penjelasan UI : Tampilan awal berupa table kalkulasi komisi bulanan per salesman. Tombol Tambah / Hitung Komisi memunculkan Modal Form berstruktur Pilihan Periode, Transit Area (TA), Lookup Marketing, serta data grid kalkulasi otomatis yang membandingkan target vs pencapaian piutang, penetapan indeks, dan total nilai komisi bersih yang berhak diterima.
+
+## System Menu
 - Dashboard `/`
 - Setting `setting`
-- Master `master`
   - User `user`
+  - Role Permision `role-permision`
   - Role `role-menu`
   - Config App `configuration`
-  - Area `area`
+  - Menu `menu`
+  - 

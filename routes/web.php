@@ -6,6 +6,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuSearchController;
 use App\Http\Controllers\ScaffoldController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RolePermisionController;
 use App\Http\Controllers\RoleMenusController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -200,6 +201,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/updatePassword', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 
     Route::middleware('cekRole')->group(function () {
+        Route::prefix('role-permision')->name('role-permision.')->group(function () {
+            Route::get('/', [RolePermisionController::class, 'index'])->name('index');
+            Route::get('/table', [RolePermisionController::class, 'table'])->name('table');
+            Route::post('/', [RolePermisionController::class, 'store'])->name('store');
+            Route::post('/show', [RolePermisionController::class, 'show'])->name('show');
+            Route::post('/delete', [RolePermisionController::class, 'destroy'])->name('destroy');
+            Route::get('/menus', [RolePermisionController::class, 'getMenus'])->name('getMenus');
+            Route::post('/save-permission', [RolePermisionController::class, 'savePermission'])->name('savePermission');
+        });
+
         Route::prefix('role-menu')->name('role.')->group(function () {
             Route::get('/', [RoleMenusController::class, 'index'])->name('index');
             Route::get('/table', [RoleMenusController::class, 'table'])->name('table');
