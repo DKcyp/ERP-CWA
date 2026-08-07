@@ -51,8 +51,8 @@
                         <th>Period</th>
                         <th>TA</th>
                         <th>Marketing</th>
-                        <th colspan="4" class="text-center bg-danger bg-opacity-25">Piutang >90 Hari</th>
-                        <th colspan="4" class="text-center bg-primary bg-opacity-25">Piutang ≤90 Hari</th>
+                        <th colspan="5" class="text-center bg-danger bg-opacity-25">Piutang >90 Hari</th>
+                        <th colspan="5" class="text-center bg-primary bg-opacity-25">Piutang ≤90 Hari</th>
                         <th class="text-end">Total</th>
                         <th width="90">Aksi</th>
                     </tr>
@@ -62,10 +62,12 @@
                         <th class="text-end" style="font-size:0.75rem;">Achv</th>
                         <th class="text-center" style="font-size:0.75rem;">%</th>
                         <th class="text-center" style="font-size:0.75rem;">Idx</th>
+                        <th class="text-end" style="font-size:0.75rem;">Komisi</th>
                         <th class="text-end" style="font-size:0.75rem;">Target</th>
                         <th class="text-end" style="font-size:0.75rem;">Achv</th>
                         <th class="text-center" style="font-size:0.75rem;">%</th>
                         <th class="text-center" style="font-size:0.75rem;">Idx</th>
+                        <th class="text-end" style="font-size:0.75rem;">Komisi</th>
                         <th></th><th></th>
                     </tr>
                 </thead>
