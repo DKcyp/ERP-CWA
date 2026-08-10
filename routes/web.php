@@ -92,6 +92,7 @@ use App\Http\Controllers\ProductionPlanning\RealisasiJadwalPastaReportController
 use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingListController;
 use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingReportController;
 use App\Http\Controllers\MonitoringPengujianKemasanController;
+use App\Http\Controllers\MonitoringBeratDalamKemasanController;
 use App\Http\Controllers\ProductionPlanning\ProductionMaterialCheckStockController;
 use App\Http\Controllers\ProductionPlanning\ProductionStockLevelController;
 use App\Http\Controllers\ProductionPlanning\ProductionSTBJController;
@@ -1144,6 +1145,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [MonitoringPengujianKemasanController::class, 'show'])->name('show');
             Route::put('/{id}', [MonitoringPengujianKemasanController::class, 'update'])->name('update');
             Route::delete('/{id}', [MonitoringPengujianKemasanController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('monitoring-berat-dalam-kemasan')->name('monitoring-berat-dalam-kemasan.')->group(function () {
+            Route::get('/', [MonitoringBeratDalamKemasanController::class, 'index'])->name('index');
+            Route::get('/table', [MonitoringBeratDalamKemasanController::class, 'table'])->name('table');
+            Route::post('/', [MonitoringBeratDalamKemasanController::class, 'store'])->name('store');
+            Route::get('/{id}', [MonitoringBeratDalamKemasanController::class, 'show'])->name('show');
+            Route::put('/{id}', [MonitoringBeratDalamKemasanController::class, 'update'])->name('update');
+            Route::delete('/{id}', [MonitoringBeratDalamKemasanController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('stbj')->name('stbj.')->group(function () {
