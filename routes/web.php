@@ -93,6 +93,7 @@ use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingListControlle
 use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingReportController;
 use App\Http\Controllers\MonitoringPengujianKemasanController;
 use App\Http\Controllers\MonitoringBeratDalamKemasanController;
+use App\Http\Controllers\MonitoringSpkpController;
 use App\Http\Controllers\ProductionPlanning\ProductionMaterialCheckStockController;
 use App\Http\Controllers\ProductionPlanning\ProductionStockLevelController;
 use App\Http\Controllers\ProductionPlanning\ProductionSTBJController;
@@ -1121,10 +1122,17 @@ Route::middleware('auth')->group(function () {
             Route::put('/{id}', [MonitoringPengujianKemasanController::class, 'update'])->name('update');
             Route::delete('/{id}', [MonitoringPengujianKemasanController::class, 'destroy'])->name('destroy');
         });
-        Route::get('/monitoring-berat-dalam-kemasan', function () { return view('placeholder', ['title' => 'Monitoring Berat Dalam Kemasan']); });
         Route::get('/monitoring-pengujian-bahan-baku', function () { return view('placeholder', ['title' => 'Monitoring Pengujian Bahan Baku']); });
-        Route::get('/monitoring-spkp', function () { return view('placeholder', ['title' => 'Monitoring SPKP']); });
         Route::get('/monitoring-sppbj', function () { return view('placeholder', ['title' => 'Monitoring SPPBJ']); });
+
+        Route::prefix('monitoring-spkp')->name('monitoring-spkp.')->group(function () {
+            Route::get('/', [MonitoringSpkpController::class, 'index'])->name('index');
+            Route::get('/table', [MonitoringSpkpController::class, 'table'])->name('table');
+            Route::post('/', [MonitoringSpkpController::class, 'store'])->name('store');
+            Route::get('/{id}', [MonitoringSpkpController::class, 'show'])->name('show');
+            Route::put('/{id}', [MonitoringSpkpController::class, 'update'])->name('update');
+            Route::delete('/{id}', [MonitoringSpkpController::class, 'destroy'])->name('destroy');
+        });
 
         Route::prefix('production-material-check-stock')->name('production-material-check-stock.')->group(function () {
             Route::get('/', [ProductionMaterialCheckStockController::class, 'index'])->name('index');
