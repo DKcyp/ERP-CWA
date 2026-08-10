@@ -193,6 +193,16 @@ class MenuSeeder extends Seeder
                     'Marketing Komisi Collection' => 'marketing-komisi-collection',
                 ]
             ],
+            'QC' => [
+                'icon' => 'bi bi-clipboard-check',
+                'items' => [
+                    'Monitoring Pengujian Kemasan' => 'monitoring-pengujian-kemasan',
+                    'Monitoring Berat Dalam Kemasan' => 'monitoring-berat-dalam-kemasan',
+                    'Monitoring Pengujian Bahan Baku' => 'monitoring-pengujian-bahan-baku',
+                    'Monitoring SPKP' => 'monitoring-spkp',
+                    'Monitoring SPPBJ' => 'monitoring-sppbj',
+                ]
+            ],
             'Master Data' => [
                 'icon' => 'bi bi-database-fill',
                 'items' => [
@@ -624,6 +634,11 @@ class MenuSeeder extends Seeder
             'UBM Collection Progress Report' => 'ubm-collection-progress-report',
             'Daily Sales Achievement Report' => 'daily-sales-achievement-report',
             'PMB (Penetapan & Monitoring Bonus)' => 'pmb-penetapan-monitoring-bonus',
+            'Monitoring Pengujian Kemasan' => 'monitoring-pengujian-kemasan',
+            'Monitoring Berat Dalam Kemasan' => 'monitoring-berat-dalam-kemasan',
+            'Monitoring Pengujian Bahan Baku' => 'monitoring-pengujian-bahan-baku',
+            'Monitoring SPKP' => 'monitoring-spkp',
+            'Monitoring SPPBJ' => 'monitoring-sppbj',
         ];
 
         return $map[$name] ?? $fallback;

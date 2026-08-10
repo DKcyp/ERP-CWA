@@ -91,6 +91,7 @@ use App\Http\Controllers\ProductionPlanning\RealisasiJadwalPastaListController;
 use App\Http\Controllers\ProductionPlanning\RealisasiJadwalPastaReportController;
 use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingListController;
 use App\Http\Controllers\ProductionPlanning\MonitoringMesinGrindingReportController;
+use App\Http\Controllers\MonitoringPengujianKemasanController;
 use App\Http\Controllers\ProductionPlanning\ProductionMaterialCheckStockController;
 use App\Http\Controllers\ProductionPlanning\ProductionStockLevelController;
 use App\Http\Controllers\ProductionPlanning\ProductionSTBJController;
@@ -1111,6 +1112,19 @@ Route::middleware('auth')->group(function () {
             Route::get('/export', [MonitoringMesinGrindingReportController::class, 'export'])->name('export');
         });
 
+        Route::prefix('monitoring-pengujian-kemasan')->name('monitoring-pengujian-kemasan.')->group(function () {
+            Route::get('/', [MonitoringPengujianKemasanController::class, 'index'])->name('index');
+            Route::get('/table', [MonitoringPengujianKemasanController::class, 'table'])->name('table');
+            Route::post('/', [MonitoringPengujianKemasanController::class, 'store'])->name('store');
+            Route::get('/{id}', [MonitoringPengujianKemasanController::class, 'show'])->name('show');
+            Route::put('/{id}', [MonitoringPengujianKemasanController::class, 'update'])->name('update');
+            Route::delete('/{id}', [MonitoringPengujianKemasanController::class, 'destroy'])->name('destroy');
+        });
+        Route::get('/monitoring-berat-dalam-kemasan', function () { return view('placeholder', ['title' => 'Monitoring Berat Dalam Kemasan']); });
+        Route::get('/monitoring-pengujian-bahan-baku', function () { return view('placeholder', ['title' => 'Monitoring Pengujian Bahan Baku']); });
+        Route::get('/monitoring-spkp', function () { return view('placeholder', ['title' => 'Monitoring SPKP']); });
+        Route::get('/monitoring-sppbj', function () { return view('placeholder', ['title' => 'Monitoring SPPBJ']); });
+
         Route::prefix('production-material-check-stock')->name('production-material-check-stock.')->group(function () {
             Route::get('/', [ProductionMaterialCheckStockController::class, 'index'])->name('index');
             Route::get('/table', [ProductionMaterialCheckStockController::class, 'table'])->name('table');
@@ -1121,6 +1135,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [ProductionStockLevelController::class, 'index'])->name('index');
             Route::get('/table', [ProductionStockLevelController::class, 'table'])->name('table');
             Route::post('/refresh', [ProductionStockLevelController::class, 'refresh'])->name('refresh');
+        });
+
+        Route::prefix('monitoring-pengujian-kemasan')->name('monitoring-pengujian-kemasan.')->group(function () {
+            Route::get('/', [MonitoringPengujianKemasanController::class, 'index'])->name('index');
+            Route::get('/table', [MonitoringPengujianKemasanController::class, 'table'])->name('table');
+            Route::post('/', [MonitoringPengujianKemasanController::class, 'store'])->name('store');
+            Route::get('/{id}', [MonitoringPengujianKemasanController::class, 'show'])->name('show');
+            Route::put('/{id}', [MonitoringPengujianKemasanController::class, 'update'])->name('update');
+            Route::delete('/{id}', [MonitoringPengujianKemasanController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('stbj')->name('stbj.')->group(function () {
