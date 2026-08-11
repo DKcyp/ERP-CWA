@@ -95,6 +95,7 @@ use App\Http\Controllers\MonitoringPengujianKemasanController;
 use App\Http\Controllers\MonitoringBeratDalamKemasanController;
 use App\Http\Controllers\MonitoringSpkpController;
 use App\Http\Controllers\MonitoringPengujianBahanBakuController;
+use App\Http\Controllers\MonitoringSppbjController;
 use App\Http\Controllers\ProductionPlanning\ProductionMaterialCheckStockController;
 use App\Http\Controllers\ProductionPlanning\ProductionStockLevelController;
 use App\Http\Controllers\ProductionPlanning\ProductionSTBJController;
@@ -1123,7 +1124,15 @@ Route::middleware('auth')->group(function () {
             Route::put('/{id}', [MonitoringPengujianKemasanController::class, 'update'])->name('update');
             Route::delete('/{id}', [MonitoringPengujianKemasanController::class, 'destroy'])->name('destroy');
         });
-        Route::get('/monitoring-sppbj', function () { return view('placeholder', ['title' => 'Monitoring SPPBJ']); });
+
+        Route::prefix('monitoring-sppbj')->name('monitoring-sppbj.')->group(function () {
+            Route::get('/', [MonitoringSppbjController::class, 'index'])->name('index');
+            Route::get('/table', [MonitoringSppbjController::class, 'table'])->name('table');
+            Route::post('/', [MonitoringSppbjController::class, 'store'])->name('store');
+            Route::get('/{id}', [MonitoringSppbjController::class, 'show'])->name('show');
+            Route::put('/{id}', [MonitoringSppbjController::class, 'update'])->name('update');
+            Route::delete('/{id}', [MonitoringSppbjController::class, 'destroy'])->name('destroy');
+        });
 
         Route::prefix('monitoring-pengujian-bahan-baku')->name('monitoring-pengujian-bahan-baku.')->group(function () {
             Route::get('/', [MonitoringPengujianBahanBakuController::class, 'index'])->name('index');
