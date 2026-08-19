@@ -1231,6 +1231,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', [SPKPAdouController::class, 'table'])->name('table');
             Route::post('/', [SPKPAdouController::class, 'store'])->name('store');
             Route::get('/{id}', [SPKPAdouController::class, 'show'])->name('show');
+            Route::get('/{id}/detail', function ($id) {
+                return view('production-planning.production-process-spkpadu-detail');
+            })->name('detail');
             Route::put('/{id}', [SPKPAdouController::class, 'update'])->name('update');
             Route::post('/{id}/approve', [SPKPAdouController::class, 'approve'])->name('approve');
             Route::post('/{id}/reject', [SPKPAdouController::class, 'reject'])->name('reject');
@@ -1242,6 +1245,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', [SPPBJAdouController::class, 'table'])->name('table');
             Route::post('/', [SPPBJAdouController::class, 'store'])->name('store');
             Route::get('/{id}', [SPPBJAdouController::class, 'show'])->name('show');
+            Route::get('/{id}/detail', function ($id) {
+                return view('production-planning.production-process-sppbjadu-detail');
+            })->name('detail');
             Route::put('/{id}', [SPPBJAdouController::class, 'update'])->name('update');
             Route::post('/{id}/approve', [SPPBJAdouController::class, 'approve'])->name('approve');
             Route::post('/{id}/reject', [SPPBJAdouController::class, 'reject'])->name('reject');
