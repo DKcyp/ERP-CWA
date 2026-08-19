@@ -36,10 +36,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        #main { display:flex; flex-direction:column; min-height:100vh; }
-        #main .main-content { flex:1; }
-        #main footer { margin-top:auto; }
-        .hz-header { border-bottom:1px solid #e9ecef; padding:0 1rem 0.75rem 1rem; margin-bottom:1rem; }
+        #main { display:flex; flex-direction:column; min-height:100vh; margin-left:0!important; padding:0!important; }
+        #main .main-content { flex:1; padding:0 1rem; }
+        #main footer { margin-top:auto; padding:0.75rem 1rem; }
+        .hz-header { border-bottom:1px solid #e9ecef; padding:0.75rem 1rem; margin-bottom:0; }
     </style>
     @stack('after-style')
 </head>
