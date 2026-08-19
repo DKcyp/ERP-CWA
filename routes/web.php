@@ -1217,6 +1217,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', [SPPBJController::class, 'table'])->name('table');
             Route::post('/', [SPPBJController::class, 'store'])->name('store');
             Route::get('/{id}', [SPPBJController::class, 'show'])->name('show');
+            Route::get('/{id}/detail', function ($id) {
+                return view('production-planning.production-process-sppbj-detail');
+            })->name('detail');
             Route::put('/{id}', [SPPBJController::class, 'update'])->name('update');
             Route::post('/{id}/approve', [SPPBJController::class, 'approve'])->name('approve');
             Route::post('/{id}/reject', [SPPBJController::class, 'reject'])->name('reject');

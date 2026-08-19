@@ -740,7 +740,7 @@ Create Doc. From CSV
   Fungsi : Mengelola dan mengeksekusi dokumen perintah kerja pembuatan adonan dasar (base) di lini produksi yang mencakup rincian penimbangan bahan baku, instruksi pengerjaan, realisasi STBJ, pencatatan hasil pengujian QC, hingga riwayat penyesuaian (adjustment).
   Penjelasan UI :
   Tampilan awal berupa table data grid yang menampilkan komponen halaman awal secara lengkap. Halaman ini tidak memiliki tombol Tambah. Terdapat filter Tanggal Awal, Tanggal Akhir, dan dropdown Tipe Produk dengan pilihan: Water Based, Solvent Based, Lain-Lain, Kemasan, TM, MP, Labeling, Pasta Printing, WB ADU.
-  Pengguna mengklik baris data pada tabel untuk membuka Halaman Proses (Detail) yang terbagi menjadi dua area utama:
+  Pengguna mengklik baris data pada tabel untuk membuka tab baru Halaman Proses (Detail) yang terbagi menjadi dua area utama:
   Bagian Atas (Header Informasi) : Menampilkan Tgl. Jadwal, No. SPKP, Kelompok Produk, Nama Produk, Batch No, Tipe Product, Formulasi, Basis, Total Basis, Status, Notes, Production ID, dan Jadwal.
   Bagian Bawah (6 Tab Navigasi) :
   Tab Bahan Baku : Berisi table data komponen Name, Tonase, Urutan Proses, Batch No., Kebutuhan, UOM, Kemasan, Checklist, Realisasi, UOM, Change Batch, Warehouse. Dilengkapi dengan tombol aksi [ Simpan ], [ Leader Formulasi ], [ Complete ], dan [ Print RM ].
@@ -751,13 +751,31 @@ Create Doc. From CSV
   Tab Result : Menampung data atau kesimpulan hasil akhir dari serangkaian proses produksi tersebut.
 
 - SPPBJ (Surat Perintah Pembuatan Barang Jadi / CM) `production-process-sppbj`
-  Komponen : Production ID, Jadwal, No. SPKP, No. Batch, Date, Created by, Product Name, Proses CM, Selesai CM, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, Bahan Baku, Production, Realisasi (STBJ), QC, Adjustment, Notes, Keputusan
-  Fungsi : Mengelola dokumen perintah kerja proses pewarnaan / pencampuran warna (Color Matching - CM) dari adonan dasar yang sudah siap, mencatat takaran pasta warna, durasi pengerjaan CM, hingga kelulusan sampel warna oleh QC.
-  Penjelasan UI : Tampilan awal berupa table data grid menampilkan No. SPKP (Ref), No. Batch, Product Name, Proses CM, Selesai CM, Machine, Status QC, dan Keputusan. Tombol Tambah memunculkan Pop-up Modal Form / Drawer berstruktur:
-    1. Header Info : Production ID, No. SPKP (Lookup SPKP Base Approved), No. Batch, Date, Created by, Product Name, Machine, Formulasi CM, Basis.
-    2. Data Grid Pigmen & Pasta Warna : Detail Bahan Baku (Pasta/Pigmen), Required Qty, Actual Production Qty, Realisasi (STBJ), Hasil QC Warna, Adjustment.
-    3. Waktu & Keputusan : Timestamp 'Proses CM' & 'Selesai CM', Textarea Notes, serta Dropdown 'Keputusan' (Approve/Reject/Rework).
-  Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi modal.
+  Komponen Tampilan Awal : Production ID, Jadwal, No. SPKP, No. Batch, Date, Created by, Product Name, Proses CM, Selesai CM, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, Bahan Baku, Production, Kemasan, Realisasi (STBJ), Tgl. Selesai, Adjustment, PPIC, WH, Notes, Base, Keputusan.
+  Fungsi : Mengelola dan mengeksekusi dokumen kelanjutan proses produksi (Color Matching / Pencampuran Warna hingga pengemasan produk jadi), yang mencakup penimbangan bahan baku CM, instruksi produksi, alokasi dan permintaan kemasan, pengujian QC, hingga penyesuaian (adjustment).
+  Penjelasan UI : Tampilan awal berupa table data grid yang menampilkan komponen halaman awal secara lengkap. Halaman ini tidak memiliki tombol Tambah (karena data biasanya di-generate otomatis dari penyelesaian tahapan SPKP sebelumnya). Terdapat filter pencarian Tanggal Awal, Tanggal Akhir, dan dropdown Tipe Produk dengan pilihan: Water Based, Solvent Based, Lain-Lain, Kemasan, TM, MP, Labeling, Pasta Printing, WB ADU.
+  Pengguna mengklik baris data pada tabel untuk membuka Halaman Proses (Detail/Separate Page) yang terbagi menjadi dua area utama:
+  Bagian Atas (Header Informasi) : Menampilkan Tgl. Jadwal, No. SPKP, Kelompok Produk, Nama Produk, Batch No, Tipe Product, Formulasi, Basis, Total Basis, Status, Notes, Production ID, dan Jadwal.
+  Bagian Bawah (7 Tab Navigasi) :
+    Tab Bahan Baku CM : Berisi table data komponen Name, Tonase, Batch No., Kebutuhan, UOM, Realisasi, UOM, Change Batch, Checklist, Warehouse. Dilengkapi dengan deretan tombol aksi: [ Save ], [ Leader Formulasi ], [ Complete ], dan [ Print CM ].
+    Tab Production : Berisi table data komponen Uraian, Batch, %, Tonase (Kg), Realisasi (Kg). Dilengkapi dengan deretan tombol aksi: [ Save ], [ Identifikasi Product ], [ Laporan Hasil Kemas ], [ Complete ], [ Proses CM ], dan [ Selesai CM ].
+    Tab Permintaan Kemasan : Berisi table data komponen Name, Kebutuhan, UOM, Realisasi, UOM, Date, Pengganti Reject, Kurang (OK), Sisa (OK), Warehouse, Reject, Warehouse Reject, Date. Dilengkapi dengan deretan tombol aksi: [ Save ], [ T Operator Print ], [ Leader Kemasan ], [ Produksi ], [ Complete ], dan [ Print Barcode ].
+    Tab Realisasi : Berisi table data komponen Product, Name, Warehouse, Qty, UOM, Batch No.
+    Tab QC : Berisi table data komponen Pengujian, Standard, Hasil Pengujian 1, Hasil Pengujian 2, Hasil Pengujian 3.
+    Tab Adjustment : Terdiri dari dua bagian. Bagian atas menampilkan informasi Date, Product Name, Batch Name, Mesin, Tonase, Notes, User Id. Bagian bawah berupa table data komponen Product ID, Nama Bahan, UOM, Warehouse, 1, FC1, 2, FC 2, 3, FC 3, 4, FC4, 5, FC 5, Pengembalian, Jumlah, Release Date.
+    Tab Result : Menampung data, rincian akhir, atau kesimpulan dari serangkaian proses barang jadi (Finished Goods) tersebut.
+    
+tidak perlu tombol tambah
+komponen table halaman awal :Production ID, Jadwal, No. SPKP, No. Batch, Date, Createdby,Product Name, Proses CM, Selesai CM, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, bahan baku, production, kemasan, Realisasi(STBJ), Tgl. Selesai, Adjustment, PPIC, WH, Notes, Base, Keputusan
+halaman awal ada filter tanggal awal dan akhir dan tipe product select (Water Based ,Solvent Based ,Lain-Lain ,Kemasan ,TM ,MP ,Labeling ,Pasta Printing ,WB ADU)
+komponen halaman proses:Tgl. Jadwal, No. SPKP, Kelompok Produk, Nama Produk, Batch No, Tipe Product, Formulasi, Basis, Total Basis, Status, Notes, Production ID, Jadwal (ini di bagian atas)
+bagian bawah ada 7 tab (bahan baku CM, production, Permintaan Kemasan,realisasi, QC, Adjusment, Result)
+Komponen tab bahan baku CM :Name, Tonase, Batch No., Kebutuhan, UOM, Realisasi, UOM, Change Batch, Checklist, Warehouse (dalam bentuk table)(ada tombol save, leader formulasi, complete, print CM)
+komponen tab production:Uraian, Batch, %, Tonase (Kg), Realisasi (Kg) (dalam bentuk table)(ada tombol a Save, Identifikasi Product, Laporan Hasil Kemas, Complete, Proses CM, Selesai CM)
+komponen tab Permintaan Kemasan :Name, Kebutuhan, UOM, Realisasi, UOM, Date, Pengganti Reject, Kurang (OK), Sisa (OK), Warehouse, Reject, Warehouse Reject, Date(dalam bentuk table)(ada tombol, Save, T Operator Print, Leader Kemasan, Produksi, Complete, Print Barcode)
+komponen tab realisasi :Product, Name, Warehouse, Qty, UOM, Batch No (dalam bentuk table)
+Komponen tab QC : Pengujian, Standard, Hasil Pengujian 1, Hasil Pengujian 2, Hasil Pengujian 3(dalam bentuk table)
+komponen tab adjusment : Date, Product Name, Batch Name, Mesin, Tonase, Notes, User Id (ini bagian atas tab adjusment), Product ID, Nama Bahan, UOM, Warehouse, 1, FC1, 2, FC 2, 3, FC 3, 4, FC4, 5, FC 5, Pengembalian, Jumlah, Release Date (ini table nya bagian bawah nya) 
 
 - SPKP ADU (Surat Perintah Kerja Produksi Adu / Adjustment Base) `production-process-spkpadu`
   Komponen : Production ID, Jadwal, No. SPKP, No. Batch, Date, Created by, Product Name, Proses BASE, Selesai BASE, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, Bahan Baku, Production, Realisasi (STBJ), QC, Adjustment, Notes, Keputusan
