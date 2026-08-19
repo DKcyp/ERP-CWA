@@ -1,15 +1,9 @@
 @extends('layouts.layout-minimal')
-@section('title', 'Detail SPKP - Surat Perintah Kerja Produksi Base')
+@section('title', 'Detail SPKP')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <div>
-        <h4 class="mb-0"><i class="bi bi-clipboard-data me-2"></i>Detail SPKP</h4>
-        <small class="text-muted">Surat Perintah Kerja Produksi Base</small>
-    </div>
-    <div>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.close()"><i class="bi bi-x-lg me-1"></i>Tutup</button>
-    </div>
+<div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-sm btn-outline-secondary" onclick="window.close()"><i class="bi bi-x-lg me-1"></i>Tutup</button>
 </div>
 
 <div class="card border-0 shadow-sm mb-3">
