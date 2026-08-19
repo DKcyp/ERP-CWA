@@ -39,7 +39,7 @@
         #main { display:flex; flex-direction:column; min-height:100vh; }
         #main .main-content { flex:1; }
         #main footer { margin-top:auto; }
-        .hz-header { border-bottom:1px solid #e9ecef; padding-bottom:0.75rem; margin-bottom:1rem; }
+        .hz-header { border-bottom:1px solid #e9ecef; padding:0 1rem 0.75rem 1rem; margin-bottom:1rem; }
     </style>
     @stack('after-style')
 </head>
@@ -47,7 +47,7 @@
 <body>
     <script src="{{ asset('custom/assets/static/js/initTheme.js') }}"></script>
     <div id="app">
-        <div id="main" class="px-4 py-3">
+        <div id="main" class="py-3">
             <header class="hz-header">
                 <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
                     <div class="d-flex align-items-center gap-3">
@@ -80,7 +80,7 @@
                 @yield('content')
             </div>
 
-            <footer class="py-3 mt-auto">
+            <footer class="py-3 mt-auto px-3">
                 <div class="footer clearfix mb-0 text-muted fs-6">
                     <div class="float-start"><p><span id="current-year"></span> &copy; ERP CWA Layout</p></div>
                     <div class="float-end"><p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill"></i></span></p></div>
