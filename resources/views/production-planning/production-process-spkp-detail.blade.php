@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.layout-minimal')
 @section('title', 'Detail SPKP - Surat Perintah Kerja Produksi Base')
 
 @section('content')
@@ -8,7 +8,7 @@
         <small class="text-muted">Surat Perintah Kerja Produksi Base</small>
     </div>
     <div>
-        <a href="{{ url('/production-process-spkp') }}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.close()"><i class="bi bi-x-lg me-1"></i>Tutup</button>
     </div>
 </div>
 
