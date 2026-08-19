@@ -1203,6 +1203,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', [SPKPController::class, 'table'])->name('table');
             Route::post('/', [SPKPController::class, 'store'])->name('store');
             Route::get('/{id}', [SPKPController::class, 'show'])->name('show');
+            Route::get('/{id}/detail', function ($id) {
+                return view('production-planning.production-process-spkp-detail');
+            })->name('detail');
             Route::put('/{id}', [SPKPController::class, 'update'])->name('update');
             Route::post('/{id}/approve', [SPKPController::class, 'approve'])->name('approve');
             Route::post('/{id}/reject', [SPKPController::class, 'reject'])->name('reject');

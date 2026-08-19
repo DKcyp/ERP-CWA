@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP System Flowchart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 15px;
+        }
+
+        .canvas {
+            background: white;
+            width: 1500px;
+            min-height: 1100px;
+            padding: 25px;
+            position: relative;
+            border-radius: 5px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Section containers */
+        .section {
+            position: absolute;
+            border: 2px solid;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            padding: 8px 15px;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 6px 6px 0 0;
+            margin: -2px -2px 0 -2px;
+        }
+
+        .section-content {
+            padding: 15px;
+        }
+
+        /* Section 1 - Master Data */
+        #master-data {
+            left: 20px;
+            top: 10px;
+            width: 580px;
+            border-color: #2196F3;
+        }
+        #master-data .section-header {
+            background: #E3F2FD;
+            color: #1565C0;
+            border-bottom: 2px solid #2196F3;
+        }
+
+        /* Section 2 - Material Management */
+        #material-management {
+            left: 620px;
+            top: 10px;
+            width: 860px;
+            border-color: #4CAF50;
+        }
+        #material-management .section-header {
+            background: #E8F5E9;
+            color: #2E7D32;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        /* Section 3 - Production Planning */
+        #production-planning {
+            left: 20px;
+            top: 280px;
+            width: 380px;
+            border-color: #FF9800;
+        }
+        #production-planning .section-header {
+            background: #FFF3E0;
+            color: #E65100;
+            border-bottom: 2px solid #FF9800;
+        }
+
+        /* Section 4 - Production Process */
+        #production-process {
+            left: 420px;
+            top: 280px;
+            width: 480px;
+            border-color: #9C27B0;
+        }
+        #production-process .section-header {
+            background: #F3E5F5;
+            color: #6A1B9A;
+            border-bottom: 2px solid #9C27B0;
+        }
+
+        /* Section 5 - Sales & Distribution */
+        #sales-distribution {
+            left: 920px;
+            top: 560px;
+            width: 560px;
+            border-color: #F44336;
+        }
+        #sales-distribution .section-header {
+            background: #FFEBEE;
+            color: #C62828;
+            border-bottom: 2px solid #F44336;
+        }
+
+        /* Section 6 - Transit Area */
+        #transit-area {
+            left: 420px;
+            top: 750px;
+            width: 480px;
+            border-color: #00BCD4;
+        }
+        #transit-area .section-header {
+            background: #E0F7FA;
+            color: #00838F;
+            border-bottom: 2px solid #00BCD4;
+        }
+
+        /* Section 7 - Marketing */
+        #marketing {
+            left: 20px;
+            top: 620px;
+            width: 180px;
+            border-color: #E91E63;
+        }
+        #marketing .section-header {
+            background: #FCE4EC;
+            color: #AD1457;
+            border-bottom: 2px solid #E91E63;
+        }
+
+        /* Section 8 - QC */
+        #quality-control {
+            left: 920px;
+            top: 380px;
+            width: 280px;
+            border-color: #795548;
+        }
+        #quality-control .section-header {
+            background: #EFEBE9;
+            color: #4E342E;
+            border-bottom: 2px solid #795548;
+        }
+
+        /* Master Data columns */
+        .master-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .master-col {
+            background: #f8f8f8;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .master-col-title {
+            font-weight: bold;
+            font-size: 11px;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+        }
+
+        .master-col ul {
+            list-style: none;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .master-col ul li::before {
+            content: "•";
+            margin-right: 5px;
+            color: #666;
+        }
+
+        .other-master {
+            background: #f8f8f8;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        /* Sub-section boxes */
+        .sub-box {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .sub-box-title {
+            font-weight: bold;
+            font-size: 10px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        /* Flow elements */
+        .flow-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            padding: 5px 10px;
+            border: 1px solid #888;
+            border-radius: 3px;
+            font-size: 9px;
+            background: white;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .flow-arrow {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .flow-arrow-down {
+            text-align: center;
+            color: #666;
+            font-size: 10px;
+            margin: 3px 0;
+        }
+
+        /* Color variants */
+        .box-blue { background: #E3F2FD; border-color: #2196F3; }
+        .box-green { background: #E8F5E9; border-color: #4CAF50; }
+        .box-orange { background: #FFF3E0; border-color: #FF9800; }
+        .box-purple { background: #F3E5F5; border-color: #9C27B0; }
+        .box-red { background: #FFEBEE; border-color: #F44336; }
+        .box-pink { background: #FCE4EC; border-color: #E91E63; }
+        .box-brown { background: #EFEBE9; border-color: #795548; }
+        .box-cyan { background: #E0F7FA; border-color: #00BCD4; }
+        .box-dark { background: #333; color: white; border-color: #333; }
+        .box-highlight { background: #BBDEFB; border-color: #1976D2; }
+
+        /* Decision boxes */
+        .decision {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 8px;
+            font-style: italic;
+        }
+
+        .decision-ok {
+            background: #C8E6C9;
+            border: 1px solid #4CAF50;
+            color: #2E7D32;
+        }
+
+        .decision-reject {
+            background: #FFCDD2;
+            border: 1px solid #E53935;
+            color: #C62828;
+        }
+
+        /* Vertical flow */
+        .v-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        /* Two columns */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* Three columns */
+        .three-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        /* Dashed reference box */
+        .ref-box {
+            border: 1px dashed #999;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        /* Legend */
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 12px 20px;
+            border-radius: 4px;
+            display: flex;
+            gap: 25px;
+            font-size: 10px;
+            align-items: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-line {
+            width: 35px;
+            height: 2px;
+            background: #333;
+            position: relative;
+        }
+
+        .legend-line::after {
+            content: "▶";
+            position: absolute;
+            right: -8px;
+            top: -7px;
+            font-size: 10px;
+        }
+
+        .legend-dashed {
+            background: transparent;
+            border-top: 2px dashed #333;
+            height: 0;
+        }
+
+        .legend-ok {
+            width: 18px;
+            height: 12px;
+            background: #C8E6C9;
+            border: 1px solid #4CAF50;
+            border-radius: 2px;
+        }
+
+        .legend-reject {
+            width: 18px;
+            height: 12px;
+            background: #FFCDD2;
+            border: 1px solid #E53935;
+            border-radius: 2px;
+        }
+
+        /* Connector lines (dashed references) */
+        .connector {
+            position: absolute;
+            border: 1px dashed #999;
+        }
+
+        .connector-label {
+            position: absolute;
+            font-size: 9px;
+            color: #666;
+            background: white;
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+        <!-- 1. MASTER DATA -->
+        <div id="master-data" class="section">
+            <div class="section-header">1. MASTER DATA</div>
+            <div class="section-content">
+                <div class="master-grid">
+                    <div class="master-col">
+                        <div class="master-col-title">Product</div>
+                        <ul>
+                            <li>Product</li>
+                            <li>Brand</li>
+                            <li>Group</li>
+                            <li>Category</li>
+                            <li>Series</li>
+                            <li>Hierarchie</li>
+                            <li>Quality</li>
+                        </ul>
+                    </div>
+                    <div class="master-col">
+                        <div class="master-col-title">Measure & Conversion</div>
+                        <ul>
+                            <li>Unit of Measures</li>
+                            <li>UOM General Conversion</li>
+                        </ul>
+                    </div>
+                    <div class="master-col">
+                        <div class="master-col-title">Price & Discount</div>
+                        <ul>
+                            <li>Discount</li>
+                            <li>Price List</li>
+                            <li>Sales Discount</li>
+                            <li>Purchase Discount</li>
+                            <li>Product Cash Back</li>
+                        </ul>
+                    </div>
+                    <div class="master-col">
+                        <div class="master-col-title">Supplier</div>
+                        <ul>
+                            <li>Supplier</li>
+                            <li>Supplier Group</li>
+                            <li>Supplier Product</li>
+                        </ul>
+                    </div>
+                    <div class="master-col">
+                        <div class="master-col-title">Customer</div>
+                        <ul>
+                            <li>Customer</li>
+                            <li>Customer Group</li>
+                            <li>Customer Area</li>
+                            <li>Customer Centre</li>
+                            <li>WA Name</li>
+                            <li>Customer Tools</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="other-master">
+                    <div>
+                        <div class="master-col-title">Other Master</div>
+                        <ul>
+                            <li>Production Master</li>
+                            <li>Warehouse</li>
+                            <li>Currency & Rate</li>
+                            <li>Payment Term</li>
+                            <li>Notes</li>
+                        </ul>
+                    </div>
+                    <ul>
+                        <li>Promo Buy N Get M</li>
+                        <li>Area</li>
+                        <li>Commission</li>
+                        <li>Department</li>
+                        <li>Forwarder</li>
+                    </ul>
+                    <ul>
+                        <li>Cash</li>
+                        <li>Bank</li>
+                        <li>Document</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. MATERIAL MANAGEMENT -->
+        <div id="material-management" class="section">
+            <div class="section-header">2. MATERIAL MANAGEMENT</div>
+            <div class="section-content">
+                <div class="sub-box">
+                    <div class="sub-box-title">A. Purchasing</div>
+                    <div class="flow-row" style="margin-bottom: 10px;">
+                        <div class="flow-box">Purchase Request</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Purchase Order</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-highlight">STBJ (Material Receipt)</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Purchase Invoice</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Supplier Payment</div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 15px; margin-top: 15px;">
+                        <div class="v-flow">
+                            <div class="flow-box box-green">QC Bahan Baku<br>(8. QC)</div>
+                        </div>
+                        <div class="v-flow" style="gap: 8px;">
+                            <div class="decision decision-ok">Approved</div>
+                            <div class="decision decision-reject">Rejected / Return</div>
+                        </div>
+                        <div class="flow-box">Purchase Return</div>
+                    </div>
+                    <div class="flow-row" style="margin-top: 15px; justify-content: flex-end;">
+                        <div class="flow-box">Material Stock</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-highlight">SJBB (Barter)</div>
+                    </div>
+                </div>
+
+                <div class="sub-box">
+                    <div class="sub-box-title">B. Inventory & Stock</div>
+                    <div class="flow-row">
+                        <div class="flow-box">Stock Adjustment</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Stock Transfer Request</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Stock Transfer</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Shipment Preparation</div>
+                    </div>
+                    <div class="flow-row" style="margin-top: 10px; justify-content: flex-end;">
+                        <div class="flow-box">Stock Conversion</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Material Template</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. PRODUCTION PLANNING -->
+        <div id="production-planning" class="section">
+            <div class="section-header">3. PRODUCTION PLANNING</div>
+            <div class="section-content">
+                <div class="sub-box">
+                    <div class="sub-box-title">A. Perencanaan Produksi</div>
+                    <div class="flow-row">
+                        <div class="flow-box box-orange">Pre-SPK</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-orange">SPK</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-orange">Production Scheduling</div>
+                    </div>
+                </div>
+
+                <div class="sub-box">
+                    <div class="sub-box-title">B. Kemasan</div>
+                    <div class="flow-row">
+                        <div class="flow-box box-orange">SPK Kemasan</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-orange">Jadwal Kemasan</div>
+                    </div>
+                </div>
+
+                <div class="sub-box">
+                    <div class="sub-box-title">C. Produksi</div>
+                    <div class="flow-row">
+                        <div class="flow-box box-orange">Production List</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-orange">Release Production</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-highlight">STBJ (Finished Goods)</div>
+                    </div>
+                </div>
+
+                <div class="sub-box">
+                    <div class="sub-box-title">D. Monitoring & Realisasi</div>
+                    <div class="flow-row" style="margin-bottom: 8px;">
+                        <div class="flow-box" style="font-size: 8px;">Realisasi Jadwal Base</div>
+                        <div class="flow-box" style="font-size: 8px;">Realisasi Jadwal CM</div>
+                        <div class="flow-box" style="font-size: 8px;">Realisasi Jadwal Canning & Packing</div>
+                        <div class="flow-box" style="font-size: 8px;">Realisasi Jadwal Base per Mesin</div>
+                        <div class="flow-box" style="font-size: 8px;">Realisasi Jadwal Pasta</div>
+                    </div>
+                    <div class="flow-row">
+                        <div class="flow-box" style="font-size: 8px;">Monitoring Mesin Grinding</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box" style="font-size: 8px;">Production Material Check Stock</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box" style="font-size: 8px;">Production Stock Level</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. PRODUCTION PROCESS -->
+        <div id="production-process" class="section">
+            <div class="section-header">4. PRODUCTION PROCESS</div>
+            <div class="section-content">
+                <div class="two-col">
+                    <div class="sub-box">
+                        <div class="sub-box-title">A. Proses Base / Giling (SKP)</div>
+                        <div class="v-flow">
+                            <div class="flow-box box-purple" style="width: 100%;">SKP</div>
+                            <div class="flow-arrow-down">↓</div>
+                            <div class="flow-box box-purple" style="width: 100%;">Proses BASE / Giling</div>
+                            <div class="flow-arrow-down">↓</div>
+                            <div class="flow-box box-green" style="width: 100%;">QC SKP Base / Giling (8. QC)</div>
+                            <div style="display: flex; gap: 8px; margin: 5px 0;">
+                                <div class="decision decision-ok">Approved</div>
+                                <div class="decision decision-reject">Reject / Rework</div>
+                            </div>
+                            <div class="flow-arrow-down">↓</div>
+                            <div class="flow-box" style="width: 100%;">SPKP ADU (Rework Base)</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-box">
+                        <div class="sub-box-title">B. Proses Color Matching (SPPBJ)</div>
+                        <div class="v-flow">
+                            <div class="flow-box box-purple" style="width: 100%;">SPPBJ</div>
+                            <div class="flow-arrow-down">↓</div>
+                            <div class="flow-box box-purple" style="width: 100%;">Proses CM / Color Matching</div>
+                            <div class="flow-arrow-down">↓</div>
+                            <div class="flow-box box-green" style="width: 100%;">QC SPPBJ CM / Finished Goods (8. QC)</div>
+                            <div style="display: flex; gap: 8px; margin: 5px 0;">
+                                <div class="decision decision-ok">Approved</div>
+                                <div class="decision decision-reject">Reject / Rework</div>
+                            </div>
+                            <div class="flow-arrow-down">↓</div>
+                            <div class="flow-box" style="width: 100%;">SPPBJ ADU (Rework CM)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-box" style="margin-top: 10px;">
+                    <div class="v-flow">
+                        <div class="flow-box box-purple" style="width: 60%;">SPPI (Bahan Penunjang Khusus)</div>
+                        <div class="flow-arrow-down">↓</div>
+                        <div class="flow-box box-purple" style="width: 60%;">SPPPK (Persiapan & Penggunaan Kemasan)</div>
+                        <div class="flow-arrow-down">↓</div>
+                        <div class="flow-box box-green" style="width: 60%;">QC Kemasan (8. QC)</div>
+                        <div class="flow-arrow-down">↓</div>
+                        <div class="flow-box box-green" style="width: 60%;">QC Berat Dalam Kemasan (8. QC)</div>
+                        <div style="display: flex; gap: 15px; margin: 5px 0;">
+                            <div class="decision decision-ok">Ok</div>
+                            <div class="decision decision-reject">Not OK / Rework</div>
+                        </div>
+                        <div class="flow-arrow-down">↓</div>
+                        <div class="flow-box box-dark" style="width: 60%;">Finished Goods</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. SALES & DISTRIBUTION -->
+        <div id="sales-distribution" class="section">
+            <div class="section-header">5. SALES & DISTRIBUTION</div>
+            <div class="section-content">
+                <div class="sub-box">
+                    <div class="sub-box-title">A. Order to Delivery</div>
+                    <div class="flow-row" style="margin-bottom: 10px;">
+                        <div class="flow-box box-red">Sales Order</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-red">Sales Order Fulfilment</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-red">Shipment Priority</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-red">Packing</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-red">Delivery Order</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-red">Shipment Preparation</div>
+                    </div>
+                    <div class="flow-row" style="justify-content: flex-end;">
+                        <div class="flow-box box-highlight">Delivery</div>
+                        <span class="flow-arrow">←</span>
+                        <div class="flow-box box-red">Sales Invoice</div>
+                    </div>
+                </div>
+
+                <div class="sub-box">
+                    <div class="sub-box-title">B. Billing & Collection</div>
+                    <div class="flow-row">
+                        <div class="flow-box box-red">Tanda Terima Invoice</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-red">Tanda Terima Penagihan</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-red">Customer Payment</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-red">Cheque / Giro Management</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box box-red">Collection / RLKP</div>
+                    </div>
+                </div>
+
+                <div class="sub-box">
+                    <div class="sub-box-title">C. Others</div>
+                    <div class="flow-row">
+                        <div class="flow-box">Sales Return</div>
+                        <div class="flow-box">Purchase Note (PO Customer)</div>
+                        <div class="flow-box">Sales Commission (Salesman Incentive)</div>
+                        <div class="flow-box">Tax / Faktur Pajak (Withholding, PPN)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. TRANSIT AREA -->
+        <div id="transit-area" class="section">
+            <div class="section-header">6. TRANSIT AREA</div>
+            <div class="section-content">
+                <div class="two-col">
+                    <div>
+                        <div class="v-flow">
+                            <div class="flow-box box-cyan" style="width: 100%;">Transit Area Target</div>
+                            <div class="flow-arrow-down">↓</div>
+                            <div class="flow-box box-cyan" style="width: 100%;">Transit Area / Depo<br>Penyimpanan Sementara</div>
+                            <div class="flow-arrow-down">↓</div>
+                            <div class="flow-box box-cyan" style="width: 100%;">Stock Finished Goods (Transit)</div>
+                            <div class="flow-arrow-down">↓</div>
+                            <div class="flow-box box-cyan" style="width: 100%;">Distribution / Delivery</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="master-col-title">UBM Daily Control</div>
+                        <ul style="font-size: 9px; line-height: 1.8;">
+                            <li>Progress Sales</li>
+                            <li>Transit Area New Brand</li>
+                            <li>UBM New Product Sales</li>
+                            <li>UBM Collection Progress</li>
+                            <li>Daily Sales Achievement</li>
+                            <li>PMB (Bonus / Incentive)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. MARKETING -->
+        <div id="marketing" class="section">
+            <div class="section-header">7. MARKETING</div>
+            <div class="section-content">
+                <div class="v-flow">
+                    <div class="flow-box box-pink" style="width: 100%;">Non Customer</div>
+                    <div class="flow-arrow-down">↓</div>
+                    <div class="flow-box box-pink" style="width: 100%;">Marketing Visit</div>
+                    <div class="flow-arrow-down">↓</div>
+                    <div class="flow-box box-pink" style="width: 100%;">NOO / New Customer</div>
+                    <div class="flow-arrow-down">↓</div>
+                    <div class="flow-box box-pink" style="width: 100%;">New Customer Incentive</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. QC (Quality Control) -->
+        <div id="quality-control" class="section">
+            <div class="section-header">8. QC (Quality Control)</div>
+            <div class="section-content">
+                <div class="v-flow" style="align-items: stretch;">
+                    <div class="flow-box box-brown" style="width: 100%; margin-bottom: 5px;">1. Monitoring Pengujian Kemasan</div>
+                    <div class="flow-box box-brown" style="width: 100%; margin-bottom: 5px;">2. Monitoring Berat Dalam Kemasan</div>
+                    <div class="flow-box box-brown" style="width: 100%; margin-bottom: 5px;">3. Monitoring Pengujian Bahan Baku</div>
+                    <div class="flow-box box-brown" style="width: 100%; margin-bottom: 5px;">4. Monitoring SKP (Base / Giling)</div>
+                    <div class="flow-box box-brown" style="width: 100%;">5. Monitoring SPPBJ (CM / Finished Goods)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashed reference lines -->
+        <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+            <!-- Reference line from Master Data to Production Planning -->
+            <path d="M 310 240 L 310 265 L 210 265 L 210 280" stroke="#999" stroke-width="1" stroke-dasharray="5,5" fill="none"/>
+            <text x="200" y="260" font-size="9" fill="#666">Referensi Master</text>
+        </svg>
+
+        <!-- Legend -->
+        <div class="legend">
+            <span style="font-weight: bold;">Keterangan:</span>
+            <div class="legend-item">
+                <div class="legend-line"></div>
+                <span>Alur utama proses</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line legend-dashed"></div>
+                <span>Referensi / Data Master</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-ok"></div>
+                <span>Keputusan OK / Approved</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-reject"></div>
+                <span>Keputusan Reject / Rework</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
