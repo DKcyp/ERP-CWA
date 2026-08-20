@@ -1281,6 +1281,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [RisetController::class, 'instruksiPenyaringan'])->name('index');
         });
 
+        Route::prefix('riset-jenis-saringan')->name('riset-jenis-saringan.')->group(function () {
+            Route::get('/', [RisetController::class, 'jenisSaringan'])->name('index');
+        });
+
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
             Route::get('/', [ArWarehouseReportController::class, 'index'])->name('index');
             Route::get('/table', [ArWarehouseReportController::class, 'table'])->name('table');

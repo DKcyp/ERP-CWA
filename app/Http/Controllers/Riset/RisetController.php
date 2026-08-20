@@ -21,4 +21,9 @@ class RisetController extends Controller
     {
         return view('riset.instruksi-penyaringan');
     }
+
+    public function jenisSaringan()
+    {
+        return view('riset.jenis-saringan');
+    }
 }
