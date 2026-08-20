@@ -16,4 +16,9 @@ class RisetController extends Controller
     {
         return view('riset.data-metode-aplikasi');
     }
+
+    public function instruksiPenyaringan()
+    {
+        return view('riset.instruksi-penyaringan');
+    }
 }
