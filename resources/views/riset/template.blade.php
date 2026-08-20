@@ -123,6 +123,13 @@
                                     </tr>
                                 </thead>
                                 <tbody id="formulaBody"></tbody>
+                                <tfoot>
+                                    <tr class="table-light">
+                                        <td colspan="3" class="text-end"><strong>Total Formulasi</strong></td>
+                                        <td class="text-end" style="width:120px"><strong id="totalFormula">0.00%</strong></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -201,10 +208,20 @@ function renderFormula(rows) {
             <td>${i + 1}</td>
             <td><input type="text" class="form-control form-control-sm" value="${r.kode}" placeholder="Kode"></td>
             <td><input type="text" class="form-control form-control-sm" value="${r.nama}" placeholder="Nama bahan"></td>
-            <td><input type="number" class="form-control form-control-sm" value="${r.persen}" min="0" max="100" step="0.01"></td>
+            <td><input type="number" class="form-control form-control-sm formula-input" value="${r.persen}" min="0" max="100" step="0.01" oninput="calcTotal()"></td>
             <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger" onclick="removeRow(this)"><i class="bi bi-x"></i></button></td>
         </tr>
     `).join('');
+    calcTotal();
+}
+
+function calcTotal() {
+    const inputs = document.querySelectorAll('.formula-input');
+    let total = 0;
+    inputs.forEach(inp => total += parseFloat(inp.value) || 0);
+    const el = document.getElementById('totalFormula');
+    el.textContent = total.toFixed(2) + '%';
+    el.className = total === 100 ? 'text-success' : total > 100 ? 'text-danger' : 'text-warning';
 }
 
 function addRow() {
@@ -215,15 +232,17 @@ function addRow() {
         <td>${tbody.children.length + 1}</td>
         <td><input type="text" class="form-control form-control-sm" placeholder="Kode"></td>
         <td><input type="text" class="form-control form-control-sm" placeholder="Nama bahan"></td>
-        <td><input type="number" class="form-control form-control-sm" value="0" min="0" max="100" step="0.01"></td>
+        <td><input type="number" class="form-control form-control-sm formula-input" value="0" min="0" max="100" step="0.01" oninput="calcTotal()"></td>
         <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger" onclick="removeRow(this)"><i class="bi bi-x"></i></button></td>
     `;
     tbody.appendChild(tr);
+    calcTotal();
 }
 
 function removeRow(btn) {
     btn.closest('tr').remove();
     document.querySelectorAll('#formulaBody tr').forEach((tr, i) => tr.children[0].textContent = i + 1);
+    calcTotal();
 }
 
 function getFormulaFromTable() {
