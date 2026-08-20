@@ -764,36 +764,37 @@ Create Doc. From CSV
     Tab QC : Berisi table data komponen Pengujian, Standard, Hasil Pengujian 1, Hasil Pengujian 2, Hasil Pengujian 3.
     Tab Adjustment : Terdiri dari dua bagian. Bagian atas menampilkan informasi Date, Product Name, Batch Name, Mesin, Tonase, Notes, User Id. Bagian bawah berupa table data komponen Product ID, Nama Bahan, UOM, Warehouse, 1, FC1, 2, FC 2, 3, FC 3, 4, FC4, 5, FC 5, Pengembalian, Jumlah, Release Date.
     Tab Result : Menampung data, rincian akhir, atau kesimpulan dari serangkaian proses barang jadi (Finished Goods) tersebut.
-    
-tidak perlu tombol tambah
-komponen table halaman awal :Production ID, Jadwal, No. SPKP, No. Batch, Date, Createdby,Product Name, Proses CM, Selesai CM, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, bahan baku, production, kemasan, Realisasi(STBJ), Tgl. Selesai, Adjustment, PPIC, WH, Notes, Base, Keputusan
-halaman awal ada filter tanggal awal dan akhir dan tipe product select (Water Based ,Solvent Based ,Lain-Lain ,Kemasan ,TM ,MP ,Labeling ,Pasta Printing ,WB ADU)
-komponen halaman proses:Tgl. Jadwal, No. SPKP, Kelompok Produk, Nama Produk, Batch No, Tipe Product, Formulasi, Basis, Total Basis, Status, Notes, Production ID, Jadwal (ini di bagian atas)
-bagian bawah ada 7 tab (bahan baku CM, production, Permintaan Kemasan,realisasi, QC, Adjusment, Result)
-Komponen tab bahan baku CM :Name, Tonase, Batch No., Kebutuhan, UOM, Realisasi, UOM, Change Batch, Checklist, Warehouse (dalam bentuk table)(ada tombol save, leader formulasi, complete, print CM)
-komponen tab production:Uraian, Batch, %, Tonase (Kg), Realisasi (Kg) (dalam bentuk table)(ada tombol a Save, Identifikasi Product, Laporan Hasil Kemas, Complete, Proses CM, Selesai CM)
-komponen tab Permintaan Kemasan :Name, Kebutuhan, UOM, Realisasi, UOM, Date, Pengganti Reject, Kurang (OK), Sisa (OK), Warehouse, Reject, Warehouse Reject, Date(dalam bentuk table)(ada tombol, Save, T Operator Print, Leader Kemasan, Produksi, Complete, Print Barcode)
-komponen tab realisasi :Product, Name, Warehouse, Qty, UOM, Batch No (dalam bentuk table)
-Komponen tab QC : Pengujian, Standard, Hasil Pengujian 1, Hasil Pengujian 2, Hasil Pengujian 3(dalam bentuk table)
-komponen tab adjusment : Date, Product Name, Batch Name, Mesin, Tonase, Notes, User Id (ini bagian atas tab adjusment), Product ID, Nama Bahan, UOM, Warehouse, 1, FC1, 2, FC 2, 3, FC 3, 4, FC4, 5, FC 5, Pengembalian, Jumlah, Release Date (ini table nya bagian bawah nya) 
 
 - SPKP ADU (Surat Perintah Kerja Produksi Adu / Adjustment Base) `production-process-spkpadu`
-  Komponen : Production ID, Jadwal, No. SPKP, No. Batch, Date, Created by, Product Name, Proses BASE, Selesai BASE, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, Bahan Baku, Production, Realisasi (STBJ), QC, Adjustment, Notes, Keputusan
-  Fungsi : Mengelola dokumen perintah kerja perbaikan / penyesuaian (adustment/adu) pada adonan dasar (base) yang tidak memenuhi kriteria standar QC (misal: penyesuaian viskositas atau kehalusan gilingan).
-  Penjelasan UI : Tampilan awal berupa table data grid menampilkan No. SPKP, No. Batch, Product Name, Machine, Jenis Adjustment, Status QC, dan Keputusan dengan penanda badge warna oranye/kuning (Adu/Adjustment). Tombol Tambah memunculkan Pop-up Modal Form berstruktur:
-    1. Header Info : Ref SPKP Asal (Lookup SPKP Reject), No. Batch, Date, Created by, Machine, Basis.
-    2. Data Grid Penambahan Bahan Perbaikan : Detail Bahan Baku Tambahan (Bahan/Aditif/Solvent), Required Qty, Actual Production Qty, Adjustment Qty, Realisasi (STBJ).
-    3. Waktu & Keputusan : Timestamp 'Proses BASE' & 'Selesai BASE' (Adu), Catatan Perbaikan (Notes), dan Dropdown 'Keputusan' QC Re-check.
-  Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi modal.
+  Komponen Tampilan Awal : Production ID, Jadwal, No. SPKP ADU, No. Batch, Date, Created by, Product Name, Proses BASE ADU, Selesai BASE ADU, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning.
+  Fungsi : Mengelola dokumen eksekusi perintah kerja perbaikan/penyesuaian (adjustment) pada adonan dasar (base) yang memerlukan proses ulang di lini produksi.
+  Penjelasan UI :
+  Tampilan awal berupa table data grid yang menampilkan komponen halaman awal secara lengkap. Halaman ini tidak memiliki tombol Tambah. Terdapat filter Tanggal Awal, Tanggal Akhir, dan dropdown Tipe Produk dengan pilihan: Water Based, Solvent Based, Lain-Lain, Kemasan, TM, MP, Labeling, Pasta Printing, WB ADU.
+  Pengguna mengklik baris data pada tabel untuk membuka Halaman Proses (Detail Page) yang terbagi menjadi dua area utama:
+  Bagian Atas (Header Informasi) : Menampilkan Tgl. Jadwal, No. SPKP ADU, Kelompok Produk, Nama Produk, Batch No, Tipe Product, Formulasi, Basis, Total Basis, Status, Notes, Production ID, dan Jadwal.
+  Bagian Bawah (6 Tab Navigasi) :
+  Tab Bahan Baku ADU : Berisi table data komponen Name, Tonase, Urutan Proses, Batch No., Kebutuhan, UOM, Kemasan, Checklist, Realisasi, UOM, Change Batch, Warehouse. (Dengan tombol aksi: Save, Leader Formulasi, Complete, Print RM).
+  Tab Production ADU : Berisi table data komponen Urutan Proses dan Instruksi, Kemasan, Checklist, Tanggal Mulai, Jam Mulai, Tanggal Selesai, Jam Selesai. (Dengan tombol aksi: Save, Complete, Proses Base, Selesai Base).
+  Tab Realisasi ADU : Berisi table data komponen Product, Name, Warehouse, Qty, UOM, Batch No. (Dengan tombol aksi: Save).
+  Tab QC ADU : Berisi table data komponen Pengujian, Standard, Hasil Pengujian 1, Hasil Pengujian 2, Hasil Pengujian 3.
+  Tab Adjustment ADU : Terdiri dari dua bagian (Header: Date, Product Name, Mesin, Tonase, dll. & Table: Product ID, Nama Bahan, UOM, 1, FC1, 2, FC2, dst., Pengembalian, Jumlah, Release Date).
+  Tab Result ADU : Menampung data atau kesimpulan hasil akhir dari proses perbaikan base.
 
 - SPPBJ ADU (Surat Perintah Pembuatan Barang Jadi Adu / Adjustment CM) `production-process-sppbjadu`
-  Komponen : Production ID, Jadwal, No. SPKP, No. Batch, Date, Created by, Product Name, Proses CM, Selesai CM, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, Bahan Baku, Production, Realisasi (STBJ), QC, Adjustment, Notes, Keputusan
-  Fungsi : Mengelola dokumen perintah kerja perbaikan / penyesuaian warna (rework color matching) pada batch yang di-reject oleh QC karena ketidaksesuaian standar warna (tinting adjustment).
-  Penjelasan UI : Tampilan awal berupa table data grid menampilkan No. SPKP, No. Batch, Product Name, Machine, Catatan Reject QC Asal, Status QC, dan Keputusan. Tombol Tambah memunculkan Pop-up Modal Form berstruktur:
-    1. Header Info : Ref SPPBJ Asal (Lookup SPPBJ Rework/Reject), No. Batch, Date, Created by, Machine, Target Kode Warna.
-    2. Data Grid Koreksi Takaran Warna : Detail Bahan Baku (Pasta/Pigmen Tambahan), Required Qty, Actual Production Qty, Adjustment Qty, Realisasi (STBJ).
-    3. Waktu & Keputusan : Timestamp 'Proses CM' & 'Selesai CM' (Adu), Textarea Notes Koreksi, dan Dropdown 'Keputusan' QC Re-check.
-  Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi modal.
+  Komponen Tampilan Awal: Production ID, Jadwal, No. SPKP ADU, No. Batch, Date, Created by, Product Name, Proses CM ADU, Selesai CM ADU, Machine, Tipe Produk, Formulasi, FK, Basis, Required, Recanning, Bahan Baku ADU, Production ADU, Kemasan ADU, Realisasi (STBJ), Tgl. Selesai, Adjustment ADU, PPIC, WH, Notes, Base, Keputusan.
+  Fungsi : Mengelola dokumen perintah kerja perbaikan/penyesuaian warna (rework color matching) atau pengemasan ulang pada produk jadi yang tidak lolos standar QC.
+  Penjelasan UI :
+  Tampilan awal berupa table data grid yang menampilkan komponen halaman awal secara lengkap. Halaman ini tidak memiliki tombol Tambah. Terdapat filter Tanggal Awal, Tanggal Akhir, dan dropdown Tipe Produk.
+  Pengguna mengklik baris data pada tabel untuk membuka Halaman Proses (Detail Page) yang terbagi menjadi dua area utama:
+  Bagian Atas (Header Informasi) : Menampilkan Tgl. Jadwal, No. SPKP ADU, Kelompok Produk, Nama Produk, Batch No, Tipe Product, Formulasi, Basis, Total Basis, Status, Notes, Production ID, dan Jadwal.
+  Bagian Bawah (7 Tab Navigasi) :
+  Tab Bahan Baku CM ADU : Berisi table data komponen Name, Tonase, Batch No., Kebutuhan, UOM, Realisasi, UOM, Change Batch, Checklist, Warehouse. (Dengan tombol aksi: Save, Leader Formulasi, Complete, Print CM).
+  Tab Production ADU : Berisi table data komponen Uraian, Batch, %, Tonase (Kg), Realisasi (Kg). (Dengan tombol aksi: Save, Identifikasi Product, Laporan Hasil Kemas, Complete, Proses CM, Selesai CM).
+  Tab Permintaan Kemasan ADU : Berisi table data komponen Name, Kebutuhan, UOM, Realisasi, Date, Pengganti Reject, Kurang (OK), Sisa (OK), Warehouse, Reject, Warehouse Reject, Date. (Dengan tombol aksi: Save, T Operator Print, Leader Kemasan, Produksi, Complete, Print Barcode).
+  Tab Realisasi ADU : Berisi table data komponen Product, Name, Warehouse, Qty, UOM, Batch No.
+  Tab QC ADU : Berisi table data komponen Pengujian, Standard, Hasil Pengujian 1, Hasil Pengujian 2, Hasil Pengujian 3.
+  Tab Adjustment ADU : Terdiri dari dua bagian (Header: Date, Mesin, Tonase, dll. & Table input parameter koreksi 1, FC1, 2, FC2, dst.).
+  Tab Result ADU : Menampung data, rincian akhir, atau kesimpulan dari proses rework barang jadi tersebut.
 
 - SPPI (Surat Perintah Penggunaan Insektisida / Bahan Penolong Khusus) `production-process-sppi`
   Komponen : Production ID, SPPI_No, Date, Created_By, No_Batch, Product_Name, Machine, Material_ID, Material_Name, Target_Dose_Qty, Actual_Dose_Qty, UOM, Mixing_Time, Operator, Notes, Status
@@ -1189,6 +1190,43 @@ komponen tab adjusment : Date, Product Name, Batch Name, Mesin, Tonase, Notes, U
     3. Tab Quality Control Kemasan & Pengisian : Cek Teks/Miss Print, Kualitas Cetakan, Kebersihan, Seep Test, Drop Test, Dimensi & Integritas Kemasan.
     4. Footer : Textarea Ringkasan QC dan Radio Button Keputusan Final (Approve / Rework CM / Reject).
   Edit memunculkan modal terisi untuk pembaruan data, Hapus memunculkan alert konfirmasi modal.
+
+## Riset
+
+- Data dan Metode Aplikasi
+  Komponen: Data dan metode Aplikasi, Ketentuan
+  Fungsi: Mengelola dan mendefinisikan standar metode serta parameter teknis pengaplikasian produk hasil riset (misalnya cara aplikasi, alat yang digunakan, hingga kondisi lingkungan yang dipersyaratkan).
+  Penjelasan UI: Tampilan berupa tabel daftar data dan metode aplikasi beserta ketentuannya. Terdapat tombol Tambah yang memunculkan pop-up modal form berisi kolom input untuk "Data dan metode Aplikasi" serta "Ketentuan". Aksi Edit memunculkan modal yang sama dengan data terisi, dan Hapus memunculkan alert konfirmasi.
+
+- Instruksi Penyaringan
+  Komponen: Instruksi Penyaringan
+  Fungsi: Menyimpan standar prosedur atau instruksi khusus terkait proses penyaringan (filtering) bahan atau produk selama tahap riset uji coba dan produksi massal.
+  Penjelasan UI: Tampilan berupa tabel daftar instruksi penyaringan. Tombol Tambah memunculkan pop-up modal form dengan field input teks tunggal untuk instruksi. Edit dan Hapus memiliki standar alert dan form yang sama.
+
+- Jenis Saringan
+  Komponen: Jenis Saringan
+  Fungsi: Mendata tipe atau ukuran saringan (mesh/filter) yang wajib digunakan sesuai dengan standar produk yang sedang diteliti.
+  Penjelasan UI: Tampilan tabel sederhana berisi daftar jenis saringan. Tombol Tambah memunculkan pop-up modal form untuk menginputkan nama/jenis saringan.
+
+- Cost
+  Komponen: Nama Biaya, Biaya
+  Fungsi: Mencatat dan mengatur komponen biaya tambahan (overhead, operasional lab, pengujian eksternal, dll.) di luar bahan baku utama yang timbul selama proses riset.
+  Penjelasan UI: Tampilan tabel menampilkan daftar Nama Biaya dan nominal Biayanya. Tombol Tambah memunculkan pop-up modal form untuk menginput Nama Biaya dan nilai Biaya (currency).
+
+- Template
+  Komponen: ID, Date, Product ID, Name, FA, Rev, Status, User, Notes (Table Halaman Utama). Product ID, Name, Notes, Template ID, Date, User ID, FA, Rev, Status (Untuk modal tambah bagian atas). Kode bahan, nama bahan, formula% (Untuk Table bagian bawah ada tombol tambah baris). No. LHR, Template ID, Product ID, Nama Formula, FA, Rev, Price Method, Report ID, Created Dat, Status, User ID, Posting Date (Untuk modal tambah laporan bagian atas).
+  Fungsi: Mengelola template dasar formulasi produk (BOM Riset) beserta versi revisinya sebagai acuan standar sebelum diuji coba menjadi Laporan Hasil Riset (LHR).
+  Penjelasan UI: Tampilan awal berupa tabel daftar template. Tombol Tambah akan membuka halaman/modal form yang terbagi menjadi dua area. Bagian atas memuat form informasi header (Product ID, Name, FA, Rev, dll.). Bagian bawah memuat tabel dinamis untuk menginput komponen formula (Kode Bahan, Nama Bahan, Formula %) yang dilengkapi dengan tombol "Tambah Baris" untuk memasukkan multi-bahan baku.
+
+- Riset Report
+  Komponen: Doc ID, No LHR, Price Method, Product ID, Name, Created Date, Posting Date, Status, FA, Rev, Grand Total, Notes, User ID (Untuk Halaman awal). Kode Bahan, Nama Bahan, Formula %, Harga COGS, Formula (KG), Faktor Konversi, Total Formula, Total Harga (Untuk table bagian bawah).
+  Fungsi: Mencatat rincian laporan analisis biaya dan komposisi finansial dari sebuah formula riset, serta menampilkan kalkulasi otomatis harga pokok produksi (COGS) dari formulasi yang sedang diuji.
+  Penjelasan UI: Tampilan awal berupa tabel rekap dokumen laporan riset. Saat melihat detail atau menambah data, antarmuka menampilkan Header informasi LHR di bagian atas, dan tabel kalkulasi bahan terperinci di bagian bawah. Di bawah tabel tersebut terdapat area field Notes untuk catatan tambahan. 
+
+- Riset Result Report
+  Komponen: Doc ID, Date, Last Status Update, No.LHR, Status, Riset ID, Product, Name, FA, Revisi, Substart, Pemakaian, Hapus STD Lama, Instruksi Penyaringan, Jenis Saringan, User, Notes (Untuk table halaman awal). Riset ID, No. LHR, Product ID, Nama Formula, FA, Rev, Substart, Report ID, Created Date, Status, User ID, Pemakaian, Hapus STD Lama, Last Status Update (Untuk modal tambah bagian atas). Tab Formulasi (Kode Bahan, Nama Bahan, Urutan Proses, Jumlah%, Adjustmen). Tab Hasil Pengujian (Pengujian, Spek). Tab Data Aplikasi (data dan metode aplikasi, Ketentuan).
+  Fungsi: Mendokumentasikan hasil pengujian komprehensif dari suatu riset, mencakup komposisi final, parameter kelulusan uji laboratorium, hingga metode pengaplikasiannya, sebagai penentu rilis formula standar baru.
+  Penjelasan UI: Tampilan awal berupa tabel daftar hasil riset (Result Report). Tombol Tambah/Detail akan membuka Halaman Proses (Terpisah) dengan Header Informasi LHR di bagian atas. Bagian bawah menggunakan sistem 3 Tab Navigasi: Tab Formulasi (Tabel input urutan proses & adjustment), Tab Hasil Pengujian (Tabel input spesifikasi uji lab), dan Tab Data Aplikasi (Tabel instruksi metode). Di bagian footer/paling bawah halaman terdapat field dropdown dan teks untuk Instruksi Penyaringan, Jenis Saringan, dan Notes.
 
 ## System Menu
 - Dashboard `/`

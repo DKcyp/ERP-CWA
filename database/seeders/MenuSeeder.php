@@ -203,6 +203,18 @@ class MenuSeeder extends Seeder
                     'Monitoring SPPBJ' => 'monitoring-sppbj',
                 ]
             ],
+            'Riset' => [
+                'icon' => 'bi bi-lightbulb-fill',
+                'items' => [
+                    'Data dan Metode Aplikasi' => 'riset-data-metode',
+                    'Instruksi Penyaringan' => 'riset-intruksi-penyaringan',
+                    'Jenis Saringan' => 'riset-jenis-saringan',
+                    'Cost' => 'riset-cost',
+                    'Template' => 'riset-template',
+                    'Riset Report' => 'riset-report',
+                    'Riset Result Report' => 'riset-result-report',
+                ]
+            ],
             'Master Data' => [
                 'icon' => 'bi bi-database-fill',
                 'items' => [
@@ -639,6 +651,13 @@ class MenuSeeder extends Seeder
             'Monitoring Pengujian Bahan Baku' => 'monitoring-pengujian-bahan-baku',
             'Monitoring SPKP' => 'monitoring-spkp',
             'Monitoring SPPBJ' => 'monitoring-sppbj',
+            'Data dan Metode Aplikasi' => 'riset-data-metode',
+            'Instruksi Penyaringan' => 'riset-intruksi-penyaringan',
+            'Jenis Saringan' => 'riset-jenis-saringan',
+            'Cost' => 'riset-cost',
+            'Template' => 'riset-template',
+            'Riset Report' => 'riset-report',
+            'Riset Result Report' => 'riset-result-report',
         ];
 
         return $map[$name] ?? $fallback;

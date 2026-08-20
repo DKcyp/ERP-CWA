@@ -106,6 +106,7 @@ use App\Http\Controllers\ProductionPlanning\SPKPAdouController;
 use App\Http\Controllers\ProductionPlanning\SPPBJAdouController;
 use App\Http\Controllers\ProductionPlanning\SPPPKController;
 use App\Http\Controllers\ProductionPlanning\SPPIController;
+use App\Http\Controllers\Riset\RisetController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderListController;
 use App\Http\Controllers\MaterialManagement\PurchaseOrderFulfillmentController;
 use App\Http\Controllers\MaterialManagement\DailyPurchaseOrderReportController;
@@ -1270,6 +1271,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [SPPPKController::class, 'show'])->name('show');
             Route::put('/{id}', [SPPPKController::class, 'update'])->name('update');
             Route::delete('/{id}', [SPPPKController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('riset')->name('riset.')->group(function () {
+            Route::get('/data-metode-aplikasi', [RisetController::class, 'dataMetodeAplikasi'])->name('data-metode-aplikasi');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
