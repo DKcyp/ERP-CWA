@@ -26,4 +26,9 @@ class RisetController extends Controller
     {
         return view('riset.jenis-saringan');
     }
+
+    public function cost()
+    {
+        return view('riset.cost');
+    }
 }
