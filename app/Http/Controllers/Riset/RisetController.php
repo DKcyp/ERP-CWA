@@ -31,4 +31,9 @@ class RisetController extends Controller
     {
         return view('riset.cost');
     }
+
+    public function template()
+    {
+        return view('riset.template');
+    }
 }
