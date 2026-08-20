@@ -1273,8 +1273,8 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{id}', [SPPPKController::class, 'destroy'])->name('destroy');
         });
 
-        Route::prefix('riset')->name('riset.')->group(function () {
-            Route::get('/data-metode-aplikasi', [RisetController::class, 'dataMetodeAplikasi'])->name('data-metode-aplikasi');
+        Route::prefix('riset-data-metode')->name('riset-data-metode.')->group(function () {
+            Route::get('/', [RisetController::class, 'dataMetodeAplikasi'])->name('index');
         });
 
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
