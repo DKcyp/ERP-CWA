@@ -36,4 +36,9 @@ class RisetController extends Controller
     {
         return view('riset.template');
     }
+
+    public function risetReport()
+    {
+        return view('riset.riset-report');
+    }
 }
