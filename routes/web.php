@@ -1297,6 +1297,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [RisetController::class, 'risetReport'])->name('index');
         });
 
+        Route::prefix('riset-result-report')->name('riset-result-report.')->group(function () {
+            Route::get('/', [RisetController::class, 'risetResultReport'])->name('index');
+            Route::get('/{id}/detail', function ($id) {
+                return view('riset.riset-result-report-detail');
+            })->name('detail');
+        });
+
         Route::prefix('ar-warehouse-report')->name('ar-warehouse.')->group(function () {
             Route::get('/', [ArWarehouseReportController::class, 'index'])->name('index');
             Route::get('/table', [ArWarehouseReportController::class, 'table'])->name('table');
